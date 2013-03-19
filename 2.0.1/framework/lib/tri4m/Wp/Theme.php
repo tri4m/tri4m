@@ -1,27 +1,18 @@
 <?PHP
 	NAMESPACE tri4m\Wp;
+	USE tri4m\Wp\__config_Theme;
 	USE tri4m\Wp\Application;
 	USE tri4m\Wp\Hook;
 	USE tri4m\Wp\Trap;
+	USE ILLI\Core\Util\Inflector;
+	USE ILLI\Core\Util\String;
 	
 	CLASS Theme
 	{
-		protected static $__config		= [];
-		protected static $__themePath		= NULL;
-		protected static $__themeUri		= NULL;
-		protected static $__wpIncPath		= NULL;
-		protected static $__wpIncUri		= NULL;
-		protected static $__slug		= NULL;
-		protected static $__dataSlug		= NULL;
-		protected static $__name		= NULL;
-		protected static $__fullName		= NULL;
-		protected static $__themeName		= NULL;
-		protected static $__version		= NULL;
-		protected static $__versionId		= NULL;
-		protected static $__debug		= NULL;
+		protected static $__Setup		= NULL;
 		protected static $__Hook		= NULL;
 		protected static $__Application		= NULL;
-		protected static $__pathMap		=
+		protected static $__pathScheme		=
 		[
 			'root'		=> '{:root}',
 			'core'		=> '{:root}/core',
@@ -39,46 +30,49 @@
 			'wpCss'		=> '{:wp}/css',
 		];
 		
-		function __construct(array $__config = [])
+		function __construct(__config_Theme $__Setup)
 		{
-			foreach(['themePath', 'themeUri', 'wpIncPath', 'wpIncUri', 'slug', 'name', 'fullName', 'themeName', 'version', 'versionId', 'debug'] as $p)
-			{
-				$v = &$__config[$p];
-				
-				FALSE === isset($__config[$p]) ?: static::${'__'.$p} = $__config[$p];
-				
-				unset($__config[$p]);
-			}
-			
-			static::$__config	= $__config;
+			static::$__Setup	= $__Setup;
 			static::$__Application	= new Application;
-			
 			static::$__Application->boot();
-			
-			/*
-			Inv::addAction(__const_Action::AFTER_SETUP_THEME, function()
-			{
-				static::$__Application->run();
-				
-				Inv::addAction(__const_Action::SHUTDOWN, function()
-				{
-					static::$__Application->shutdown();
-				}, 1 );
-				
-			}, 1 );
-			
-			Inv::addAction(__const_Action::SHUTDOWN, function()
-			{
-				// show trace
-			}, 999 );
-			*/
-			
 		}
 		
-		static function test()
+		static function __callStatic($__name, $__parameters)
 		{
-			var_dump('Hi');
+			$r = explode('_', $n = Inflector::underscore($__name));
+			switch($prefix = $r[0]):
+				case 'slug':
+					$__parameters += [NULL, '_'];
+					list($__value, $__delimeter) = $__parameters;
+					
+					return NULL !== $__value
+						? is_array($__value)
+							? static::$__Setup->slug.$__delimeter.implode($__delimeter, $__value)
+							: static::$__Setup->slug.$__delimeter.$__value
+						: static::$__Setup->slug;
+					break;
+				case 'path':
+				case 'uri':
+					array_shift($r);
+					$__parameters += [[]];
+					list($__args) = $__parameters;
+					
+					return TRUE === isset(static::$__pathScheme[$r = lcfirst(Inflector::camelize(implode('_', $r)))])
+						? String::insert(static::$__pathScheme[$r], [
+							'root'  => static::$__Setup->{'theme'.('uri' === $prefix ? 'Uri' : 'Path')},
+							'wp'    => static::$__Setup->{'wpInc'.('uri' === $prefix ? 'Uri' : 'Path')}
+							]).(NULL !== $__args && [] !== $__args
+							? '/'.(TRUE === is_array($__args)
+								? implode('/', array_map(function(&$n) { $n = trim($n, '/'); return $n; }, $__args))
+								: trim($__args, '/'))
+							: NULL)
+						: NULL;
+					break;
+			endswitch;
+			
+			return FALSE === ('__Setup' === ($n = '__'.$__name))
+				&& (TRUE === isset(static::$$n) || TRUE === property_exists(__CLASS__, $n))
+					? static::$$n
+					: static::$__Setup->$__name;
 		}
-		
-		
 	}
