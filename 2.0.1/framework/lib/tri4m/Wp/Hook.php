@@ -4,14 +4,11 @@
 	
 	CLASS Hook
 	{
-		CONST	ACTION_AFTER_SETUP_THEME	= 'after_setup_theme';
-		
-		static function install(array $__config = [])
-		{
-			parent::install($__config);
-		}
-		
 		protected static $__hooked = [];
+		
+		static function enqueue()
+		{
+		}
 		
 		static function action($__event, $__callable, $__priority = 10)
 		{
