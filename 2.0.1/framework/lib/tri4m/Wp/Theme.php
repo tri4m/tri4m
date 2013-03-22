@@ -1,8 +1,11 @@
 <?PHP
 	NAMESPACE tri4m\Wp;
 	USE tri4m\Wp\__config_Theme;
+	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\Application;
 	USE tri4m\Wp\Hook;
+	USE tri4m\Wp\Inv;
+	USE tri4m\Wp\Log;
 	USE tri4m\Wp\Trap;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
@@ -35,6 +38,28 @@
 			static::$__Setup	= $__Setup;
 			static::$__Application	= new Application;
 			static::$__Application->boot();
+			
+			Inv::addAction(__const_Action::AFTER_SETUP_THEME, function()
+			{
+				static::$__Application->run();
+			});
+			
+			Inv::addAction(__const_Action::AFTER_SWITCH_THEME, function()
+			{
+				static::$__Application->install();
+			});
+			
+			Inv::addAction(__const_Action::SWITCH_THEME, function()
+			{
+				static::$__Application->uninstall();
+			});
+			
+			Inv::addAction(__const_Action::SHUTDOWN, function()
+			{
+				static::$__Application->shutdown();
+				print Log::html();
+				Trap::stop();
+			});
 		}
 		
 		static function __callStatic($__name, $__parameters)

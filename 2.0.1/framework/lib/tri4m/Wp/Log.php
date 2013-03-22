@@ -16,4 +16,9 @@
 		{
 			return implode(PHP_EOL, static::$__log);
 		}
+		
+		static function html()
+		{
+			return '<pre>'.htmlspecialchars(static::show()).'</pre>';
+		}
 	}
