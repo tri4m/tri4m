@@ -19,6 +19,6 @@
 		
 		static function html()
 		{
-			return '<pre>'.htmlspecialchars(static::show()).'</pre>';
+			return String::insert('<pre>{:code}</pre>', ['code' => htmlspecialchars(static::show())]);
 		}
 	}
