@@ -161,7 +161,7 @@
 				try
 				{
 					Trace::add(4, __METHOD__.': {:setup}', ['setup' => $this->__config]);
-					if(FALSE === Inv::postTypeExists($this->__name['slug_singular']))
+					if(FALSE === Inv::postTypeExists($this->__name['slug_plural']))
 						Inv::registerPostType($this->__name['slug_plural'], $this->tuple());
 				}
 				catch(\Exception $E)
