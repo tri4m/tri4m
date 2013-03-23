@@ -1,7 +1,7 @@
 <?PHP
 	NAMESPACE tri4m\Wp;
 	USE tri4m\Wp\Inv;
-	USE tri4m\Wp\Log;
+	USE tri4m\Wp\Trace;
 	USE ILLI\Core\Std\Invoke;
 	USE Closure;
 	
@@ -14,7 +14,7 @@
 			foreach(static::$__hooked as $class => $__hook)
 				foreach($__hook as $case => $hook)
 				{
-					Log::add(1, __METHOD__.'[{:case}]', ['case' => $case]);
+					Trace::add(1, __METHOD__.'[{:case}]', ['case' => $case]);
 					switch($case):
 						case 'call':
 							foreach($hook as $fn)
@@ -34,7 +34,7 @@
 		{
 			static::$__hooked[get_called_class()][__FUNCTION__][$__event][$__priority][] = function() use ($__event, $__callable, $__priority)
 			{
-				Log::add(2, 'run {:event}@{:prio} {:exec}', ['event' => $__event, 'prio' => $__priority, 'exec' => $__callable]);
+				Trace::add(2, 'run {:event}@{:prio} {:exec}', ['event' => $__event, 'prio' => $__priority, 'exec' => $__callable]);
 				$args = func_get_args();
 				if(is_string($__callable))
 				{
@@ -65,7 +65,7 @@
 		{
 			static::$__hooked[get_called_class()][__FUNCTION__][] = function() use ($__callable, $__arguments)
 			{
-				Log::add(2, 'run {:exec} {:args}', ['exec' => $__callable, 'args' => $__arguments]);
+				Trace::add(2, 'run {:exec} {:args}', ['exec' => $__callable, 'args' => $__arguments]);
 				if(is_string($__callable))
 				{
 					return Inv::emitFunction($__callable, $__arguments);

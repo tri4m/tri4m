@@ -3,17 +3,18 @@
 	USE tri4m\Wp\__config_Theme;
 	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\Application;
+	USE tri4m\Wp\Error;
 	USE tri4m\Wp\Hook;
 	USE tri4m\Wp\Inv;
-	USE tri4m\Wp\Log;
+	USE tri4m\Wp\Trace;
 	USE tri4m\Wp\Trap;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
+	USE Exception;
 	
 	CLASS Theme
 	{
 		protected static $__Setup		= NULL;
-		protected static $__Hook		= NULL;
 		protected static $__Application		= NULL;
 		protected static $__pathScheme		=
 		[
@@ -35,31 +36,42 @@
 		
 		function __construct(__config_Theme $__Setup)
 		{
+			if(Trap::isRunning())
+				Trap::stop();
+			
+			Trap::config(
+			[
+				'code' => E_ALL,
+				'fire' => function($i = NULL)
+				{
+					Error::add($i['Exception']->toTrack()->asText());
+				}
+			]);
+			
+			Trap::run();
+			
 			static::$__Setup	= $__Setup;
 			static::$__Application	= new Application;
 			static::$__Application->boot();
 			
-			Inv::addAction(__const_Action::AFTER_SETUP_THEME, function()
-			{
-				static::$__Application->run();
-			});
-			
-			Inv::addAction(__const_Action::AFTER_SWITCH_THEME, function()
-			{
-				static::$__Application->install();
-			});
-			
-			Inv::addAction(__const_Action::SWITCH_THEME, function()
-			{
-				static::$__Application->uninstall();
-			});
-			
-			Inv::addAction(__const_Action::SHUTDOWN, function()
-			{
-				static::$__Application->shutdown();
-				print Log::html();
-				Trap::stop();
-			});
+			foreach([
+				__const_Action::AFTER_SETUP_THEME	=> 'run',
+				__const_Action::SHUTDOWN		=> 'shutdown',
+				__const_Action::AFTER_SWITCH_THEME	=> 'install',
+				__const_Action::SWITCH_THEME		=> 'uninstall'
+			] as $c => $m)
+				Inv::addAction($c, function() use ($m)
+				{
+					try
+					{
+						print $foo;
+						static::$__Application->$m();
+					}
+					catch(\Exception $E)
+					{
+						Error::add($E->toTrack()->asText());
+					}
+				});
 		}
 		
 		static function __callStatic($__name, $__parameters)
