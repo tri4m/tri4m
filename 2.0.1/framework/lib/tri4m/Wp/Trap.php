@@ -15,7 +15,6 @@
 			{
 				extract($i);
 				
-				// do nothing with errors from crappy wp code
 				if(strpos($file, 'wp-includes'))
 					return FALSE;
 				

@@ -1,6 +1,7 @@
 <?PHP
 	NAMESPACE tri4m\Wp\Wtf;
 	USE tri4m\Wp\__const_Action;
+	USE tri4m\Wp\__type_Action;
 	USE tri4m\Wp\Hook;
 	USE tri4m\Wp\Inv;
 	USE tri4m\Wp\Trace;
@@ -22,7 +23,11 @@
 			'after_title'	=> '</h2>'
 		];
 		
-		protected $__config = [];
+		protected $__config	= [];
+		protected $__actions	=
+		[
+			__const_Action::WIDGETS_INIT => NULL
+		];
 		
 		function __construct(array $__config)
 		{
@@ -39,20 +44,23 @@
 				$__config[$k] = String::insert($v, $p);
 			
 			$this->__config = $__config;
-		}
-		
-		function tuple()
-		{
-			return $this->__config;
+			
+			$this->__actions[__const_Action::WIDGETS_INIT] = new __type_Action([
+				__type_Action::argsNum	=> 1,
+				__type_Action::priority	=> 20,
+				__type_Action::fn	=> function()
+				{
+					Inv::registerSidebar($this->__config);
+				}
+			]);
 		}
 		
 		function install()
 		{
-			Hook::action(__const_Action::WIDGETS_INIT, function()
+			foreach($this->__actions as $event => $Action)
 			{
-				Trace::add(4, __METHOD__.': {:setup}', ['setup' => $this->__config]);
-				Inv::registerSidebar($this->__config);
+				$Action->event = $event;
+				Hook::action($Action);
 			}
-			, 20);
 		}
 	}

@@ -2,7 +2,7 @@
 	NAMESPACE tri4m\Wp;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
-	CLASS __config_Theme EXTENDS \ILLI\Core\Std\Def\ADVTuple
+	CLASS __type_Theme EXTENDS \ILLI\Core\Std\Def\ADVTuple
 	{
 		CONST slug		= 0x00;
 		CONST name		= 0x01;

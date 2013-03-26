@@ -1,7 +1,12 @@
 <?PHP
 	NAMESPACE tri4m\Wp;
+	USE tri4m\Wp\__type_Action;
+	USE tri4m\Wp\__type_Call;
+	USE tri4m\Wp\__type_Filter;
+	USE tri4m\Wp\__type_Hook;
 	USE tri4m\Wp\Inv;
 	USE tri4m\Wp\Trace;
+	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Invoke;
 	USE Closure;
 	
@@ -11,67 +16,90 @@
 		
 		static function dequeue()
 		{
-			foreach(static::$__hooked as $class => $__hook)
-				foreach($__hook as $case => $hook)
-				{
-					Trace::add(1, __METHOD__.'[{:case}]', ['case' => $case]);
-					switch($case):
-						case 'call':
-							foreach($hook as $fn)
+			foreach(static::$__hooked as $case => $hook)
+			{
+				Trace::add(1, __METHOD__.'[{:case}]', ['case' => $case]);
+				switch($case):
+					case 'call':
+						foreach($hook as $hash => $fn)
+							$fn();
+						break;
+					case 'action':
+						foreach($hook as $event => $do)
+							foreach($do as $hash => $fn)
 								$fn();
-							break;
-						case 'action':
-							foreach($hook as $name => $event)
-								foreach($event as $slot => $stack)
-									foreach($stack as $fn)
-										Inv::addAction($name, $fn, $slot);
-							break;
-					endswitch;
-				}
+						break;
+				endswitch;
+			}
 		}
 		
-		static function action($__event, $__callable, $__priority = 10)
+		static function action(__type_Action $__Action)
 		{
-			static::$__hooked[get_called_class()][__FUNCTION__][$__event][$__priority][] = function() use ($__event, $__callable, $__priority)
-			{
-				Trace::add(2, 'run {:event}@{:prio} {:exec}', ['event' => $__event, 'prio' => $__priority, 'exec' => $__callable]);
-				$args = func_get_args();
-				if(is_string($__callable))
+			$hash = spl_object_hash($__Action);
+			
+			static::$__hooked[__FUNCTION__][$__Action->event][$hash] = new __type_Hook([
+				__type_Hook::handle => function() use (&$__Action)
 				{
-					return Inv::emitFunction($__callable, $args);
+					Trace::add(2, 'register {:event}@{:prio} {:exec}',
+					[
+						'event'	=> $__Action->event,
+						'prio'	=> $__Action->priority,
+						'exec'	=> $__Action->fn
+					]);
+					
+					Inv::addAction
+					(
+						$__Action->event,
+						function() use (&$__Action)
+						{
+							Trace::add(2, 'call {:fn}@{:args}',
+							[
+								'fn'	=> $__Action->event,
+								'args'	=> func_get_args()
+							]);
+							
+							if($__Action->isVal(__type_Action::fn, __const_Type::SPL_CLOSURE))
+								return Invoke::emitCallable($__Action->fn, func_get_args());
+							
+							if($__Action->isVal(__type_Action::fn, __const_Type::SPL_FUNCTION))
+								return Invoke::emitFunction($__Action->fn, func_get_args());
+							
+							if($__Action->isVal(__type_Action::fn, __const_Type::SPL_METHOD))
+								return Invoke::emit($__Action->fn[0], $__Action->fn[1], func_get_args());
+						},
+						$__Action->priority,
+						$__Action->argsNum
+					);
 				}
-				
-				
-				return $__callable instanceOf Closure
-					? Invoke::emitCallable($__callable, $args)
-					: Invoke::emitMethod($__callable[0], $__callable[1], $args);
-			};
+			]);
 		}
 		
 		static function filter($__event, $__callable, $__priority = 10)
 		{
-			static::$__hooked[get_called_class()][__FUNCTION__][$__event][$__priority][] = function() use ($__callable)
-			{
-				$args = func_get_args();
-				
-				if(is_string($__callable) && function_exists($__callable))
-					return Invoke::emitFunction($__callable, $args);
-				
-				return Invoke::emitMethod($__callable[0], $__callable[1], $args);
-			};
 		}
 		
-		static function call($__callable, $__arguments = [], $__priority = 10)
+		static function call(__type_Call $__Call)
 		{
-			static::$__hooked[get_called_class()][__FUNCTION__][] = function() use ($__callable, $__arguments)
-			{
-				Trace::add(2, 'run {:exec} {:args}', ['exec' => $__callable, 'args' => $__arguments]);
-				if(is_string($__callable))
+			$hash = spl_object_hash($__Call);
+			
+			static::$__hooked[__FUNCTION__][$hash] = new __type_Hook([
+				__type_Hook::handle => function() use (&$__Call)
 				{
-					return Inv::emitFunction($__callable, $__arguments);
+					Trace::add(2, 'call {:fn}@{:args}',
+					[
+						'fn'	=> $__Call->fn,
+						'args'	=> $__Call->arguments
+					]);
+					
+					if($__Call->isVal(__type_Call::fn, __const_Type::SPL_CLOSURE))
+						return Invoke::emitCallable($__Call->fn, $__Call->arguments);
+						
+					if($__Call->isVal(__type_Call::fn, __const_Type::SPL_FUNCTION))
+						return Invoke::emitFunction($__Call->fn, $__Call->arguments);
+						
+					if($__Call->isVal(__type_Call::fn, __const_Type::SPL_METHOD))
+						return Invoke::emit($__Call->fn[0], $__Call->fn[1], $__Call->arguments);
 				}
-				
-				return Invoke::emitMethod($__callable[0], $__callable[1], $args);
-			};
+			]);
 		}
 	}

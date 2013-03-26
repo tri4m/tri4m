@@ -1,13 +1,12 @@
 <?PHP
 	NAMESPACE tri4m\Wp\Wtf;
 	USE tri4m\Wp\__const_Action;
-	USE tri4m\Wp\__type_Action;
 	USE tri4m\Wp\Hook;
 	USE tri4m\Wp\Inv;
 	USE tri4m\Wp\Trace;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
-	USE WP_Screen;
+	USE WP_Admin_Bar;
 	
 	CLASS PostType
 	{
@@ -38,52 +37,78 @@
 			self::SUPPORT_POST_FORMATS	=> 'post-formats',
 		];
 		
-		static protected $__patterns =
+		static protected $__ietf =
 		[
-			'description'				=> 'Holds your {:plural} and {:singular} specific data.',
-			'labels' =>
+			'en' =>
 			[
-				'name'				=> '{:plural}',
-				'singular_name'			=> '{:singular}',
-				'add_new'			=> 'Add New',
-				'add_new_item'			=> 'Add New {:singular}',
-				'edit_item'			=> 'Edit {:singular}',
-				'new_item'			=> 'New {:singular}',
-				'all_items'			=> 'All {:plural}',
-				'view_item'			=> 'View {:singular}',
-				'search_items'			=> 'Search {:plural}',
-				'not_found'			=> 'No {:plural} found.',
-				'not_found_in_trash'		=> 'No {:plural} found in the trash.',
-				'parent_item_colon'		=> '',
-				'menu_name'			=> '{:plural}',
-			],
-			'updates' =>
-			[
-				'updated_preview'		=> '{:singular} updated. <a href="{:permalink}">View {:singular}</a>',
-				'custom_field_updated'		=> 'Custom field updated.',
-				'custom_field_deleted'		=> 'Custom field deleted.',
-				'updated'			=> '{:singular} updated.',
-				'restored'			=> '{:singular} restored to revision from {:revision}.',
-				'published'			=> '{:singular} published. <a href="{:permalink}">View {:singular}</a>',
-				'saved'				=> '{:singular} saved.',
-				'submitted'			=> '{:singular} submitted. <a href="{:preview}" target="_blank">Preview {:singular}</a>',
-				'sheduled'			=> '{:singular} sheduled for: <strong>{:date}</strong>. <a href="{:permalink}" target="_blank">Preview {:singular}</a>',
-				'draft_updated'			=> '{:singular} draft updated. <a href="{:preview}" target="_blank">Preview {:singular}</a>',
-			],
-			'context' =>
-			[
-				'{:slug_plural}'		=>
+				'US' =>
 				[
-					'<h2>{:plural}</h2>',
-					'<p>{:plural} show the details of the items that we sell on the website. You can see a list of them on this page in reverse chronological order - the latest one we added is first.</p>',
-					'<p>You can view/edit the details of each {:singular} by clicking on its name, or you can perform bulk actions using the dropdown menu and selecting multiple items.</p>'
-				],
-				'edit-{:slug_plural}'		=>
-				[
-					'<h2>Editing {:plural}</h2>',
-					'<p>This page allows you to view/modify {:singular} details. Please make sure to fill out the available boxes with the appropriate details and <strong>not</strong> add these details to the {:singular} description.</p>'
+					'description'				=> 'Holds your {:plural} and {:singular} specific data.',
+					'labels' =>
+					[
+						'name'				=> '{:plural}',
+						'singular_name'			=> '{:singular}',
+						'add_new'			=> 'Add New',
+						'add_new_item'			=> 'Add New {:singular}',
+						'edit_item'			=> 'Edit {:singular}',
+						'new_item'			=> 'New {:singular}',
+						'all_items'			=> 'All {:plural}',
+						'view_item'			=> 'View {:singular}',
+						'search_items'			=> 'Search {:plural}',
+						'not_found'			=> 'No {:plural} found.',
+						'not_found_in_trash'		=> 'No {:plural} found in the trash.',
+						'parent_item_colon'		=> '',
+						'menu_name'			=> '{:plural}',
+					],
+					'update' =>
+					[
+						'updated_preview'		=> '{:singular} updated. <a href="{:permalink}">View {:singular}</a>',
+						'custom_field_updated'		=> 'Custom field updated.',
+						'custom_field_deleted'		=> 'Custom field deleted.',
+						'updated'			=> '{:singular} updated.',
+						'restored'			=> '{:singular} restored to revision from {:revision}.',
+						'published'			=> '{:singular} published. <a href="{:permalink}">View {:singular}</a>',
+						'saved'				=> '{:singular} saved.',
+						'submitted'			=> '{:singular} submitted. <a href="{:preview}" target="_blank">Preview {:singular}</a>',
+						'sheduled'			=> '{:singular} sheduled for: <strong>{:date}</strong>. <a href="{:permalink}" target="_blank">Preview {:singular}</a>',
+						'draft_updated'			=> '{:singular} draft updated. <a href="{:preview}" target="_blank">Preview {:singular}</a>',
+					],
+					'context' =>
+					[
+					]
 				]
 			]
+		]
+		
+		static protected $__labels =
+		[
+			'name'				=> '{:plural}',
+			'singular_name'			=> '{:singular}',
+			'add_new'			=> 'Add New',
+			'add_new_item'			=> 'Add New {:singular}',
+			'edit_item'			=> 'Edit {:singular}',
+			'new_item'			=> 'New {:singular}',
+			'all_items'			=> 'All {:plural}',
+			'view_item'			=> 'View {:singular}',
+			'search_items'			=> 'Search {:plural}',
+			'not_found'			=> 'No {:plural} found.',
+			'not_found_in_trash'		=> 'No {:plural} found in the trash.',
+			'parent_item_colon'		=> '',
+			'menu_name'			=> '{:plural}',
+		];
+		
+		static protected $__messages =
+		[
+			'updated_preview'		=> '{:singular} updated. <a href="{:permalink}">View {:singular}</a>',
+			'custom_field_updated'		=> 'Custom field updated.',
+			'custom_field_deleted'		=> 'Custom field deleted.',
+			'updated'			=> '{:singular} updated.',
+			'restored'			=> '{:singular} restored to revision from {:revision}.',
+			'published'			=> '{:singular} published. <a href="{:permalink}">View {:singular}</a>',
+			'saved'				=> '{:singular} saved.',
+			'submitted'			=> '{:singular} submitted. <a href="{:preview}" target="_blank">Preview {:singular}</a>',
+			'sheduled'			=> '{:singular} sheduled for: <strong>{:date}</strong>. <a href="{:permalink}" target="_blank">Preview {:singular}</a>',
+			'draft_updated'			=> '{:singular} draft updated. <a href="{:preview}" target="_blank">Preview {:singular}</a>',
 		];
 		
 		static protected $__rewrite =
@@ -98,7 +123,7 @@
 		static protected $__defaults =
 		[
 			'labels'			=> [],
-			'description'			=> '',
+			'description'			=> 'Holds your {:plural} and {:singular} specific data.',
 			'public'			=> TRUE,
 			'exclude_from_search'		=> FALSE,
 			'publicly_queryable'		=> TRUE,
@@ -141,7 +166,7 @@
 			'_edit_link'			=> 'post.php?post=%d'
 		];
 		
-		protected $__name	=
+		protected $__name =
 		[
 			'singular'			=> '',
 			'plural'			=> '',
@@ -151,36 +176,20 @@
 		
 		protected $__config	= [];
 		
-		protected $__actions	=
-		[
-			__const_Action::INIT		=> NULL,
-			__const_Action::CONTEXTUAL_HELP	=> NULL
-		];
 		
-		protected $__filters	=
-		[
-			'post_updated_messages'		=> NULL,
-		];
+		protected $__update	= NULL;
+		protected $__help	= NULL;
 		
 		function __construct($__name, array $__config)
 		{
-			$loc = &static::$__patterns;
-			
-			$__config += ['description' => $loc['description']] + static::$__defaults;
+			$__config += static::$__defaults;
 			
 			if(is_array($__config['rewrite']))
 				$__config['rewrite'] += static::$__rewrite;
 				
 			if(is_array($__config['labels']))
-				$__config['labels'] += $loc['labels'];
-			
-			foreach($__config['labels'] as $k => &$v)
-				if(is_array($v))
-					$v = join(PHP_EOL, $v);
-			
-			if(is_array($__config['description']))
-				$__config['description'] = join(PHP_EOL, $__config['description']);
-			
+				$__config['labels'] += static::$__labels;
+				
 			if(is_integer($__config['supports']))
 			{
 				$_ = [];
@@ -220,32 +229,10 @@
 					$_ = String::insert($_, $this->__name);
 			}
 			
-			$this->__actions[__const_Action::INIT] = new __type_Action([
-				__type_Action::fn => function()
-				{
-					if(FALSE === Inv::postTypeExists($this->__name['slug_plural']))
-						Inv::registerPostType($this->__name['slug_plural'], $this->__config);
-				}
-			]);
-				
-			$this->__actions[__const_Action::CONTEXTUAL_HELP] = new __type_Action([
-				__type_Action::argsNum	=> 3,
-				__type_Action::fn	=> function($__contextualHelp, $__screenId, WP_Screen $__WpScreen) use ($loc)
-				{
-					$d = [];
-					
-					foreach($loc['context'] as $k => $v)
-						$d[String::insert($k, $this->__name)] = String::insert(is_array($v) ? join(PHP_EOL, $v) : $v, $this->__name);
-					
-					return isset($d[$__WpScreen->id])
-						? $d[$__WpScreen->id]
-						: $__contextualHelp;
-				}
-			]);
+			$messages = static::$__messages;
 			
-			$this->__filters['post_updated_messages'] = function($__messages) use ($loc)
+			$this->__update = function($__messages) use (&$messages)
 			{
-				$d	= &$loc['updates'];
 				$post	= Inv::glob('post');
 				$id	= Inv::glob('post_ID');
 				$i	= 0;
@@ -258,33 +245,36 @@
 					'date'		=> Inv::dateI18n('M j, Y @ G:i', strtotime($post->post_date))
 				];
 				
-				$s = function($_) use (&$p)
-				{
-					!is_array($_) ?: $_ = join(PHP_EOL, $_);
-					return String::insert($_, $p);
-				};
-				
 				foreach([
 					'updated_preview', 'custom_field_updated', 'custom_field_deleted',
 					'updated', 'restored', 'published', 'saved', 'submitted', 'sheduled', 'draft_updated'
 				] as $k)
-					$h[++$i] = $s($d[$k]);
+					$h[++$i] = String::insert($messages[$k], $p);
 				
 				return $__messages;
 			};
 		}
 		
+		function tuple()
+		{
+			return $this->__config;
+		}
+		
 		function install()
 		{
-			foreach($this->__filters as $event => $Filter)
+			add_filter( 'post_updated_messages', $this->__update );
+			Hook::action(__const_Action::INIT, function()
 			{
-				add_filter($event, $Filter);
-			}
-			
-			foreach($this->__actions as $event => $Action)
-			{
-				$Action->event = $event;
-				Hook::action($Action);
-			}
+				try
+				{
+					Trace::add(4, __METHOD__.': {:setup}', ['setup' => $this->__config]);
+					if(FALSE === Inv::postTypeExists($this->__name['slug_plural']))
+						Inv::registerPostType($this->__name['slug_plural'], $this->tuple());
+				}
+				catch(\Exception $E)
+				{
+					print $E->toTrack()->asText();
+				}
+			}, 5);
 		}
 	}

@@ -1,6 +1,7 @@
 <?PHP
 	NAMESPACE tri4m\Wp\Wtf;
 	USE tri4m\Wp\__const_Action;
+	USE tri4m\Wp\__type_Action;
 	USE tri4m\Wp\Hook;
 	USE tri4m\Wp\Trace;
 	USE ILLI\Core\Util\Inflector;
@@ -28,6 +29,10 @@
 		
 		protected $__config	= [];
 		protected $__sub	= [];
+		protected $__actions	=
+		[
+			__const_Action::ADMIN_BAR_MENU => NULL
+		];
 		
 		function __construct(array $__config)
 		{
@@ -40,6 +45,15 @@
 				$__config['id'] = Inflector::underscore(Inflector::camelize($__config['id']));
 				
 			$this->__config = $__config;
+			
+			$this->__actions[__const_Action::ADMIN_BAR_MENU] = new __type_Action([
+				__type_Action::argsNum	=> 1,
+				__type_Action::priority	=> 500,
+				__type_Action::fn	=> function(WP_Admin_Bar $__AdminBar)
+				{
+					$__AdminBar->add_menu($this->__config);
+				}
+			]);
 		}
 		
 		function add($__config)
@@ -78,12 +92,12 @@
 		}
 		
 		function install()
-		{		
-			Hook::action(__const_Action::ADMIN_BAR_MENU, function(WP_Admin_Bar $__AdminBar)
+		{
+			foreach($this->__actions as $event => $Action)
 			{
-				Trace::add(4, __METHOD__.': {:setup}', ['setup' => $this->__config]);
-				$__AdminBar->add_menu($this->tuple());
-			}, 500);
+				$Action->event = $event;
+				Hook::action($Action);
+			}
 			
 			foreach($this->__sub as $sub)
 				$sub->install();

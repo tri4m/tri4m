@@ -1,7 +1,7 @@
 <?PHP
 	NAMESPACE tri4m\Wp;
-	USE tri4m\Wp\__config_Theme;
 	USE tri4m\Wp\__const_Action;
+	USE tri4m\Wp\__type_Theme;
 	USE tri4m\Wp\Application;
 	USE tri4m\Wp\Error;
 	USE tri4m\Wp\Hook;
@@ -34,7 +34,7 @@
 			'wpCss'		=> '{:wp}/css',
 		];
 		
-		function __construct(__config_Theme $__Setup)
+		function __construct(__type_Theme $__Setup)
 		{
 			if(Trap::isRunning())
 				Trap::stop();
@@ -64,7 +64,6 @@
 				{
 					try
 					{
-						print $foo;
 						static::$__Application->$m();
 					}
 					catch(\Exception $E)
