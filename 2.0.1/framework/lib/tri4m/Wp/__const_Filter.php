@@ -28,7 +28,7 @@
 			/**
 			 * @since 3.1
 			 */
-			CONST ADD_{$META_TYPE}_METADATA				= 'add_{$meta_type}_metadata';
+			CONST ADD_META_TYPE_METADATA__				= 'add_{:metaType}_metadata';
 		#::
 		#:Admin:
 			/**
@@ -145,7 +145,7 @@
 			/**
 			 * @since 2.5
 			 */
-			CONST ASYNC_UPLOAD_{$TYPE}				= 'async_upload_{$type}';
+			CONST ASYNC_UPLOAD_TYPE__				= 'async_upload_{:type}';
 		#::
 		#:Atom:
 			/**
@@ -231,7 +231,7 @@
 			/**
 			 * @since 3.3
 			 */
-			CONST AUTH_POST_META_{$META_KEY}			= 'auth_post_meta_{$meta_key}';
+			CONST AUTH_POST_META_META_KEY__				= 'auth_post_meta_{:metaKey}';
 			
 			/**
 			 * @since 2.9
@@ -281,7 +281,7 @@
 			/**
 			 * @since 3.5
 			 */
-			CONST BLOG_OPTION_{$OPTION}				= 'blog_option_{$option}';
+			CONST BLOG_OPTION_OPTION__				= 'blog_option_{:option}';
 			
 			/**
 			 * @since 3.0
@@ -298,13 +298,13 @@
 			/**
 			 * @since 3.2
 			 */
-			CONST BROWSE-HAPPY-NOTICE				= 'browse-happy-notice';
+			CONST BROWSE_HAPPY_NOTICE				= 'browse-happy-notice';
 		#::
 		#:Bulk:
 			/**
 			 * @since 3.5
 			 */
-			CONST BULK_ACTIONS-{$THIS->SCREEN->ID}			= 'bulk_actions-{$this->screen->id}';
+			CONST BULK_ACTIONS_SCREEN_ID__				= 'bulk_actions-{:screenId}';
 		#::
 		#:Cancel:
 			/**
@@ -492,7 +492,7 @@
 			/**
 			 * @since 3.0
 			 */
-			CONST COMMENT_FORM_FIELD_{$NAME}			= 'comment_form_field_{$name}';
+			CONST COMMENT_FORM_FIELD_NAME__				= 'comment_form_field_{:name}';
 			
 			/**
 			 * @since 3.0
@@ -632,7 +632,7 @@
 			/**
 			 * @since 3.4
 			 */
-			CONST CURRENT_THEME_SUPPORTS-{$FEATURE}			= 'current_theme_supports-{$feature}';
+			CONST CURRENT_THEME_SUPPORTS_FEATURE__			= 'current_theme_supports-{:feature}';
 		#::
 		#:Customize:
 			/**
@@ -643,17 +643,17 @@
 			/**
 			 * @since 3.4
 			 */
-			CONST CUSTOMIZE_SANITIZE_JS_{$THIS->ID}			= 'customize_sanitize_js_{$this->id}';
+			CONST CUSTOMIZE_SANITIZE_JS_ID__			= 'customize_sanitize_js_{:id}';
 			
 			/**
 			 * @since 3.4
 			 */
-			CONST CUSTOMIZE_SANITIZE_{$THIS->ID}			= 'customize_sanitize_{$this->id}';
+			CONST CUSTOMIZE_SANITIZE_ID__				= 'customize_sanitize_{:id}';
 			
 			/**
 			 * @since 3.4
 			 */
-			CONST CUSTOMIZE_VALUE_{$THIS->ID_DATA[BASE]}		= 'customize_value_{$this->id_data[base]}';
+			CONST CUSTOMIZE_VALUE_ID_DATA_BASE__			= 'customize_value_{:idDataBase}';
 		#::
 		#:Custom:
 			/**
@@ -774,12 +774,12 @@
 			/**
 			 * @since 3.4
 			 */
-			CONST DEFAULT_OPTION_{$OPTION}				= 'default_option_{$option}';
+			CONST DEFAULT_OPTION_OPTION__				= 'default_option_{:option}';
 			
 			/**
 			 * @since 3.4
 			 */
-			CONST DEFAULT_SITE_OPTION_{$OPTION}			= 'default_site_option_{$option}';
+			CONST DEFAULT_SITE_OPTION_OPTION__			= 'default_site_option_{:option}';
 			
 			/**
 			 * @since 1.5.2
@@ -795,7 +795,7 @@
 			/**
 			 * @since 3.1
 			 */
-			CONST DELETE_{$META_TYPE}_METADATA			= 'delete_{$meta_type}_metadata';
+			CONST DELETE_META_TYPE_METADATA__			= 'delete_{:metaType}_metadata';
 		#::
 		#:Deprecated:
 			/**
@@ -916,7 +916,7 @@
 			/**
 			 * @since 2.3
 			 */
-			CONST EDIT_POST_{$FIELD}				= 'edit_post_{$field}';
+			CONST EDIT_POST_FIELD__					= 'edit_post_{:field}';
 			
 			/**
 			 * @since 3.1
@@ -941,22 +941,22 @@
 			/**
 			 * @since 2.3
 			 */
-			CONST EDIT_TERM_{$FIELD}				= 'edit_term_{$field}';
+			CONST EDIT_TERM_FIELD__					= 'edit_term_{:field}';
 			
 			/**
 			 * @since 2.9
 			 */
-			CONST EDIT_USER_{$FIELD}				= 'edit_user_{$field}';
+			CONST EDIT_USER_FIELD__					= 'edit_user_{:field}';
 			
 			/**
 			 * @since 2.3
 			 */
-			CONST EDIT_{$FIELD}					= 'edit_{$field}';
+			CONST EDIT_FIELD__					= 'edit_{:field}';
 			
 			/**
 			 * @since 2.3
 			 */
-			CONST EDIT_{$TAXONOMY}_{$FIELD}				= 'edit_{$taxonomy}_{$field}';
+			CONST EDIT_TAXONOMY_FIELD__				= 'edit_{:taxonomy}_{:field}';
 		#::
 		#:Embed:
 			/**
@@ -1075,7 +1075,7 @@
 			/**
 			 * @since 2.9
 			 */
-			CONST EXTRA_{$CONTEXT}_HEADERS				= 'extra_{$context}_headers';
+			CONST EXTRA_CONTEXT_HEADERS__				= 'extra_{:context}_headers';
 		#::
 		#:Feed:
 			/**
@@ -1500,7 +1500,7 @@
 			/**
 			 * @since 2.8
 			 */
-			CONST GET_THE_AUTHOR_{$FIELD}				= 'get_the_author_{$field}';
+			CONST GET_THE_AUTHOR_FIELD__				= 'get_the_author_{:field}';
 			
 			/**
 			 * @since 3.1
@@ -1520,7 +1520,7 @@
 			/**
 			 * @since 2.5
 			 */
-			CONST GET_THE_GENERATOR_{$TYPE}				= 'get_the_generator_{$type}';
+			CONST GET_THE_GENERATOR_TYPE__				= 'get_the_generator_{:type}';
 			
 			/**
 			 * @since 1.5.2
@@ -1570,7 +1570,7 @@
 			/**
 			 * @since 2.5
 			 */
-			CONST GET_USER_OPTION_{$OPTION}				= 'get_user_option_{$option}';
+			CONST GET_USER_OPTION_OPTION__				= 'get_user_option_{:option}';
 			
 			/**
 			 * @since 2.2
@@ -1580,27 +1580,27 @@
 			/**
 			 * @since 2.5
 			 */
-			CONST GET_{$ADJACENT}_POST_JOIN				= 'get_{$adjacent}_post_join';
+			CONST GET_ADJACENT_POST_JOIN__				= 'get_{:adjacent}_post_join';
 			
 			/**
 			 * @since 2.5
 			 */
-			CONST GET_{$ADJACENT}_POST_SORT				= 'get_{$adjacent}_post_sort';
+			CONST GET_ADJACENT_POST_SORT__				= 'get_{:adjacent}_post_sort';
 			
 			/**
 			 * @since 2.5
 			 */
-			CONST GET_{$ADJACENT}_POST_WHERE			= 'get_{$adjacent}_post_where';
+			CONST GET_ADJACENT_POST_WHERE__				= 'get_{:adjacent}_post_where';
 			
 			/**
 			 * @since 3.1
 			 */
-			CONST GET_{$META_TYPE}_METADATA				= 'get_{$meta_type}_metadata';
+			CONST GET_META_TYPE_METADATA__				= 'get_{:metaType}_metadata';
 			
 			/**
 			 * @since 2.3
 			 */
-			CONST GET_{$TAXONOMY}					= 'get_{$taxonomy}';
+			CONST GET_TAXONOMY__					= 'get_{:taxonomy}';
 		#::
 		#:Global:
 			/**
@@ -2092,7 +2092,7 @@
 			/**
 			 * @since 3.5
 			 */
-			CONST MANAGE_TAXONOMIES_FOR_{$POST_TYPE}_COLUMNS	= 'manage_taxonomies_for_{$post_type}_columns';
+			CONST MANAGE_TAXONOMIES_FOR_POST_TYPE_COLUMNS__		= 'manage_taxonomies_for_{:postType}_columns';
 			
 			/**
 			 * @since 2.8
@@ -2102,22 +2102,22 @@
 			/**
 			 * @since 3.0
 			 */
-			CONST MANAGE_{$POST_TYPE}_POSTS_COLUMNS			= 'manage_{$post_type}_posts_columns';
+			CONST MANAGE_POST_TYPE_POSTS_COLUMNS__			= 'manage_{:postType}_posts_columns';
 			
 			/**
 			 * @since 3.0
 			 */
-			CONST MANAGE_{$SCREEN->ID}_COLUMNS			= 'manage_{$screen->id}_columns';
+			CONST MANAGE_SCREEN_ID_COLUMNS__			= 'manage_{:screenId}_columns';
 			
 			/**
 			 * @since 3.5
 			 */
-			CONST MANAGE_{$THIS->SCREEN->ID}_SORTABLE_COLUMNS	= 'manage_{$this->screen->id}_sortable_columns';
+			CONST MANAGE_SCREEN_ID_SORTABLE_COLUMNS__		= 'manage_{:screenId}_sortable_columns';
 			
 			/**
 			 * @since 3.5
 			 */
-			CONST MANAGE_{$THIS->SCREEN->TAXONOMY}_CUSTOM_COLUMN	= 'manage_{$this->screen->taxonomy}_custom_column';
+			CONST MANAGE_SCREEN_TAXONOMY_CUSTOM_COLUMN__		= 'manage_{:screenTaxonomy}_custom_column';
 		#::
 		#:Map:
 			/**
@@ -2309,7 +2309,7 @@
 			/**
 			 * @since 3.2
 			 */
-			CONST NAV_MENU_ITEMS_{$POST_TYPE_NAME}			= 'nav_menu_items_{$post_type_name}';
+			CONST NAV_MENU_ITEMS_POST_TYPE_NAME__			= 'nav_menu_items_{:postTypeName}';
 			
 			/**
 			 * @since 3.1
@@ -2335,7 +2335,7 @@
 			/**
 			 * @since 3.5
 			 */
-			CONST NETWORK_SITES_UPDATED_MESSAGE_{$UPDATED}		= 'network_sites_updated_message_{$updated}';
+			CONST NETWORK_SITES_UPDATED_MESSAGE_UPDATED__		= 'network_sites_updated_message_{:updated}';
 			
 			/**
 			 * @since 3.0
@@ -2457,12 +2457,12 @@
 			/**
 			 * @since 3.2
 			 */
-			CONST OPTION_PAGE_CAPABILITY_{$OPTION_PAGE}		= 'option_page_capability_{$option_page}';
+			CONST OPTION_PAGE_CAPABILITY_OPTION_PAGE__		= 'option_page_capability_{:optionPage}';
 			
 			/**
 			 * @since 3.0
 			 */
-			CONST OPTION_{$OPTION}					= 'option_{$option}';
+			CONST OPTION_OPTION__					= 'option_{:option}';
 		#::
 		#:Override:
 			/**
@@ -2597,7 +2597,7 @@
 			/**
 			 * @since 3.2
 			 */
-			CONST POSTBOX_CLASSES_{$PAGE}_{$ID}			= 'postbox_classes_{$page}_{$id}';
+			CONST POSTBOX_CLASSES_PAGE_ID__				= 'postbox_classes_{:page}_{:id}';
 		#::
 		#:PostMeta:
 			/**
@@ -2815,7 +2815,7 @@
 			/**
 			 * @since 3.5
 			 */
-			CONST POST_TYPE_LABELS_{$POST_TYPE}			= 'post_type_labels_{$post_type}';
+			CONST POST_TYPE_LABELS_POST_TYPE__			= 'post_type_labels_{:postType}';
 			
 			/**
 			 * @since 3.0
@@ -2830,7 +2830,7 @@
 			/**
 			 * @since 2.3
 			 */
-			CONST POST_{$FIELD}					= 'post_{$field}';
+			CONST POST_FIELD					= 'post_{:field}';
 		#::
 		#:Prepend:
 			/**
@@ -2865,7 +2865,7 @@
 			/**
 			 * @since 3.0
 			 */
-			CONST PRE_ADD_SITE_OPTION_{$OPTION}			= 'pre_add_site_option_{$option}';
+			CONST PRE_ADD_SITE_OPTION_OPTION__			= 'pre_add_site_option_{:option}';
 			
 			/**
 			 * @since 2.0.11
@@ -3000,7 +3000,7 @@
 			/**
 			 * @since 3.0
 			 */
-			CONST PRE_OPTION_{$OPTION}				= 'pre_option_{$option}';
+			CONST PRE_OPTION_OPTION__				= 'pre_option_{:option}';
 			
 			/**
 			 * @since 3.0
@@ -3010,7 +3010,7 @@
 			/**
 			 * @since 2.3
 			 */
-			CONST PRE_POST_{$FIELD}					= 'pre_post_{$field}';
+			CONST PRE_POST_FIELD__					= 'pre_post_{:field}';
 			
 			/**
 			 * @since 2.5
@@ -3020,42 +3020,42 @@
 			/**
 			 * @since 3.0
 			 */
-			CONST PRE_SET_SITE_TRANSIENT_{$TRANSIENT}		= 'pre_set_site_transient_{$transient}';
+			CONST PRE_SET_SITE_TRANSIENT_TRANSIENT__		= 'pre_set_site_transient_{:transient}';
 			
 			/**
 			 * @since 3.0
 			 */
-			CONST PRE_SET_TRANSIENT_{$TRANSIENT}			= 'pre_set_transient_{$transient}';
+			CONST PRE_SET_TRANSIENT_TRANSIENT__			= 'pre_set_transient_{:transient}';
 			
 			/**
 			 * @since 3.0
 			 */
-			CONST PRE_SITE_OPTION_{$OPTION}				= 'pre_site_option_{$option}';
+			CONST PRE_SITE_OPTION_OPTION__				= 'pre_site_option_{:option}';
 			
 			/**
 			 * @since 2.9
 			 */
-			CONST PRE_SITE_TRANSIENT_{$TRANSIENT}			= 'pre_site_transient_{$transient}';
+			CONST PRE_SITE_TRANSIENT_TRANSIENT__			= 'pre_site_transient_{:transient}';
 			
 			/**
 			 * @since 2.3
 			 */
-			CONST PRE_TERM_{$FIELD}					= 'pre_term_{$field}';
+			CONST PRE_TERM_FIELD__					= 'pre_term_{:field}';
 			
 			/**
 			 * @since 2.8
 			 */
-			CONST PRE_TRANSIENT_{$TRANSIENT}			= 'pre_transient_{$transient}';
+			CONST PRE_TRANSIENT_TRANSIENT__				= 'pre_transient_{:transient}';
 			
 			/**
 			 * @since 3.0
 			 */
-			CONST PRE_UPDATE_OPTION_{$OPTION}			= 'pre_update_option_{$option}';
+			CONST PRE_UPDATE_OPTION_OPTION__			= 'pre_update_option_{:option}';
 			
 			/**
 			 * @since 3.0
 			 */
-			CONST PRE_UPDATE_SITE_OPTION_{$OPTION}			= 'pre_update_site_option_{$option}';
+			CONST PRE_UPDATE_SITE_OPTION_OPTION__			= 'pre_update_site_option_{:option}';
 			
 			/**
 			 * @since 2.1
@@ -3115,17 +3115,17 @@
 			/**
 			 * @since 2.9
 			 */
-			CONST PRE_USER_{$FIELD}					= 'pre_user_{$field}';
+			CONST PRE_USER_FIELD__					= 'pre_user_{:field}';
 			
 			/**
 			 * @since 2.3
 			 */
-			CONST PRE_{$FIELD}					= 'pre_{$field}';
+			CONST PRE_FIELD__					= 'pre_{:field}';
 			
 			/**
 			 * @since 2.3
 			 */
-			CONST PRE_{$TAXONOMY}_{$FIELD}				= 'pre_{$taxonomy}_{$field}';
+			CONST PRE_TAXONOMY_FIELD__				= 'pre_{:taxonomy}_{:field}';
 		#::
 		#:Print:
 			/**
@@ -3376,7 +3376,7 @@
 			/**
 			 * @since 2.3
 			 */
-			CONST SANITIZE_OPTION_{$OPTION}				= 'sanitize_option_{$option}';
+			CONST SANITIZE_OPTION_OPTION__				= 'sanitize_option_{:option}';
 			
 			/**
 			 * @since 2.9
@@ -3396,7 +3396,7 @@
 			/**
 			 * @since 3.3
 			 */
-			CONST SANITIZE_{$META_TYPE}_META_{$META_KEY}		= 'sanitize_{$meta_type}_meta_{$meta_key}';
+			CONST SANITIZE_META_TYPE_META_KEY__			= 'sanitize_{:metaType}_meta_{:metaKey}';
 		#::
 		#:Schedule:
 			/**
@@ -3467,7 +3467,7 @@
 			/**
 			 * @since 2.8
 			 */
-			CONST SET-SCREEN-OPTION					= 'set-screen-option';
+			CONST SET_SCREEN_OPTION					= 'set-screen-option';
 			
 			/**
 			 * @since 3.4
@@ -3569,12 +3569,12 @@
 			/**
 			 * @since 3.0
 			 */
-			CONST SITE_OPTION_{$OPTION}				= 'site_option_{$option}';
+			CONST SITE_OPTION_OPTION__				= 'site_option_{:option}';
 			
 			/**
 			 * @since 2.9
 			 */
-			CONST SITE_TRANSIENT_{$TRANSIENT}			= 'site_transient_{$transient}';
+			CONST SITE_TRANSIENT_TRANSIENT__			= 'site_transient_{:transient}';
 			
 			/**
 			 * @since 2.7
@@ -3757,7 +3757,7 @@
 			/**
 			 * @since 2.5
 			 */
-			CONST TERM_LINKS-{$TAXONOMY}				= 'term_links-{$taxonomy}';
+			CONST TERM_LINKS_TAXONOMY__				= 'term_links-{:taxonomy}';
 			
 			/**
 			 * @since 2.5
@@ -3767,12 +3767,12 @@
 			/**
 			 * @since 2.3
 			 */
-			CONST TERM_{$FIELD}					= 'term_{$field}';
+			CONST TERM_FIELD__					= 'term_{:field}';
 			
 			/**
 			 * @since 2.3
 			 */
-			CONST TERM_{$FIELD}_RSS					= 'term_{$field}_rss';
+			CONST TERM_FIELD_RSS__					= 'term_{:field}_rss';
 		#::
 		#:Temes:
 			/**
@@ -3799,7 +3799,7 @@
 			/**
 			 * @since 3.5
 			 */
-			CONST THEME_ACTION_LINKS_{$STYLESHEET}			= 'theme_action_links_{$stylesheet}';
+			CONST THEME_ACTION_LINKS_STYLESHEET			= 'theme_action_links_{:stylesheet}';
 			
 			/**
 			 * @since 3.4
@@ -3814,7 +3814,7 @@
 			/**
 			 * @since 2.2
 			 */
-			CONST THEME_MOD_{$NAME}					= 'theme_mod_{$name}';
+			CONST THEME_MOD_NAME__					= 'theme_mod_{:name}';
 			
 			/**
 			 * @since 1.5.2
@@ -3845,7 +3845,7 @@
 			/**
 			 * @since 2.8
 			 */
-			CONST THE_AUTHOR_{$FIELD}				= 'the_author_{$field}';
+			CONST THE_AUTHOR_FIELD__				= 'the_author_{:field}';
 			
 			/**
 			 * @since 1.2.1
@@ -4061,7 +4061,7 @@
 			/**
 			 * @since 2.8
 			 */
-			CONST TRANSIENT_{$TRANSIENT}				= 'transient_{$transient}';
+			CONST TRANSIENT_TRANSIENT__				= 'transient_{:transient}';
 		#::
 		#:Twenty:
 			/**
@@ -4200,7 +4200,7 @@
 			/**
 			 * @since 3.1
 			 */
-			CONST UPDATE_{$META_TYPE}_METADATA			= 'update_{$meta_type}_metadata';
+			CONST UPDATE_META_TYPE_METADATA				= 'update_{:metaType}_metadata';
 		#::
 		#:Upgrader:
 			/**
@@ -4299,12 +4299,12 @@
 			/**
 			 * @since 2.9
 			 */
-			CONST USER_{$FIELD}					= 'user_{$field}';
+			CONST USER_FIELD__					= 'user_{:field}';
 			
 			/**
 			 * @since 2.9
 			 */
-			CONST USER_{$NAME}_LABEL				= 'user_{$name}_label';
+			CONST USER_NAME_LABEL__					= 'user_{:name}_label';
 		#::
 		#:Use:
 			/**
@@ -4347,7 +4347,7 @@
 			/**
 			 * @since 3.5
 			 */
-			CONST VIEWS_{$THIS->SCREEN->ID}				= 'views_{$this->screen->id}';
+			CONST VIEWS_SCREEN_ID__					= 'views_{:screenId}';
 		#::
 		#:Walker:
 			/**
@@ -4847,7 +4847,7 @@
 			/**
 			 * @since 3.0
 			 */
-			CONST WP_NAV_MENU_{$MENU->SLUG}_ITEMS			= 'wp_nav_menu_{$menu->slug}_items';
+			CONST WP_NAV_MENU_SLUG_ITEMS__				= 'wp_nav_menu_{:menuSlug}_items';
 			
 			/**
 			 * @since 3.1
@@ -5126,7 +5126,7 @@
 			/**
 			 * @since 2.6
 			 */
-			CONST _WP_POST_REVISION_FIELD_{$FIELD}			= '_wp_post_revision_field_{$field}';
+			CONST _WP_POST_REVISION_FIELD_FIELD__			= '_wp_post_revision_field_{:field}';
 			
 			/**
 			 * @since 2.9
@@ -5137,106 +5137,106 @@
 			/**
 			 * @since 3.5
 			 */
-			CONST {$ADJACENT}_IMAGE_LINK				= '{$adjacent}_image_link';
+			CONST ADJACENT_IMAGE_LINK__				= '{:adjacent}_image_link';
 			
 			/**
 			 * @since 2.6
 			 */
-			CONST {$ADJACENT}_POST_LINK				= '{$adjacent}_post_link';
+			CONST ADJACENT_POST_LINK__				= '{:adjacent}_post_link';
 			
 			/**
 			 * @since 2.8
 			 */
-			CONST {$ADJACENT}_POST_REL_LINK				= '{$adjacent}_post_rel_link';
+			CONST ADJACENT_POST_REL_LINK__				= '{:adjacent}_post_rel_link';
 			
 			/**
 			 * @since 2.8
 			 */
-			CONST {$BOUNDARY}_POST_REL_LINK				= '{$boundary}_post_rel_link';
+			CONST BOUNDARY_POST_REL_LINK__				= '{:boundary}_post_rel_link';
 			
 			/**
 			 * @since 2.3
 			 */
-			CONST {$FIELD_NO_PREFIX}_EDIT_PRE			= '{$field_no_prefix}_edit_pre';
+			CONST FIELD_NO_PREFIX_EDIT_PRE__			= '{:fieldNoPrefix}_edit_pre';
 			
 			/**
 			 * @since 2.3
 			 */
-			CONST {$FIELD_NO_PREFIX}_SAVE_PRE			= '{$field_no_prefix}_save_pre';
+			CONST FIELD_NO_PREFIX_SAVE_PRE__			= '{:fieldNoPrefix}_save_pre';
 			
 			/**
 			 * @since 2.3
 			 */
-			CONST {$FIELD}						= '{$field}';
+			CONST FIELD__						= '{:field}';
 			
 			/**
 			 * @since 2.3
 			 */
-			CONST {$FIELD}_PRE					= '{$field}_pre';
+			CONST FIELD_PRE__					= '{:field}_pre';
 			
 			/**
 			 * @since 2.9
 			 */
-			CONST {$OPTION}						= '{$option}';
+			CONST OPTION__						= '{:option}';
 			
 			/**
 			 * @since 3.1
 			 */
-			CONST {$PERMASTRUCTNAME}_REWRITE_RULES			= '{$permastructname}_rewrite_rules';
+			CONST PERMASTRUCTNAME_REWRITE_RULES__			= '{:permaStructName}_rewrite_rules';
 			
 			/**
 			 * @since 3.0
 			 */
-			CONST {$PER_PAGE}					= '{$per_page}';
+			CONST PER_PAGE__					= '{:perPage}';
 			
 			/**
 			 * @since 3.1
 			 */
-			CONST {$PREFIX}PLUGIN_ACTION_LINKS			= '{$prefix}plugin_action_links';
+			CONST PREFIX_PLUGIN_ACTION_LINKS__			= '{:prefix}plugin_action_links';
 			
 			/**
 			 * @since 3.1
 			 */
-			CONST {$PREFIX}PLUGIN_ACTION_LINKS_{$PLUGIN_FILE}	= '{$prefix}plugin_action_links_{$plugin_file}';
+			CONST PREFIX_PLUGIN_ACTION_LINKS_PLUGIN_FILE__		= '{:prefix}plugin_action_links_{:pluginFile}';
 			
 			/**
 			 * @since 1.2.1
 			 */
-			CONST {$TAG}						= '{$tag}';
+			CONST TAG__						= '{:tag}';
 			
 			/**
 			 * @since 3.0
 			 */
-			CONST {$TAXONOMY}_ROW_ACTIONS				= '{$taxonomy}_row_actions';
+			CONST TAXONOMY_ROW_ACTIONS__				= '{:taxonomy}_row_actions';
 			
 			/**
 			 * @since 2.3
 			 */
-			CONST {$TAXONOMY}_{$FIELD_RSS}				= '{$taxonomy}_{$field_rss}';
+			CONST TAXONOMY_FIELD_RSS__				= '{:taxonomy}_{:fieldRss}';
 			
 			/**
 			 * @since 2.3
 			 */
-			CONST {$TAXONOMY}_{$FIELD}				= '{$taxonomy}_{$field}';
+			CONST TAXONOMY_FIELD__					= '{:taxonomy}_{:field}';
 			
 			/**
 			 * @since 2.5
 			 */
-			CONST {$TAXONOMY}_{$FIELD}_RSS				= '{$taxonomy}_{$field}_rss';
+			CONST TAXONOMY_FIELD_RSS__				= '{:taxonomy}_{:field}_rss';
 			
 			/**
 			 * @since 3.3
 			 */
-			CONST {$TYPE}_SEND_TO_EDITOR_URL			= '{$type}_send_to_editor_url';
+			CONST TYPE_SEND_TO_EDITOR_URL__				= '{:type}_send_to_editor_url';
 			
 			/**
 			 * @since 1.5.2
 			 */
-			CONST {$TYPE}_TEMPLATE					= '{$type}_template';
+			CONST TYPE_TEMPLATE__					= '{:type}_template';
 			
 			/**
 			 * @since 3.0
 			 */
-			CONST {$TYPE}_UPLOAD_IFRAME_SRC				= '{$type}_upload_iframe_src';
+			CONST TYPE_UPLOAD_IFRAME_SRC__				= '{:type}_upload_iframe_src';
 		#::
 	}
