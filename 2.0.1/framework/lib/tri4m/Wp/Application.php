@@ -14,27 +14,27 @@
 		{
 			Trace::add(__METHOD__);
 			
-			Hook::call(new __type_Call([
+			Hook::enqueue(new __type_Call([
 				__type_Call::fn		=> ['tri4m\Wp\Inv', 'addThemeSupport'],
 				__type_Call::arguments	=> ['post-formats', ['aside', 'gallery', 'link', 'image', 'quote', 'status', 'audio', 'video', 'chat']]
 			]));
 			
-			Hook::call(new __type_Call([
+			Hook::enqueue(new __type_Call([
 				__type_Call::fn		=> ['tri4m\Wp\Inv', 'addThemeSupport'],
 				__type_Call::arguments	=> ['post-thumbnails']
 			]));
 			
-			Hook::call(new __type_Call([
+			Hook::enqueue(new __type_Call([
 				__type_Call::fn		=> ['tri4m\Wp\Inv', 'addThemeSupport'],
 				__type_Call::arguments	=> ['automatic-feed-links']
 			]));
 			
-			Hook::call(new __type_Call([
+			Hook::enqueue(new __type_Call([
 				__type_Call::fn		=> ['tri4m\Wp\Inv', 'addThemeSupport'],
 				__type_Call::arguments	=> [720, 240, true]
 			]));
 			
-			Hook::call(new __type_Call([
+			Hook::enqueue(new __type_Call([
 				__type_Call::fn		=> ['tri4m\Wp\Inv', 'addEditorStyle']
 			]));
 				

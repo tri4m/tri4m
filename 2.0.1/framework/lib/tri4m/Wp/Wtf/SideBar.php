@@ -60,7 +60,7 @@
 			foreach($this->__actions as $event => $Action)
 			{
 				$Action->event = $event;
-				Hook::action($Action);
+				Hook::enqueue($Action);
 			}
 		}
 	}
