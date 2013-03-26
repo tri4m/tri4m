@@ -1,24 +1,14 @@
 <?PHP
 	namespace bootload;
 	
-	USE	Invoke;
+	USE	Invoke, Server;
 		
 	USE	Exception,
 		ErrorException,
 		ILLI\Core\Std\Throwable;
 	
-	try
-	{
-		require_once dirname(__DIR__).'/ILLI/bootload.php';
-		
-		Invoke\Init::add('tri4m', '2.0.1', __DIR__);
-		Invoke\Init::run();
-	}
-	catch(Throwable $T)
-	{
-		print $T->toTrack()->asText();
-	}
-	catch(Exception $E)
-	{
-		var_dump($E);
-	}
+	require_once dirname(__DIR__).'/ILLI/bootload.php';
+	Server\Init::run(7);
+	Invoke\Init::add('tri4m', '2.0.1', __DIR__);
+	Invoke\Init::run();
+	

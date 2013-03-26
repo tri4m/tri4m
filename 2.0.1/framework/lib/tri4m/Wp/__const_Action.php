@@ -2849,4 +2849,8 @@
 			 */
 			CONST TAXONOMY_PRE_EDIT_FORM__				= '{:taxonomy}_pre_edit_form';
 		#::
+		
+		#:OTHER:
+			CONST CONTEXTUAL_HELP					= 'contextual_help';
+		#::
 	}
