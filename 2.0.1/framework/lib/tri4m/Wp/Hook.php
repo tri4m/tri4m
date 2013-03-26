@@ -25,14 +25,16 @@
 			{
 				Trace::add(1, __METHOD__.'[{:case}]', ['case' => $case]);
 				switch($case):
-					case self::CALL:
-						foreach($hook as $hash => $fn)
-							$fn();
-						break;
 					case self::ACTION:
 						foreach($hook as $event => $do)
 							foreach($do as $hash => $fn)
 								$fn();
+						break;
+					case self::CALL:
+						foreach($hook as $hash => $fn)
+							$fn();
+						break;
+					case self::FILTER:
 						break;
 				endswitch;
 			}
@@ -43,8 +45,6 @@
 			$hash = spl_object_hash($__T);
 			
 			switch(TRUE):
-				case $__T instanceOf __type_Filter:
-					break;
 				case $__T instanceOf __type_Action:
 					static::$__hooked[self::ACTION][$__T->event][$hash] = new __type_Hook([
 						__type_Hook::handle => function() use (&$__T)
@@ -102,6 +102,8 @@
 								return Invoke::emit($__T->fn[0], $__T->fn[1], $__T->arguments);
 						}
 					]);
+					break;
+				case $__T instanceOf __type_Filter:
 					break;
 			endswitch;
 		}
