@@ -4355,7 +4355,7 @@
 			 */
 			CONST WALKER_NAV_MENU_START_EL				= 'walker_nav_menu_start_el';
 		#::
-		#:Whitelist :
+		#:Whitelist:
 			/**
 			 * @since 2.7
 			 */
