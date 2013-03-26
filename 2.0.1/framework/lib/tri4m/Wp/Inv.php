@@ -1,7 +1,7 @@
 <?PHP
 	NAMESPACE tri4m\Wp;
-	USE ILLI\Core\Std\Invoke;
 	USE ILLI\Core\Util\Inflector;
+	USE ILLI\Core\Std\Invoke;
 	
 	CLASS Inv
 	{
@@ -14,9 +14,9 @@
 		{
 			return function_exists($__name)
 				? Invoke::emitFunction($__name, $__parameters)
-				: function_exists($__name = Inflector::underscore(Inflector::camelize($__name)))
+				: (function_exists($__name = Inflector::underscore(Inflector::camelize($__name)))
 					? Invoke::emitFunction($__name, $__parameters)
-					: NULL;
+					: NULL);
 		}
 		
 		static function glob($__name)
