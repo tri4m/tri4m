@@ -1,7 +1,9 @@
 <?PHP
 	NAMESPACE tri4m\Wp\Wtf;
 	USE tri4m\Wp\__const_Action;
+	USE tri4m\Wp\__const_Filter;
 	USE tri4m\Wp\__type_Action;
+	USE tri4m\Wp\__type_Filter;
 	USE tri4m\Wp\Hook;
 	USE tri4m\Wp\Inv;
 	USE tri4m\Wp\Trace;
@@ -159,7 +161,7 @@
 		
 		protected $__filters	=
 		[
-			'post_updated_messages'		=> NULL,
+			__const_Filter::POST_UPDATED_MESSAGES	=> NULL,
 		];
 		
 		function __construct($__name, array $__config)
@@ -227,7 +229,7 @@
 						Inv::registerPostType($this->__name['slug_plural'], $this->__config);
 				}
 			]);
-				
+			
 			$this->__actions[__const_Action::CONTEXTUAL_HELP] = new __type_Action([
 				__type_Action::argsNum	=> 3,
 				__type_Action::fn	=> function($__contextualHelp, $__screenId, WP_Screen $__WpScreen) use ($loc)
@@ -237,48 +239,46 @@
 					foreach($loc['context'] as $k => $v)
 						$d[String::insert($k, $this->__name)] = String::insert(is_array($v) ? join(PHP_EOL, $v) : $v, $this->__name);
 					
-					return isset($d[$__WpScreen->id])
+					return TRUE === isset($d[$__WpScreen->id])
 						? $d[$__WpScreen->id]
 						: $__contextualHelp;
 				}
 			]);
 			
-			$this->__filters['post_updated_messages'] = function($__messages) use ($loc)
-			{
-				$d	= &$loc['updates'];
-				$post	= Inv::glob('post');
-				$id	= Inv::glob('post_ID');
-				$i	= 0;
-				$h	= &$__messages[$this->__name['slug_plural']];
-				$p	= $this->__name +
-				[
-					'permalink'	=> Inv::escUrl(Inv::getPermalink($id)),
-					'revision'	=> isset($_GET['revision']) ? Inv::wpPostRevisionTitle(intval($_GET['revision']), FALSE) : NULL,
-					'preview'	=> Inv::escUrl(Inv::addQueryArg('preview', 'true', Inv::getPermalink($id))),
-					'date'		=> Inv::dateI18n('M j, Y @ G:i', strtotime($post->post_date))
-				];
-				
-				$s = function($_) use (&$p)
+			$this->__filters[__const_Filter::POST_UPDATED_MESSAGES] = new __type_Filter([
+				__type_Filter::argsNum	=> 1,
+				__type_Filter::fn	=> function($__messages) use ($loc)
 				{
-					!is_array($_) ?: $_ = join(PHP_EOL, $_);
-					return String::insert($_, $p);
-				};
-				
-				foreach([
-					'updated_preview', 'custom_field_updated', 'custom_field_deleted',
-					'updated', 'restored', 'published', 'saved', 'submitted', 'sheduled', 'draft_updated'
-				] as $k)
-					$h[++$i] = $s($d[$k]);
-				
-				return $__messages;
-			};
+					$d	= &$loc['updates'];
+					$post	= Inv::glob('post');
+					$id	= Inv::glob('post_ID');
+					$i	= 0;
+					$h	= &$__messages[$this->__name['slug_plural']];
+					$p	= $this->__name +
+					[
+						'permalink'	=> Inv::escUrl(Inv::getPermalink($id)),
+						'revision'	=> isset($_GET['revision']) ? Inv::wpPostRevisionTitle(intval($_GET['revision']), FALSE) : NULL,
+						'preview'	=> Inv::escUrl(Inv::addQueryArg('preview', 'true', Inv::getPermalink($id))),
+						'date'		=> Inv::dateI18n('M j, Y @ G:i', strtotime($post->post_date))
+					];
+					
+					foreach([
+						'updated_preview', 'custom_field_updated', 'custom_field_deleted',
+						'updated', 'restored', 'published', 'saved', 'submitted', 'sheduled', 'draft_updated'
+					] as $k)
+						$h[++$i] = String::insert(is_array($d[$k]) ? join(PHP_EOL, $d[$k]) : $d[$k], $p);
+					
+					return $__messages;
+				}
+			]);
 		}
 		
 		function install()
 		{
 			foreach($this->__filters as $event => $Filter)
 			{
-				add_filter($event, $Filter);
+				$Filter->event = $event;
+				Hook::enqueue($Filter);
 			}
 			
 			foreach($this->__actions as $event => $Action)

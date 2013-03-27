@@ -1,7 +1,7 @@
 <?PHP
 	NAMESPACE tri4m\Wp;
 	
-	CLASS __const_Action EXTENDS \ILLI\Core\Std\ConstantCollection
+	CLASS __const_Filter EXTENDS \ILLI\Core\Std\ConstantCollection
 	{
 		#:Additional:
 			/**
@@ -4355,7 +4355,7 @@
 			 */
 			CONST WALKER_NAV_MENU_START_EL				= 'walker_nav_menu_start_el';
 		#::
-		#:Whitelist :
+		#:Whitelist:
 			/**
 			 * @since 2.7
 			 */
@@ -5212,7 +5212,7 @@
 			/**
 			 * @since 2.3
 			 */
-			CONST TAXONOMY_FIELD_RSS__				= '{:taxonomy}_{:fieldRss}';
+			CONST TAXONOMY_FIELDRSS__				= '{:taxonomy}_{:fieldRss}';
 			
 			/**
 			 * @since 2.3
