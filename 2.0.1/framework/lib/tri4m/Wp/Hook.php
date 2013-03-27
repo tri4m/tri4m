@@ -26,6 +26,7 @@
 				Trace::add(1, __METHOD__.'[{:case}]', ['case' => $case]);
 				switch($case):
 					case self::ACTION:
+					case self::FILTER:
 						foreach($hook as $event => $do)
 							foreach($do as $hash => $fn)
 								$fn();
@@ -104,6 +105,41 @@
 					]);
 					break;
 				case $__T instanceOf __type_Filter:
+					static::$__hooked[self::FILTER][$__T->event][$hash] = new __type_Hook([
+						__type_Hook::handle => function() use (&$__T)
+						{
+							Trace::add(2, 'register {:event}@{:prio} {:exec}',
+							[
+								'event'	=> $__T->event,
+								'prio'	=> $__T->priority,
+								'exec'	=> $__T->fn
+							]);
+							
+							Inv::addFilter
+							(
+								$__T->event,
+								function() use (&$__T)
+								{
+									Trace::add(2, 'call {:fn}@{:args}',
+									[
+										'fn'	=> $__T->event,
+										'args'	=> func_get_args()
+									]);
+									
+									if($__T->isVal(__type_Action::fn, __const_Type::SPL_CLOSURE))
+										return Invoke::emitCallable($__T->fn, func_get_args());
+									
+									if($__T->isVal(__type_Action::fn, __const_Type::SPL_FUNCTION))
+										return Invoke::emitFunction($__T->fn, func_get_args());
+									
+									if($__T->isVal(__type_Action::fn, __const_Type::SPL_METHOD))
+										return Invoke::emit($__T->fn[0], $__T->fn[1], func_get_args());
+								},
+								$__T->priority,
+								$__T->argsNum
+							);
+						}
+					]);
 					break;
 			endswitch;
 		}
