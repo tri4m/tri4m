@@ -9,7 +9,6 @@
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Def\ADVTuple;
 	USE ILLI\Core\Std\Invoke;
-	USE Closure;
 	
 	CLASS Hook
 	{

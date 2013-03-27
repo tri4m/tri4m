@@ -5,9 +5,10 @@
 	USE tri4m\Wp\Hook;
 	USE tri4m\Wp\Trace;
 	USE ILLI\Core\Util\Inflector;
+	USE ILLI\Core\Std\Spl\FsbCollection;
 	USE WP_Admin_Bar;
 	
-	CLASS AdminBar
+	CLASS AdminBar EXTENDS \tri4m\Wp\Wtf
 	{
 		static protected $__meta =
 		[
@@ -27,12 +28,12 @@
 			'meta'		=> FALSE
 		];
 		
-		protected $__config	= [];
-		protected $__sub	= [];
 		protected $__actions	=
 		[
 			__const_Action::ADMIN_BAR_MENU => NULL
 		];
+		
+		protected $__Sub	= NULL;
 		
 		function __construct(array $__config)
 		{
@@ -44,7 +45,8 @@
 			if(is_string($__config['id']))
 				$__config['id'] = Inflector::underscore(Inflector::camelize($__config['id']));
 				
-			$this->__config = $__config;
+			$this->__config	= $__config;
+			$this->__Sub	= new FsbCollection(0);
 			
 			$this->__actions[__const_Action::ADMIN_BAR_MENU] = new __type_Action([
 				__type_Action::argsNum	=> 1,
@@ -65,10 +67,8 @@
 					$t = $__config;
 					break;
 				case $__config instanceOf ThemeOptionsPage:
-					$t = $__Page->tuple();
-					break;
 				case $__config instanceOf AdminBar:
-					$t = $__config->tuple();
+					$t = $__config->__config;
 					break;
 			endswitch;
 			
@@ -81,25 +81,14 @@
 			
 			$c = get_called_class();
 			
-			$this->__sub[] = new $c($t);
+			$this->__Sub->add(new $c($t));
 			
 			return $this;
 		}
 		
-		function tuple()
-		{
-			return $this->__config;
-		}
-		
 		function install()
 		{
-			foreach($this->__actions as $event => $Action)
-			{
-				$Action->event = $event;
-				Hook::enqueue($Action);
-			}
-			
-			foreach($this->__sub as $sub)
-				$sub->install();
+			parent::install()->__Sub->invoke('install');
+			return $this;
 		}
 	}

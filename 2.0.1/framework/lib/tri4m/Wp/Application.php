@@ -7,6 +7,7 @@
 	USE tri4m\Wp\Wtf\AdminBar;
 	USE tri4m\Wp\Wtf\PostType;
 	USE tri4m\Wp\Wtf\SideBar;
+	USE tri4m\Wp\Wtf\ThemeOptionsPage;
 	
 	CLASS Application
 	{
@@ -38,13 +39,29 @@
 				__type_Call::fn		=> ['tri4m\Wp\Inv', 'addEditorStyle']
 			]));
 				
-			(new PostType('Member', []))->install();
-			(new AdminBar(['title' => Theme::fullName()]))->add(['title' => 'foo'])->install();
-			(new AdminBar(['title' => Theme::name()]))->add(['title' => 'foo'])->add(new AdminBar(['title' => 'baz']))->install();
-			(new SideBar(['name' => 'Left']))->install();
-			(new SideBar(['name' => 'Right']))->install();
-			(new SideBar(['name' => '2nd Right']))->install();
-			(new SideBar(['name' => 'Footer']))->install();
+			(new PostType('Member', []))
+				->install();
+				
+			(new AdminBar(['title' => Theme::fullName()]))
+				->add(['title' => 'foo'])
+				->install();
+				
+			(new AdminBar(['title' => Theme::name()]))
+				->add(new ThemeOptionsPage(['title' => 'my fun options', 'id' => 'myFunOptions']))
+				->add(new AdminBar(['title' => 'baz']))
+				->install();
+			
+			(new SideBar(['name' => 'Left']))
+				->install();
+				
+			(new SideBar(['name' => 'Right']))
+				->install();
+				
+			(new SideBar(['name' => '2nd Right']))
+				->install();
+				
+			(new SideBar(['name' => 'Footer']))
+				->install();
 		}
 		
 		function run()
