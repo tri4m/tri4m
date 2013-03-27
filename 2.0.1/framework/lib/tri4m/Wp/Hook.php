@@ -41,11 +41,11 @@
 		
 		static function enqueue(ADVTuple $__T)
 		{
-			static $__fnR, $__fnI;
-			$hash = spl_object_hash($__T);
+			static $__STATIC_fnR, $__STATIC_fnI;
 			
-			isset($__fnI) ?: $__fnI = function($T, $a)
+			isset($__STATIC_fnI) ?: $__STATIC_fnI = function($T, $a)
 			{
+				Trace::add(2, 'call {:fn}@{:args}', ['fn' => $T->fn, 'args' => $a]);
 				switch(TRUE):
 					case $T->isVal($T::fn, __const_Type::SPL_CLOSURE):	return Invoke::emitCallable($T->fn, $a);
 					case $T->isVal($T::fn, __const_Type::SPL_FUNCTION):	return Invoke::emitFunction($T->fn, $a);
@@ -53,24 +53,23 @@
 				endswitch;
 			};
 			
-			isset($__fnR) ?: $__fnR = function($h)
+			isset($__STATIC_fnR) ?: $__STATIC_fnR = function($h)
 			{
 				return new __type_Hook([__type_Hook::handle => $h]);
 			};
 			
 			switch(TRUE):
 				case $__T instanceOf __type_Action:
-					static::$__hooked[self::ACTION][$__T->event][$hash] = $__fnR(function() use (&$__T, &$__fnI)
+					static::$__hooked[self::ACTION][$__T->event][spl_object_hash($__T)] = $__STATIC_fnR(function() use (&$__T, &$__STATIC_fnI)
 					{
 						Trace::add(2, 'register {:event}@{:prio} {:exec}', ['event' => $__T->event, 'prio' => $__T->priority, 'exec' => $__T->fn]);
 						
 						Inv::addAction
 						(
 							$__T->event,
-							function() use (&$__T, &$__fnI)
+							function() use (&$__T, &$__STATIC_fnI)
 							{
-								Trace::add(2, 'call {:fn}@{:args}', ['fn' => $__T->event, 'args' => func_get_args()]);
-								return $__fnI($__T, func_get_args());
+								return $__STATIC_fnI($__T, func_get_args());
 							},
 							$__T->priority,
 							$__T->argsNum
@@ -78,17 +77,16 @@
 					});
 					break;
 				case $__T instanceOf __type_Filter:
-					static::$__hooked[self::FILTER][$__T->event][$hash] = $__fnR(function() use (&$__T, &$__fnI)
+					static::$__hooked[self::FILTER][$__T->event][spl_object_hash($__T)] = $__STATIC_fnR(function() use (&$__T, &$__STATIC_fnI)
 					{
 						Trace::add(2, 'register {:event}@{:prio} {:exec}', ['event' => $__T->event, 'prio' => $__T->priority, 'exec' => $__T->fn]);
 						
 						Inv::addFilter
 						(
 							$__T->event,
-							function() use (&$__T, &$__fnI)
+							function() use (&$__T, &$__STATIC_fnI)
 							{
-								Trace::add(2, 'call {:fn}@{:args}', ['fn' => $__T->event, 'args' => func_get_args()]);
-								return $__fnI($__T, func_get_args());
+								return $__STATIC_fnI($__T, func_get_args());
 							},
 							$__T->priority,
 							$__T->argsNum
@@ -96,10 +94,9 @@
 					});
 					break;
 				case $__T instanceOf __type_Call:
-					static::$__hooked[self::CALL][$hash] = $__fnR(function() use (&$__T, &$__fnI)
+					static::$__hooked[self::CALL][spl_object_hash($__T)] = $__STATIC_fnR(function() use (&$__T, &$__STATIC_fnI)
 					{
-						Trace::add(2, 'call {:fn}@{:args}', ['fn' => $__T->fn, 'args' => $__T->arguments]);
-						return $__fnI($__T, $__T->arguments);
+						return $__STATIC_fnI($__T, $__T->arguments);
 					});
 					break;
 			endswitch;
