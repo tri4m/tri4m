@@ -246,8 +246,8 @@
 			]);
 			
 			$this->__filters[__const_Filter::POST_UPDATED_MESSAGES] = new __type_Filter([
-				__type_Action::argsNum	=> 1,
-				__type_Action::fn	=> function($__messages) use ($loc)
+				__type_Filter::argsNum	=> 1,
+				__type_Filter::fn	=> function($__messages) use ($loc)
 				{
 					$d	= &$loc['updates'];
 					$post	= Inv::glob('post');
