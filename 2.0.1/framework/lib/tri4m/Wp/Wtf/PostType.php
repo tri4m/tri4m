@@ -11,7 +11,7 @@
 	USE ILLI\Core\Util\String;
 	USE WP_Screen;
 	
-	CLASS PostType
+	CLASS PostType EXTENDS \tri4m\Wp\Wtf
 	{
 		CONST SUPPORT_TITLE			= 0b0000000000000001;
 		CONST SUPPORT_EDITOR			= 0b0000000000000010;
@@ -151,8 +151,6 @@
 			'slug_plural'			=> '',
 		];
 		
-		protected $__config	= [];
-		
 		protected $__actions	=
 		[
 			__const_Action::INIT		=> NULL,
@@ -271,20 +269,5 @@
 					return $__messages;
 				}
 			]);
-		}
-		
-		function install()
-		{
-			foreach($this->__filters as $event => $Filter)
-			{
-				$Filter->event = $event;
-				Hook::enqueue($Filter);
-			}
-			
-			foreach($this->__actions as $event => $Action)
-			{
-				$Action->event = $event;
-				Hook::enqueue($Action);
-			}
 		}
 	}

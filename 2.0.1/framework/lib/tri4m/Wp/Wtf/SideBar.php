@@ -9,7 +9,7 @@
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
 	
-	CLASS SideBar
+	CLASS SideBar EXTENDS \tri4m\Wp\Wtf
 	{
 		static protected $__defaults =
 		[
@@ -23,7 +23,6 @@
 			'after_title'	=> '</h2>'
 		];
 		
-		protected $__config	= [];
 		protected $__actions	=
 		[
 			__const_Action::WIDGETS_INIT => NULL
@@ -53,14 +52,5 @@
 					Inv::registerSidebar($this->__config);
 				}
 			]);
-		}
-		
-		function install()
-		{
-			foreach($this->__actions as $event => $Action)
-			{
-				$Action->event = $event;
-				Hook::enqueue($Action);
-			}
 		}
 	}
