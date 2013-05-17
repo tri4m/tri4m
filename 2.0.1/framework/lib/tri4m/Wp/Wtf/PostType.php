@@ -1,31 +1,49 @@
 <?PHP
 	NAMESPACE tri4m\Wp\Wtf;
+	USE tri4m\Wp\Wtf\__type_Name;
+	USE tri4m\Wp\Wtf\__type_Posttype;
 	USE tri4m\Wp\Wtf\PostType\__flag_Support;
 	USE tri4m\Wp\Wtf\PostType\__type_Env;
 	USE tri4m\Wp\Wtf\PostType\__type_Labels;
-	USE tri4m\Wp\Wtf\PostType\__type_Name;
 	USE tri4m\Wp\Wtf\PostType\__type_Rewrite;
 	USE tri4m\Wp\Wtf\PostType\__type_UpdateMsg;
-	USE tri4m\Wp\Wtf\__type_Posttype;
 	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\__const_Filter;
 	USE tri4m\Wp\__type_Action;
 	USE tri4m\Wp\__type_Filter;
-	USE tri4m\Wp\Hook;
 	USE tri4m\Wp\Inv;
-	USE tri4m\Wp\Trace;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
 	USE WP_Screen;
 	
+	/**
+	 * @todo
+	 * 	'capability_type'		=> 'post',
+	 * 	'capabilities'			=>
+	 * 	[
+	 * 		'delete_post'			=> 'delete_{:slug_singular}',
+	 * 		'delete_posts'			=> 'delete_{:slug_plural}',
+	 * 		'delete_private_posts'		=> 'delete_private_{:slug_plural}',
+	 * 		'delete_published_posts'	=> 'delete_published_{:slug_plural}',
+	 * 		'delete_others_posts'		=> 'delete_others_{:slug_plural}',
+	 * 		'edit_post'			=> 'edit_{:slug_singular}',
+	 * 		'edit_posts'			=> 'edit_{:slug_plural}',
+	 * 		'edit_others_posts'		=> 'edit_others_{:slug_plural}',
+	 * 		'edit_private_posts'		=> 'edit_private_{:slug_plural}',
+	 * 		'edit_published_posts'		=> 'edit_published_{:slug_plural}',
+	 * 		'publish_posts'			=> 'publish_{:slug_plural}',
+	 * 		'read_post'			=> 'read_{:slug_singular}',
+	 * 		'read_private_posts'		=> 'read_private_{:slug_plural}'
+	 * 	],
+	 * 	'map_meta_cap'			=> FALSE,
+	*/
 	CLASS PostType EXTENDS \tri4m\Wp\Wtf
 	{
 		protected $__Setup	= NULL;
 		
 		protected $__actions	=
 		[
-			__const_Action::INIT		=> NULL,
-		//	__const_Action::CONTEXTUAL_HELP	=> NULL
+			__const_Action::INIT		=> NULL
 		];
 		
 		protected $__filters	=

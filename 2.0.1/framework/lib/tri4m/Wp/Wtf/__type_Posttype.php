@@ -1,6 +1,6 @@
 <?PHP
 	NAMESPACE tri4m\Wp\Wtf;
-	USE tri4m\Wp\Wtf\PostType\__type_Name;
+	USE tri4m\Wp\Wtf\__type_Name;
 	USE tri4m\Wp\Wtf\PostType\__type_Env;
 	USE tri4m\Wp\Wtf\PostType\__type_UpdateMsg;
 	USE ILLI\Core\Std\Def\__const_Type;
@@ -16,7 +16,7 @@
 			parent::__construct
 			(
 				[
-					self::name		=> ['tri4m\Wp\Wtf\PostType\__type_Name'],
+					self::name		=> ['tri4m\Wp\Wtf\__type_Name'],
 					self::env		=> ['tri4m\Wp\Wtf\PostType\__type_Env'],
 					self::updateMsg		=> ['tri4m\Wp\Wtf\PostType\__type_UpdateMsg'],
 				],
