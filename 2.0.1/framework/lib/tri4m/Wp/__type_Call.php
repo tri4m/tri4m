@@ -12,13 +12,8 @@
 			parent::__construct
 			(
 				[
-					self::fn		=>
-					[
-						__const_Type::SPL_CLOSURE,
-						__const_Type::SPL_FUNCTION,
-						__const_Type::SPL_METHOD
-					],
-					self::arguments		=> __const_Type::SPL_ARRAY
+					self::fn		=> [__const_Type::SPL_CLOSURE, __const_Type::SPL_FUNCTION, __const_Type::SPL_METHOD],
+					self::arguments		=> [__const_Type::SPL_ARRAY]
 				],
 				parent::mergeOffsetValues($__setup, [
 					self::arguments		=> []

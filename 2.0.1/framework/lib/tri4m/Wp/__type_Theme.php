@@ -22,18 +22,18 @@
 			parent::__construct
 			(
 				[
-					self::slug		=> __const_Type::SPL_STRING,
-					self::name		=> __const_Type::SPL_STRING,
-					self::fullName		=> __const_Type::SPL_STRING,
-					self::themeName		=> __const_Type::SPL_STRING,
-					self::version		=> __const_Type::SPL_STRING,
-					self::versionId		=> __const_Type::SPL_LONG,
-					self::debug		=> __const_Type::SPL_BOOLEAN,
-					self::themePath		=> __const_Type::SPL_DIRECTORY,
-					self::themeUri		=> __const_Type::SPL_STRING,
-					self::wpIncPath		=> __const_Type::SPL_DIRECTORY,
-					self::wpIncUri		=> __const_Type::SPL_STRING,
-					self::config		=> __const_Type::SPL_ARRAY
+					self::slug		=> [__const_Type::SPL_STRING],
+					self::name		=> [__const_Type::SPL_STRING],
+					self::fullName		=> [__const_Type::SPL_STRING],
+					self::themeName		=> [__const_Type::SPL_STRING],
+					self::version		=> [__const_Type::SPL_STRING],
+					self::versionId		=> [__const_Type::SPL_LONG],
+					self::debug		=> [__const_Type::SPL_BOOLEAN],
+					self::themePath		=> [__const_Type::SPL_DIRECTORY],
+					self::themeUri		=> [__const_Type::SPL_STRING],
+					self::wpIncPath		=> [__const_Type::SPL_DIRECTORY],
+					self::wpIncUri		=> [__const_Type::SPL_STRING],
+					self::config		=> [__const_Type::SPL_ARRAY]
 				],
 				$__setup
 			);
