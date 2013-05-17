@@ -14,15 +14,10 @@
 			parent::__construct
 			(
 				[
-					self::event		=> __const_Type::SPL_STRING,
-					self::fn		=>
-					[
-						__const_Type::SPL_CLOSURE,
-						__const_Type::SPL_FUNCTION,
-						__const_Type::SPL_METHOD
-					],
-					self::priority		=> __const_Type::SPL_LONG,
-					self::argsNum		=> __const_Type::SPL_LONG,
+					self::event		=> [__const_Type::SPL_STRING],
+					self::fn		=> [__const_Type::SPL_CLOSURE, __const_Type::SPL_FUNCTION, __const_Type::SPL_METHOD],
+					self::priority		=> [__const_Type::SPL_LONG],
+					self::argsNum		=> [__const_Type::SPL_LONG],
 				],
 				parent::mergeOffsetValues($__setup, [
 					self::priority		=> 10,

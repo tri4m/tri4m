@@ -6,6 +6,10 @@
 	USE tri4m\Wp\Theme;
 	USE tri4m\Wp\Wtf\AdminBar;
 	USE tri4m\Wp\Wtf\PostType;
+	USE tri4m\Wp\Wtf\__type_Posttype;
+	USE tri4m\Wp\Wtf\PostType\__flag_Support;
+	USE tri4m\Wp\Wtf\PostType\__type_Name;
+	USE tri4m\Wp\Wtf\PostType\__type_Env;
 	USE tri4m\Wp\Wtf\SideBar;
 	USE tri4m\Wp\Wtf\ThemeOptionsPage;
 	
@@ -39,8 +43,27 @@
 				__type_Call::fn		=> ['tri4m\Wp\Inv', 'addEditorStyle']
 			]));
 				
-			(new PostType('Member', []))
-				->install();
+			(new PostType(new __type_Posttype([
+				__type_Posttype::name => new __type_Name([
+					__type_Name::singular 		=> 'Member',
+					__type_Name::plural		=> 'Members',
+					__type_Name::slugSingular	=> 'member',
+					__type_Name::slugPlural		=> 'members'
+				])
+			])))->install();
+			
+			(new PostType(new __type_Posttype([
+				__type_Posttype::name => new __type_Name([
+					__type_Name::singular 		=> 'Skill',
+					__type_Name::plural		=> 'Skills',
+					__type_Name::slugSingular	=> 'skill',
+					__type_Name::slugPlural		=> 'skills'
+				]),
+				__type_Posttype::env => new __type_Env([
+					__type_Env::supports 		=> 11 + __flag_Support::PAGE_ATTRIBUTES | __flag_Support::POST_FORMATS,
+					__type_Env::hierarchical	=> TRUE
+				]),
+			])))->install();
 				
 			(new AdminBar(['title' => Theme::fullName()]))
 				->add(['title' => 'foo'])
