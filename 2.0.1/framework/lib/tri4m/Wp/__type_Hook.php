@@ -12,8 +12,8 @@
 			parent::__construct
 			(
 				[
-					self::handle	=> __const_Type::SPL_CLOSURE,
-					self::enabled	=> __const_Type::SPL_BOOLEAN
+					self::handle	=> [__const_Type::SPL_CLOSURE],
+					self::enabled	=> [__const_Type::SPL_BOOLEAN]
 				],
 				$__setup
 			);
