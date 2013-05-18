@@ -39,8 +39,6 @@
 	*/
 	CLASS PostType EXTENDS \tri4m\Wp\Wtf
 	{
-		protected $__Setup	= NULL;
-		
 		protected $__actions	=
 		[
 			__const_Action::INIT		=> NULL
@@ -200,6 +198,4 @@
 				}
 			]);
 		}
-		
-		
 	}

@@ -11,8 +11,6 @@
 	
 	CLASS ContextualHelp EXTENDS \tri4m\Wp\Wtf
 	{
-		protected $__Setup	= NULL;
-		
 		protected $__actions	=
 		[
 			__const_Action::CONTEXTUAL_HELP	=> NULL

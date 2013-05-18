@@ -6,6 +6,7 @@
 	CLASS Wtf
 	{
 		static protected $__defaults	= [];
+		protected $__Setup		= NULL;
 		protected $__actions		= [];
 		protected $__filters		= [];
 		protected $__callables		= [];

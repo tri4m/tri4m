@@ -15,6 +15,7 @@
 	USE tri4m\Wp\Wtf\ContextualHelp\Tabs;
 	USE tri4m\Wp\Wtf\ContextualHelp\__type_Tab;
 	USE tri4m\Wp\Wtf\SideBar;
+	USE tri4m\Wp\Wtf\__type_Sidebar;
 	USE tri4m\Wp\Wtf\ThemeOptionsPage;
 	
 	CLASS Application
@@ -75,8 +76,7 @@
 						'<h2>Edit Member</h2>',
 						'<p>This page allows you to view/modify {:singular} details. Please make sure to fill out the available boxes with the appropriate details and <strong>not</strong> add these details to the {:singular} description.</p>'
 					]
-					])
-				))->install();
+				])))->install();
 				
 				(new ContextualHelp(new __type_ContextualHelp([
 					__type_ContextualHelp::name		=> new __type_Name([
@@ -128,6 +128,34 @@
 			
 			#::
 			
+			#:sidebar:
+			
+				(new SideBar(new __type_Sidebar([
+					__type_Sidebar::name	=> 'Left',
+					__type_Sidebar::id	=> '{:slug}_sidebar_left',
+					__type_Sidebar::desc	=> 'The {:name} sidebar.'
+				])))->install();
+			
+				(new SideBar(new __type_Sidebar([
+					__type_Sidebar::name	=> 'Right',
+					__type_Sidebar::id	=> '{:slug}_sidebar_right',
+					__type_Sidebar::desc	=> 'The {:name} sidebar.'
+				])))->install();
+				
+				(new SideBar(new __type_Sidebar([
+					__type_Sidebar::name	=> '2nd Right',
+					__type_Sidebar::id	=> '{:slug}_sidebar_right_2',
+					__type_Sidebar::desc	=> 'The {:name} sidebar.'
+				])))->install();
+				
+				(new SideBar(new __type_Sidebar([
+					__type_Sidebar::name	=> 'Footer',
+					__type_Sidebar::id	=> '{:slug}_sidebar_footer',
+					__type_Sidebar::desc	=> 'The {:name} sidebar.'
+				])))->install();
+			
+			#::
+				
 			#:todo:
 				(new AdminBar(['title' => Theme::fullName()]))
 					->add(['title' => 'foo'])
@@ -138,17 +166,6 @@
 					->add(new AdminBar(['title' => 'baz']))
 					->install();
 				
-				(new SideBar(['name' => 'Left']))
-					->install();
-					
-				(new SideBar(['name' => 'Right']))
-					->install();
-					
-				(new SideBar(['name' => '2nd Right']))
-					->install();
-					
-				(new SideBar(['name' => 'Footer']))
-					->install();
 			#::
 		}
 		
