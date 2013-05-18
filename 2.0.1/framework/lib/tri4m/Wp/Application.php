@@ -9,6 +9,7 @@
 	USE tri4m\Wp\Wtf\__type_Posttype;
 	USE tri4m\Wp\Wtf\__type_ContextualHelp;
 	USE tri4m\Wp\Wtf\__type_SideBar;
+	USE tri4m\Wp\Wtf\__type_Taxonomy;
 	USE tri4m\Wp\Wtf\AdminBar;
 	USE tri4m\Wp\Wtf\AdminBar\__type_Meta;
 	USE tri4m\Wp\Wtf\AdminBar\Sub;
@@ -19,6 +20,8 @@
 	USE tri4m\Wp\Wtf\ContextualHelp\__type_Tab;
 	USE tri4m\Wp\Wtf\ContextualHelp\Tabs;
 	USE tri4m\Wp\Wtf\SideBar;
+	USE tri4m\Wp\Wtf\Taxonomy;
+	USE tri4m\Wp\Wtf\Taxonomy\__type_Args;
 	USE tri4m\Wp\Wtf\ThemeOptionsPage;
 	
 	CLASS Application
@@ -66,6 +69,34 @@
 							__type_Name::slugPlural		=> 'members'
 						])
 					])))->install();
+					
+					(new Taxonomy(new __type_Taxonomy([
+						__type_Taxonomy::name => new __type_Name([
+							__type_Name::singular 		=> 'Profession',
+							__type_Name::plural		=> 'Professions',
+							__type_Name::slugSingular	=> 'tax_member_profession',
+							__type_Name::slugPlural		=> 'tax_member_professions'
+						]),
+						__type_Taxonomy::type => 'member',
+						__type_Taxonomy::args => new __type_Args([
+							__type_Args::hierarchical	=> FALSE
+						])
+					])))->install();
+					
+					(new Taxonomy(new __type_Taxonomy([
+						__type_Taxonomy::name => new __type_Name([
+							__type_Name::singular 		=> 'Level',
+							__type_Name::plural		=> 'Levels',
+							__type_Name::slugSingular	=> 'tax_member_level',
+							__type_Name::slugPlural		=> 'tax_member_levels'
+						]),
+						__type_Taxonomy::type => 'member',
+						__type_Taxonomy::args => new __type_Args([
+							__type_Args::hierarchical	=> FALSE
+						])
+					])))->install();
+					
+					
 					
 					(new ContextualHelp(new __type_ContextualHelp([
 						__type_ContextualHelp::name		=> new __type_Name([
