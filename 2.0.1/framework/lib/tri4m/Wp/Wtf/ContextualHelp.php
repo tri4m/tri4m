@@ -1,10 +1,10 @@
 <?PHP
 	NAMESPACE tri4m\Wp\Wtf;
-	USE tri4m\Wp\Wtf\__type_ContextualHelp;
-	USE tri4m\Wp\Wtf\ContextualHelp\__type_Tab;
-	USE tri4m\Wp\Wtf\ContextualHelp\Tabs;
 	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\__type_Action;
+	USE tri4m\Wp\Wtf\__type_Name;
+	USE tri4m\Wp\Wtf\__type_ContextualHelp;
+	USE tri4m\Wp\Wtf\ContextualHelp\Tabs;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
 	USE WP_Screen;

@@ -1,9 +1,9 @@
 <?PHP
 	NAMESPACE tri4m\Wp\Wtf;
-	USE tri4m\Wp\Wtf\__type_Sidebar;
 	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\__type_Action;
 	USE tri4m\Wp\Inv;
+	USE tri4m\Wp\Wtf\__type_SideBar;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
 	
@@ -14,7 +14,7 @@
 			__const_Action::WIDGETS_INIT => NULL
 		];
 		
-		function __construct(__type_Sidebar $__Setup)
+		function __construct(__type_SideBar $__Setup)
 		{
 			$this->__Setup		= $__Setup;
 			$this->__Setup->id	= Inflector::underscore($this->__Setup->id);

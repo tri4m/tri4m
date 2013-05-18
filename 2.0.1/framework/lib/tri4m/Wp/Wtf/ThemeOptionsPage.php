@@ -4,9 +4,7 @@
 	USE tri4m\Wp\__const_Filter;
 	USE tri4m\Wp\__type_Action;
 	USE tri4m\Wp\__type_Filter;
-	USE tri4m\Wp\Hook;
 	USE tri4m\Wp\Inv;
-	USE tri4m\Wp\Trace;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
 	USE WP_Screen;

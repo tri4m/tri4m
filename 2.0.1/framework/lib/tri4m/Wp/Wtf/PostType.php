@@ -1,5 +1,10 @@
 <?PHP
 	NAMESPACE tri4m\Wp\Wtf;
+	USE tri4m\Wp\__const_Action;
+	USE tri4m\Wp\__const_Filter;
+	USE tri4m\Wp\__type_Action;
+	USE tri4m\Wp\__type_Filter;
+	USE tri4m\Wp\Inv;
 	USE tri4m\Wp\Wtf\__type_Name;
 	USE tri4m\Wp\Wtf\__type_Posttype;
 	USE tri4m\Wp\Wtf\PostType\__flag_Support;
@@ -7,11 +12,6 @@
 	USE tri4m\Wp\Wtf\PostType\__type_Labels;
 	USE tri4m\Wp\Wtf\PostType\__type_Rewrite;
 	USE tri4m\Wp\Wtf\PostType\__type_UpdateMsg;
-	USE tri4m\Wp\__const_Action;
-	USE tri4m\Wp\__const_Filter;
-	USE tri4m\Wp\__type_Action;
-	USE tri4m\Wp\__type_Filter;
-	USE tri4m\Wp\Inv;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
 	USE WP_Screen;
