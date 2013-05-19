@@ -38,17 +38,17 @@
 		{
 			if(Trap::isRunning())
 				Trap::stop();
-			
+				
 			Trap::config(
 			[
-				'code' => E_ALL,
+				'code' => TRUE === $__Setup->trap ? $__Setup->trapErrorCode : 0,
 				'fire' => function($i = NULL)
 				{
 					Error::add($i['Exception']->toTrack()->asText());
 				}
 			]);
 			
-			Trap::run();
+			FALSE === $__Setup->trap ?: Trap::run();
 			
 			static::$__Setup	= $__Setup;
 			static::$__Application	= new Application;

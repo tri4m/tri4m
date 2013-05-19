@@ -2,93 +2,65 @@
 	NAMESPACE tri4m\Wp\Wtf;
 	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\__type_Action;
-	USE tri4m\Wp\Hook;
-	USE tri4m\Wp\Trace;
+	USE tri4m\Wp\Wtf\__type_AdminBar;
+	USE tri4m\Wp\Wtf\AdminBar\__type_Meta;
+	USE tri4m\Wp\Wtf\AdminBar\Sub;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Std\Spl\FsbCollection;
 	USE WP_Admin_Bar;
 	
 	CLASS AdminBar EXTENDS \tri4m\Wp\Wtf
-	{
-		static protected $__meta =
-		[
-			'html'		=> '',
-			'class'		=> '',
-			'onclick'	=> '',
-			'target'	=> '',
-			'title'		=> '',
-		];
-		
-		static protected $__defaults =
-		[
-			'title'		=> '',
-			'parent'	=> FALSE,
-			'href'		=> FALSE,
-			'id'		=> FALSE,
-			'meta'		=> FALSE
-		];
-		
+	{	
 		protected $__actions	=
 		[
 			__const_Action::ADMIN_BAR_MENU => NULL
 		];
 		
-		protected $__Sub	= NULL;
-		
-		function __construct(array $__config)
+		function __construct(__type_AdminBar $__Setup)
 		{
-			$__config += ['id' => $__config['title']] + static::$__defaults;
-			
-			if(is_array($__config['meta']))
-				$__config['meta'] += static::$__meta;
-				
-			if(is_string($__config['id']))
-				$__config['id'] = Inflector::underscore(Inflector::camelize($__config['id']));
-				
-			$this->__config	= $__config;
-			$this->__Sub	= new FsbCollection(0);
+			$this->__Setup		= $__Setup;
+			$this->__Setup->id	= Inflector::underscore($this->__Setup->id);
 			
 			$this->__actions[__const_Action::ADMIN_BAR_MENU] = new __type_Action([
 				__type_Action::argsNum	=> 1,
 				__type_Action::priority	=> 500,
 				__type_Action::fn	=> function(WP_Admin_Bar $__AdminBar)
 				{
-					$__AdminBar->add_menu($this->__config);
+					$config = [];
+					
+					foreach([
+						__type_AdminBar::parentId	=> 'parent',
+						__type_AdminBar::title		=> 'title',
+						__type_AdminBar::id		=> 'id',
+						__type_AdminBar::href		=> 'href'
+					] as $i => $k)
+						$config[$k] = $this->__Setup->get()->toArray()[$i];
+					
+					if($this->__Setup->sub instanceOf Sub)
+						foreach($this->__Setup->sub->get() as $i => $Sub)
+							$Sub->__Setup->parentId = $this->__Setup->id;
+					
+					if($this->__Setup->meta instanceOf __type_Meta)
+						foreach([
+							__type_Meta::html		=> 'html',
+							__type_Meta::cssClass		=> 'class',
+							__type_Meta::onClick		=> 'onclick',
+							__type_Meta::target		=> 'target',
+							__type_Meta::title		=> 'title'
+						] as $i => $k)
+							$config['meta'][$k] = $this->__Setup->meta->get()->toArray()[$i];
+					
+					$__AdminBar->add_menu($config);
 				}
 			]);
 		}
 		
-		function add($__config)
-		{
-			$t = NULL;
-			
-			switch(TRUE):
-				case is_array($__config):
-					$t = $__config;
-					break;
-				case $__config instanceOf ThemeOptionsPage:
-				case $__config instanceOf AdminBar:
-					$t = $__config->__config;
-					break;
-			endswitch;
-			
-			if(NULL === $t)
-				return $this;
-			
-			$t['parent'] = $this->__config['id'];
-			$t += ['id' => $t['title']];
-			$t['id'] = $this->__config['id'].'_'.$t['id'];
-			
-			$c = get_called_class();
-			
-			$this->__Sub->add(new $c($t));
-			
-			return $this;
-		}
-		
 		function install()
 		{
-			parent::install()->__Sub->invoke('install');
+			if(($Sub = parent::install()->__Setup->sub) instanceOf Sub)
+				foreach($Sub->get() as $S)
+					$S->install();
+			
 			return $this;
 		}
 	}

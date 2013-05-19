@@ -10,12 +10,14 @@
 		CONST themeName		= 0x03;
 		CONST version		= 0x04;
 		CONST versionId		= 0x05;
-		CONST debug		= 0x06;
-		CONST themePath		= 0x07;
-		CONST themeUri		= 0x08;
-		CONST wpIncPath		= 0x09;
-		CONST wpIncUri		= 0x0A;
-		CONST config		= 0x0B;
+		CONST themePath		= 0x06;
+		CONST themeUri		= 0x07;
+		CONST wpIncPath		= 0x08;
+		CONST wpIncUri		= 0x09;
+		CONST config		= 0x0A;
+		CONST debug		= 0x0B;
+		CONST trap		= 0x0C;
+		CONST trapErrorCode	= 0x0D;
 		
 		public function __construct(array $__setup = [])
 		{
@@ -28,14 +30,19 @@
 					self::themeName		=> [__const_Type::SPL_STRING],
 					self::version		=> [__const_Type::SPL_STRING],
 					self::versionId		=> [__const_Type::SPL_LONG],
-					self::debug		=> [__const_Type::SPL_BOOLEAN],
 					self::themePath		=> [__const_Type::SPL_DIRECTORY],
 					self::themeUri		=> [__const_Type::SPL_STRING],
 					self::wpIncPath		=> [__const_Type::SPL_DIRECTORY],
 					self::wpIncUri		=> [__const_Type::SPL_STRING],
-					self::config		=> [__const_Type::SPL_ARRAY]
+					self::config		=> [__const_Type::SPL_ARRAY],
+					self::debug		=> [__const_Type::SPL_BOOLEAN],
+					self::trap		=> [__const_Type::SPL_BOOLEAN],
+					self::trapErrorCode	=> [__const_Type::SPL_LONG]
 				],
-				$__setup
+				parent::mergeOffsetValues($__setup, [
+					self::trap		=> TRUE,
+					self::trapErrorCode	=> E_ALL
+				])
 			);
 		}
 	}

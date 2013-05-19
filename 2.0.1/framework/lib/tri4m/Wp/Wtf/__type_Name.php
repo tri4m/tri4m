@@ -1,5 +1,5 @@
 <?PHP
-	NAMESPACE tri4m\Wp\Wtf\PostType;
+	NAMESPACE tri4m\Wp\Wtf;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
 	CLASS __type_Name EXTENDS \ILLI\Core\Std\Def\ADVTuple
