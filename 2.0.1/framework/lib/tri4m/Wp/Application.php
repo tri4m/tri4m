@@ -6,7 +6,7 @@
 	USE tri4m\Wp\Theme;
 	USE tri4m\Wp\Wtf\__type_Name;
 	USE tri4m\Wp\Wtf\__type_AdminBar;
-	USE tri4m\Wp\Wtf\__type_Posttype;
+	USE tri4m\Wp\Wtf\__type_PostType;
 	USE tri4m\Wp\Wtf\__type_ContextualHelp;
 	USE tri4m\Wp\Wtf\__type_SideBar;
 	USE tri4m\Wp\Wtf\__type_Taxonomy;
@@ -22,6 +22,7 @@
 	USE tri4m\Wp\Wtf\SideBar;
 	USE tri4m\Wp\Wtf\Taxonomy;
 	USE tri4m\Wp\Wtf\Taxonomy\__type_Args;
+	USE tri4m\Wp\Wtf\Taxonomy\__type_Rewrite;
 	USE tri4m\Wp\Wtf\ThemeOptionsPage;
 	
 	CLASS Application
@@ -59,53 +60,92 @@
 			#::
 			
 			#:posttypes:
-				#:members:
+				
+				#:events:
+				
+					$Event = new __type_PostType([
+						__type_PostType::name => new __type_Name([
+							__type_Name::singular 		=> 'Event',
+							__type_Name::plural		=> 'Events',
+							__type_Name::slugSingular	=> 'event',
+							__type_Name::slugPlural		=> 'events'
+						])
+					]);
 					
-					(new PostType(new __type_Posttype([
-						__type_Posttype::name => new __type_Name([
+					$EventType = new __type_Taxonomy([
+						__type_Taxonomy::type => $Event->name->slugSingular,
+						__type_Taxonomy::name => new __type_Name([
+							__type_Name::singular 		=> 'Type',
+							__type_Name::plural		=> 'Types',
+							__type_Name::slugSingular	=> 'event_type',
+							__type_Name::slugPlural		=> 'event_types'
+						])
+					]);
+					
+					$Event->env->supports			= 11 + __flag_Support::POST_FORMATS;
+					$Event->env->hierarchical		= TRUE;
+					$Event->env->taxonomies			= [$EventType->name->slugSingular];
+					$Event->env->rewrite->slug		= 'event';
+					
+					(new PostType($Event))->install();
+					
+					$EventType->args->rewrite->slug		= 'events/by-type';
+					
+					(new Taxonomy($EventType))->install();
+				
+				#::
+				
+				#:members:
+				
+					$Member = new __type_PostType([
+						__type_PostType::name => new __type_Name([
 							__type_Name::singular 		=> 'Member',
 							__type_Name::plural		=> 'Members',
 							__type_Name::slugSingular	=> 'member',
 							__type_Name::slugPlural		=> 'members'
 						])
-					])))->install();
+					]);
 					
-					(new Taxonomy(new __type_Taxonomy([
+					$MemberProfession = new __type_Taxonomy([
+						__type_Taxonomy::type => $Member->name->slugSingular,
 						__type_Taxonomy::name => new __type_Name([
 							__type_Name::singular 		=> 'Profession',
 							__type_Name::plural		=> 'Professions',
 							__type_Name::slugSingular	=> 'profession',
 							__type_Name::slugPlural		=> 'professions'
-						]),
-						__type_Taxonomy::type => 'member',
-						__type_Taxonomy::args => new __type_Args([
-							__type_Args::hierarchical	=> FALSE
 						])
-					])))->install();
+					]);
 					
-					(new Taxonomy(new __type_Taxonomy([
+					$MemberLevel = new __type_Taxonomy([
+						__type_Taxonomy::type => $Member->name->slugSingular,
 						__type_Taxonomy::name => new __type_Name([
 							__type_Name::singular 		=> 'Level',
 							__type_Name::plural		=> 'Levels',
 							__type_Name::slugSingular	=> 'level',
 							__type_Name::slugPlural		=> 'levels'
-						]),
-						__type_Taxonomy::type => 'member',
-						__type_Taxonomy::args => new __type_Args([
-							__type_Args::hierarchical	=> FALSE
 						])
-					])))->install();
+					]);
 					
+					$Member->env->supports			= 11 + __flag_Support::POST_FORMATS;
+					$Member->env->hierarchical		= FALSE;
+					$Member->env->taxonomies		= [$MemberProfession->name->slugSingular, $MemberLevel->name->slugSingular];
+					$Member->env->rewrite->slug		= 'member';
+					
+					(new PostType($Member))->install();
+					
+					$MemberProfession->args->rewrite->slug	= 'members/by-profession';
+					
+					(new Taxonomy($MemberProfession))->install();
+					
+					$MemberLevel->args->rewrite->slug	= 'members/by-level';
+					
+					(new Taxonomy($MemberLevel))->install();
+				
 					(new ContextualHelp(new __type_ContextualHelp([
-						__type_ContextualHelp::name		=> new __type_Name([
-							__type_Name::singular 		=> 'Member',
-							__type_Name::plural		=> 'Members',
-							__type_Name::slugSingular	=> 'member',
-							__type_Name::slugPlural		=> 'members'
-						]),
-						__type_ContextualHelp::id		=> 'edit-member',
-						__type_ContextualHelp::content		=> new __type_Call([
-							__type_Call::fn			=> function()
+						__type_ContextualHelp::name	=> $Member->name,
+						__type_ContextualHelp::id	=> 'edit-'.$Member->name->slugSingular,
+						__type_ContextualHelp::content	=> new __type_Call([
+							__type_Call::fn		=> function()
 							{
 								return [
 									'<h2>Edit {:singular}</h2>',
@@ -116,14 +156,9 @@
 					])))->install();
 					
 					(new ContextualHelp(new __type_ContextualHelp([
-						__type_ContextualHelp::name		=> new __type_Name([
-							__type_Name::singular 		=> 'Member',
-							__type_Name::plural		=> 'Members',
-							__type_Name::slugSingular	=> 'member',
-							__type_Name::slugPlural		=> 'members'
-						]),
-						__type_ContextualHelp::id		=> 'member',
-						__type_ContextualHelp::content		=> new Tabs([
+						__type_ContextualHelp::name	=> $Member->name,
+						__type_ContextualHelp::id	=> $Member->name->slugSingular,
+						__type_ContextualHelp::content	=> new Tabs([
 							new __type_Tab([
 								__type_Tab::id		=> 'welcome',
 								__type_Tab::label	=> 'edit {:plural}',
@@ -155,51 +190,118 @@
 							]),
 						])
 					])))->install();
-					
 				
 				#::
 				
 				#:skills:
 				
-					(new PostType(new __type_Posttype([
-						__type_Posttype::name => new __type_Name([
+					$Skill = new __type_PostType([
+						__type_PostType::name => new __type_Name([
 							__type_Name::singular 		=> 'Skill',
 							__type_Name::plural		=> 'Skills',
 							__type_Name::slugSingular	=> 'skill',
 							__type_Name::slugPlural		=> 'skills'
-						]),
-						__type_Posttype::env => new __type_Env([
-							__type_Env::supports 		=> 11 + __flag_Support::PAGE_ATTRIBUTES | __flag_Support::POST_FORMATS,
-							__type_Env::hierarchical	=> TRUE
-						]),
-					])))->install();
+						])
+					]);
 					
-					(new Taxonomy(new __type_Taxonomy([
+					$SkillTechnology = new __type_Taxonomy([
+						__type_Taxonomy::type => $Skill->name->slugSingular,
 						__type_Taxonomy::name => new __type_Name([
 							__type_Name::singular 		=> 'Technology',
 							__type_Name::plural		=> 'Technologies',
-							__type_Name::slugSingular	=> 'technology',
-							__type_Name::slugPlural		=> 'technologies'
-						]),
-						__type_Taxonomy::type => 'skill',
-						__type_Taxonomy::args => new __type_Args([
-							__type_Args::hierarchical	=> FALSE
+							__type_Name::slugSingular	=> 'skill_technology',
+							__type_Name::slugPlural		=> 'skill_technologies'
 						])
-					])))->install();
+					]);
 					
-					(new Taxonomy(new __type_Taxonomy([
+					$SkillPlotKW = new __type_Taxonomy([
+						__type_Taxonomy::type => $Skill->name->slugSingular,
+						__type_Taxonomy::name => new __type_Name([
+							__type_Name::singular 		=> 'Plot Keyword',
+							__type_Name::plural		=> 'Plot Keywords',
+							__type_Name::slugSingular	=> 'skill_plot_keyword',
+							__type_Name::slugPlural		=> 'skill_plot_keywords'
+						])
+					]);
+					
+					$SkillType = new __type_Taxonomy([
+						__type_Taxonomy::type => $Skill->name->slugSingular,
 						__type_Taxonomy::name => new __type_Name([
 							__type_Name::singular 		=> 'Type',
 							__type_Name::plural		=> 'Types',
-							__type_Name::slugSingular	=> 'type',
-							__type_Name::slugPlural		=> 'types'
-						]),
-						__type_Taxonomy::type => 'skill',
-						__type_Taxonomy::args => new __type_Args([
-							__type_Args::hierarchical	=> FALSE
+							__type_Name::slugSingular	=> 'skill_type',
+							__type_Name::slugPlural		=> 'skill_types'
 						])
-					])))->install();
-				
+					]);
+					
+					$SkillYear = new __type_Taxonomy([
+						__type_Taxonomy::type => $Skill->name->slugSingular,
+						__type_Taxonomy::name => new __type_Name([
+							__type_Name::singular 		=> 'Year',
+							__type_Name::plural		=> 'Years',
+							__type_Name::slugSingular	=> 'skill_year',
+							__type_Name::slugPlural		=> 'skill_years'
+						])
+					]);
+					
+					$SkillClient = new __type_Taxonomy([
+						__type_Taxonomy::type => $Skill->name->slugSingular,
+						__type_Taxonomy::name => new __type_Name([
+							__type_Name::singular 		=> 'Client',
+							__type_Name::plural		=> 'Clients',
+							__type_Name::slugSingular	=> 'skill_client',
+							__type_Name::slugPlural		=> 'skill_clients'
+						])
+					]);
+					
+					$SkillLocation = new __type_Taxonomy([
+						__type_Taxonomy::type => $Skill->name->slugSingular,
+						__type_Taxonomy::name => new __type_Name([
+							__type_Name::singular 		=> 'Location',
+							__type_Name::plural		=> 'Location',
+							__type_Name::slugSingular	=> 'skill_location',
+							__type_Name::slugPlural		=> 'skill_locations'
+						])
+					]);
+					
+					$Skill->env->supports			= 11 + __flag_Support::PAGE_ATTRIBUTES | __flag_Support::POST_FORMATS;
+					$Skill->env->hierarchical		= TRUE;
+					$Skill->env->taxonomies			=
+					[
+						$SkillTechnology->name->slugSingular,
+						$SkillType->name->slugSingular,
+						$SkillYear->name->slugSingular,
+						$SkillClient->name->slugSingular
+					];
+					
+					$Skill->env->rewrite->slug		= 'skill';
+					
+					(new PostType($Skill))->install();
+					
+					$SkillTechnology->args->rewrite->slug	= 'skills/by-technology';
+					
+					(new Taxonomy($SkillTechnology))->install();
+					
+					$SkillType->args->rewrite->slug		= 'skills/by-plot-keyword';
+					
+					(new Taxonomy($SkillPlotKW))->install();
+					
+					$SkillType->args->rewrite->slug		= 'skills/by-type';
+					
+					(new Taxonomy($SkillType))->install();
+					
+					$SkillYear->args->rewrite->slug		= 'skills/by-year';
+					
+					(new Taxonomy($SkillYear))->install();
+					
+					$SkillClient->args->rewrite->slug	= 'skills/by-client';
+					
+					(new Taxonomy($SkillClient))->install();
+					
+					$SkillLocation->args->rewrite->slug	= 'skills/by-location';
+					
+					(new Taxonomy($SkillLocation))->install();
+					
 				#::
 			#::
 			
@@ -231,7 +333,7 @@
 			
 			#::
 				
-			#:todo:
+			#:adminbar:
 			
 				(new AdminBar(new __type_AdminBar([
 					__type_AdminBar::title	=> Theme::fullName(),

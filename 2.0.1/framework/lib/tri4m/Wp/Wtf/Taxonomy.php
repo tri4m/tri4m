@@ -2,6 +2,8 @@
 	NAMESPACE tri4m\Wp\Wtf;
 	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\__type_Action;
+	USE tri4m\Wp\__const_Filter;
+	USE tri4m\Wp\__type_Filter;
 	USE tri4m\Wp\Inv;
 	USE tri4m\Wp\Wtf\__type_Taxonomy;
 	USE tri4m\Wp\Wtf\Taxonomy\__type_Args;
@@ -35,7 +37,10 @@
 			
 			$this->__actions[__const_Action::INIT] = new __type_Action([
 				__type_Action::fn => function() use (&$__name)
-				{	
+				{
+					if(FALSE !== Inv::isTaxonomy($this->__Setup->name->slugSingular))
+						return;
+						
 					$config = [];
 						
 					foreach([
@@ -96,6 +101,5 @@
 					Inv::registerTaxonomy($this->__Setup->name->slugPlural, $this->__Setup->type, $config);
 				}
 			]);
-			
 		}
 	}
