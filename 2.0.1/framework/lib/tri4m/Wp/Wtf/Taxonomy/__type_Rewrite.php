@@ -22,7 +22,7 @@
 				parent::mergeOffsetValues($__setup, [
 					self::slug		=> '{:slug_singular}',
 					self::withFront		=> FALSE,
-					self::hierarchical	=> FALSE,
+					self::hierarchical	=> TRUE,
 					self::epMask		=> 0
 				])
 			);

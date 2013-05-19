@@ -16,7 +16,12 @@
 				[
 					self::id		=> [__const_Type::SPL_STRING],
 					self::label		=> [__const_Type::SPL_STRING],
-					self::content		=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
+					self::content		=>
+					[
+						'tri4m\Wp\__type_Call',
+						__const_Type::SPL_STRING,
+						__const_Type::SPL_ARRAY
+					],
 					self::callback		=> [__const_Type::SPL_CLOSURE, __const_Type::SPL_FUNCTION, __const_Type::SPL_METHOD]
 				],
 				$__setup

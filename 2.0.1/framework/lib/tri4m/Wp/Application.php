@@ -74,8 +74,8 @@
 						__type_Taxonomy::name => new __type_Name([
 							__type_Name::singular 		=> 'Profession',
 							__type_Name::plural		=> 'Professions',
-							__type_Name::slugSingular	=> 'tax_member_profession',
-							__type_Name::slugPlural		=> 'tax_member_professions'
+							__type_Name::slugSingular	=> 'profession',
+							__type_Name::slugPlural		=> 'professions'
 						]),
 						__type_Taxonomy::type => 'member',
 						__type_Taxonomy::args => new __type_Args([
@@ -87,16 +87,14 @@
 						__type_Taxonomy::name => new __type_Name([
 							__type_Name::singular 		=> 'Level',
 							__type_Name::plural		=> 'Levels',
-							__type_Name::slugSingular	=> 'tax_member_level',
-							__type_Name::slugPlural		=> 'tax_member_levels'
+							__type_Name::slugSingular	=> 'level',
+							__type_Name::slugPlural		=> 'levels'
 						]),
 						__type_Taxonomy::type => 'member',
 						__type_Taxonomy::args => new __type_Args([
 							__type_Args::hierarchical	=> FALSE
 						])
 					])))->install();
-					
-					
 					
 					(new ContextualHelp(new __type_ContextualHelp([
 						__type_ContextualHelp::name		=> new __type_Name([
@@ -106,11 +104,15 @@
 							__type_Name::slugPlural		=> 'members'
 						]),
 						__type_ContextualHelp::id		=> 'edit-member',
-						__type_ContextualHelp::content		=>
-						[
-							'<h2>Edit Member</h2>',
-							'<p>This page allows you to view/modify {:singular} details. Please make sure to fill out the available boxes with the appropriate details and <strong>not</strong> add these details to the {:singular} description.</p>'
-						]
+						__type_ContextualHelp::content		=> new __type_Call([
+							__type_Call::fn			=> function()
+							{
+								return [
+									'<h2>Edit {:singular}</h2>',
+									'<p>This page allows you to view/modify {:singular} details. Please make sure to fill out the available boxes with the appropriate details and <strong>not</strong> add these details to the {:singular} description.</p>'
+								];
+							}
+						])
 					])))->install();
 					
 					(new ContextualHelp(new __type_ContextualHelp([
@@ -124,7 +126,7 @@
 						__type_ContextualHelp::content		=> new Tabs([
 							new __type_Tab([
 								__type_Tab::id		=> 'welcome',
-								__type_Tab::label	=> '{:plural}',
+								__type_Tab::label	=> 'edit {:plural}',
 								__type_Tab::content	=>
 								[
 									'<h2>{:plural}</h2>',
@@ -141,8 +143,19 @@
 									'<p>This page allows you to view/modify {:singular} details. Please make sure to fill out the available boxes with the appropriate details and <strong>not</strong> add these details to the {:singular} description.</p>'
 								],
 							]),
+							new __type_Tab([
+								__type_Tab::id		=> 'ctest',
+								__type_Tab::label	=> 'Callable Test',
+								__type_Tab::content	=> new __type_Call([
+									__type_Call::fn	=> function()
+									{
+										return 'hello {:singular}';
+									}
+								])
+							]),
 						])
 					])))->install();
+					
 				
 				#::
 				
@@ -159,6 +172,32 @@
 							__type_Env::supports 		=> 11 + __flag_Support::PAGE_ATTRIBUTES | __flag_Support::POST_FORMATS,
 							__type_Env::hierarchical	=> TRUE
 						]),
+					])))->install();
+					
+					(new Taxonomy(new __type_Taxonomy([
+						__type_Taxonomy::name => new __type_Name([
+							__type_Name::singular 		=> 'Technology',
+							__type_Name::plural		=> 'Technologies',
+							__type_Name::slugSingular	=> 'technology',
+							__type_Name::slugPlural		=> 'technologies'
+						]),
+						__type_Taxonomy::type => 'skill',
+						__type_Taxonomy::args => new __type_Args([
+							__type_Args::hierarchical	=> FALSE
+						])
+					])))->install();
+					
+					(new Taxonomy(new __type_Taxonomy([
+						__type_Taxonomy::name => new __type_Name([
+							__type_Name::singular 		=> 'Type',
+							__type_Name::plural		=> 'Types',
+							__type_Name::slugSingular	=> 'type',
+							__type_Name::slugPlural		=> 'types'
+						]),
+						__type_Taxonomy::type => 'skill',
+						__type_Taxonomy::args => new __type_Args([
+							__type_Args::hierarchical	=> FALSE
+						])
 					])))->install();
 				
 				#::

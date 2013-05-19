@@ -24,7 +24,6 @@
 			$this->__Setup->name->slugSingular	= Inflector::underscore($this->__Setup->name->slugSingular);
 			$this->__Setup->name->slugPlural	= Inflector::underscore($this->__Setup->name->slugPlural);
 			
-			
 			$__name = [];
 			foreach([
 				__type_Name::singular		=> 'singular',
@@ -33,8 +32,7 @@
 				__type_Name::slugPlural		=> 'slug_plural'
 			] as $i => $k)
 				$__name[$k] = $this->__Setup->name->get()->toArray()[$i];
-				
-				
+			
 			$this->__actions[__const_Action::INIT] = new __type_Action([
 				__type_Action::fn => function() use (&$__name)
 				{	

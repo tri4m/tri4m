@@ -15,10 +15,7 @@
 			{
 				extract($i);
 				
-				if(strpos($file, 'wp-includes'))
-					return FALSE;
-				
-				return TRUE;
+				return !strpos($file, 'wp-includes');
 			};
 			
 			static::$__handle['shutdown'] = function()

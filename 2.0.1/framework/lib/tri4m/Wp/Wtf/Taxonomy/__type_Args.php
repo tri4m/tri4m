@@ -6,26 +6,24 @@
 	
 	CLASS __type_Args EXTENDS \ILLI\Core\Std\Def\ADVTuple
 	{
-		CONST label			= 0x00;
-		CONST labels			= 0x01;
-		CONST rewrite			= 0x02;
-		CONST isPublic			= 0x03;
-		CONST showUi			= 0x04;
-		CONST showInNavMenus		= 0x05;
-		CONST showTagCloud		= 0x06;
-		CONST showAdminColumn		= 0x07;
-		CONST hierarchical		= 0x08;
-		CONST updateCountCallback	= 0x09;
-		CONST queryVar			= 0x0A;
-		CONST sort			= 0x0B;
-		CONST builtin			= 0x0C;
+		CONST labels			= 0x00;
+		CONST rewrite			= 0x01;
+		CONST isPublic			= 0x02;
+		CONST showUi			= 0x03;
+		CONST showInNavMenus		= 0x04;
+		CONST showTagCloud		= 0x05;
+		CONST showAdminColumn		= 0x06;
+		CONST hierarchical		= 0x07;
+		CONST updateCountCallback	= 0x08;
+		CONST queryVar			= 0x09;
+		CONST sort			= 0x0A;
+		CONST builtin			= 0x0B;
 		
 		public function __construct(array $__setup = [])
 		{
 			parent::__construct
 			(
 				[
-					self::label			=> [__const_Type::SPL_STRING],
 					self::labels			=> ['tri4m\Wp\Wtf\Taxonomy\__type_Labels'],
 					self::rewrite			=> ['tri4m\Wp\Wtf\Taxonomy\__type_Rewrite'],
 					self::isPublic			=> [__const_Type::SPL_BOOLEAN],
