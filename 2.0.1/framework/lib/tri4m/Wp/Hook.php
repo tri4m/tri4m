@@ -24,15 +24,15 @@
 			{
 				Trace::add(1, __METHOD__.'[{:case}]', ['case' => $case]);
 				switch($case):
+					case self::CALL:
+						foreach($hook as $hash => $fn)
+							$fn();
+						break;
 					case self::ACTION:
 					case self::FILTER:
 						foreach($hook as $event => $do)
 							foreach($do as $hash => $fn)
 								$fn();
-						break;
-					case self::CALL:
-						foreach($hook as $hash => $fn)
-							$fn();
 						break;
 				endswitch;
 			}
@@ -47,8 +47,8 @@
 				Trace::add(2, 'call {:fn}@{:args}', ['fn' => $T->fn, 'args' => $a]);
 				switch(TRUE):
 					case $T->isVal($T::fn, __const_Type::SPL_CLOSURE):	return Invoke::emitCallable($T->fn, $a);
-					case $T->isVal($T::fn, __const_Type::SPL_FUNCTION):	return Invoke::emitFunction($T->fn, $a);
 					case $T->isVal($T::fn, __const_Type::SPL_METHOD):	return Invoke::emit($T->fn[0], $T->fn[1], $a);
+					case $T->isVal($T::fn, __const_Type::SPL_FUNCTION):	return Invoke::emitFunction($T->fn, $a);
 				endswitch;
 			};
 			
