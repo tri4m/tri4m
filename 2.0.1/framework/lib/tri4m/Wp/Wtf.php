@@ -6,17 +6,12 @@
 	CLASS Wtf
 	{
 		static protected $__defaults	= [];
+		protected $__Setup		= NULL;
 		protected $__actions		= [];
 		protected $__filters		= [];
 		protected $__callables		= [];
-		protected $__config		= [];
 		protected $__css		= NULL;
 		protected $__js			= NULL;
-		
-		function config(array $__config = [])
-		{
-			return $this->__config = array_merge($this->__config, $__config);
-		}
 		
 		function install()
 		{

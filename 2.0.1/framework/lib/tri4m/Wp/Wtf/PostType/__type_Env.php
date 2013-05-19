@@ -53,7 +53,7 @@
 					self::taxonomies	=> [__const_Type::SPL_ARRAY],
 					self::hasArchive	=> [__const_Type::SPL_BOOLEAN],
 					self::permalinkEpMask	=> [__const_Type::SPL_LONG],
-					self::queryVar		=> [__const_Type::SPL_BOOLEAN],
+					self::queryVar		=> [__const_Type::SPL_BOOLEAN, __const_Type::SPL_STRING],
 					self::canExport		=> [__const_Type::SPL_BOOLEAN],
 					self::builtin		=> [__const_Type::SPL_BOOLEAN],
 					self::editLink		=> [__const_Type::SPL_STRING]
@@ -74,7 +74,7 @@
 					self::menuIcon		=> NULL,
 					self::hierarchical	=> FALSE,
 					self::metaBoxFn		=> NULL,
-					self::taxonomies	=> ['category', 'post_tag', 'page-category'],
+					//self::taxonomies	=> ['category', 'post_tag', 'page-category'],
 					self::hasArchive	=> TRUE,
 					self::permalinkEpMask	=> 0,
 					self::queryVar		=> TRUE,

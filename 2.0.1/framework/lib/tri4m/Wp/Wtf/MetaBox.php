@@ -9,10 +9,16 @@
 	USE ILLI\Core\Util\String;
 	USE WP_Screen;
 	
-	CLASS ThemeOptionsPage EXTENDS \tri4m\Wp\Wtf
+	CLASS MetaBox EXTENDS \tri4m\Wp\Wtf
 	{
-		function __construct(array $__config = [])
+		protected $__actions	=
+		[
+			__const_Action::ADD_META_BOXES	=> NULL,
+			__const_Action::SAVE_POST	=> NULL,
+		];
+		
+		function __construct(__type_MetaBox $__Setup)
 		{
-			$this->__config = $__config;
+			$this->__Setup = $__Setup;
 		}
 	}
