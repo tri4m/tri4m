@@ -5,7 +5,7 @@
 	USE tri4m\Wp\Wtf\PostType\__type_UpdateMsg;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
-	CLASS __type_Posttype EXTENDS \ILLI\Core\Std\Def\ADVTuple
+	CLASS __type_PostType EXTENDS \ILLI\Core\Std\Def\ADVTuple
 	{
 		CONST name		= 0x00;
 		CONST env		= 0x01;

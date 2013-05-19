@@ -6,7 +6,7 @@
 	USE tri4m\Wp\__type_Filter;
 	USE tri4m\Wp\Inv;
 	USE tri4m\Wp\Wtf\__type_Name;
-	USE tri4m\Wp\Wtf\__type_Posttype;
+	USE tri4m\Wp\Wtf\__type_PostType;
 	USE tri4m\Wp\Wtf\PostType\__flag_Support;
 	USE tri4m\Wp\Wtf\PostType\__type_Env;
 	USE tri4m\Wp\Wtf\PostType\__type_Labels;
@@ -64,7 +64,7 @@
 			__flag_Support::POST_FORMATS	=> 'post-formats',
 		];
 		
-		function __construct(__type_Posttype $__Setup)
+		function __construct(__type_PostType $__Setup)
 		{
 			$this->__Setup = $__Setup;
 			
