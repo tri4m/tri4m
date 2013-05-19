@@ -1,9 +1,12 @@
 <?PHP
 	NAMESPACE tri4m\Wp;
 	USE tri4m\Wp\__type_Call;
+	USE tri4m\Wp\__const_Filter;
+	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\Trace;
 	USE tri4m\Wp\Hook;
 	USE tri4m\Wp\Theme;
+	USE tri4m\Wp\Inv;
 	USE tri4m\Wp\Wtf\__type_Name;
 	USE tri4m\Wp\Wtf\__type_AdminBar;
 	USE tri4m\Wp\Wtf\__type_PostType;
@@ -23,7 +26,10 @@
 	USE tri4m\Wp\Wtf\Taxonomy;
 	USE tri4m\Wp\Wtf\Taxonomy\__type_Args;
 	USE tri4m\Wp\Wtf\Taxonomy\__type_Rewrite;
+	USE tri4m\Wp\Wtf\ManageColumns;
+	USE tri4m\Wp\Wtf\__type_ManageColumns;
 	USE tri4m\Wp\Wtf\ThemeOptionsPage;
+	USE WP_Post;
 	
 	CLASS Application
 	{
@@ -46,6 +52,11 @@
 				Hook::enqueue(new __type_Call([
 					__type_Call::fn		=> ['tri4m\Wp\Inv', 'addThemeSupport'],
 					__type_Call::arguments	=> ['automatic-feed-links']
+				]));
+				
+				Hook::enqueue(new __type_Call([
+					__type_Call::fn		=> ['tri4m\Wp\Inv', 'addImageSize'],
+					__type_Call::arguments	=> ['edit-screen-thumbnail', 100, 100, TRUE]
 				]));
 				
 				Hook::enqueue(new __type_Call([
@@ -356,6 +367,53 @@
 						]))
 					])
 				])))->install();
+				
+			#::
+			
+			#:manageColumns:
+			
+				#:posts:
+			
+					(new ManageColumns(new __type_ManageColumns([
+						__type_ManageColumns::filterEvent	=> __const_Filter::MANAGE_POSTS_COLUMNS,
+						__type_ManageColumns::filter		=> new __type_Call([
+							__type_Call::fn			=> function($__columns)
+							{
+								unset($__columns['tags']);
+								return $__columns;
+							}
+						])
+					])))->install();
+					
+					(new ManageColumns(new __type_ManageColumns([
+						__type_ManageColumns::id		=> 'featured_image',
+						__type_ManageColumns::title		=> 'Featured Image',
+						__type_ManageColumns::index		=> 0,
+						__type_ManageColumns::filterEvent	=> __const_Filter::MANAGE_POSTS_COLUMNS,
+						__type_ManageColumns::actionEvent	=> __const_Action::MANAGE_POSTS_CUSTOM_COLUMN,
+						__type_ManageColumns::action		=> new __type_Call([
+							__type_Call::fn			=> function($__column, WP_Post $__WpPost)
+							{
+								print Inv::getThePostThumbnail($__WpPost->ID, 'edit-screen-thumbnail');
+							}
+						])
+					])))->install();
+					
+					(new ManageColumns(new __type_ManageColumns([
+						__type_ManageColumns::id		=> 'word_count',
+						__type_ManageColumns::title		=> 'Word Count',
+						__type_ManageColumns::index		=> 2,
+						__type_ManageColumns::filterEvent	=> __const_Filter::MANAGE_POSTS_COLUMNS,
+						__type_ManageColumns::actionEvent	=> __const_Action::MANAGE_POSTS_CUSTOM_COLUMN,
+						__type_ManageColumns::action		=> new __type_Call([
+							__type_Call::fn			=> function($__column, WP_Post $__WpPost)
+							{
+								print Inv::strWordCount($__WpPost->post_content);
+							}
+						])
+					])))->install();
+				
+				#::
 				
 			#::
 		}
