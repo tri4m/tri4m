@@ -61,51 +61,52 @@
 			#:posttypes:
 				#:members:
 					
+					$__def_Members = new __type_Name([
+						__type_Name::singular 		=> 'Member',
+						__type_Name::plural		=> 'Members',
+						__type_Name::slugSingular	=> 'member',
+						__type_Name::slugPlural		=> 'members'
+					]);
+					
+					$__def_MemberProfessions = new __type_Name([
+						__type_Name::singular 		=> 'Profession',
+						__type_Name::plural		=> 'Professions',
+						__type_Name::slugSingular	=> 'profession',
+						__type_Name::slugPlural		=> 'professions'
+					]);
+					
+					$__def_MemberLevels = new __type_Name([
+						__type_Name::singular 		=> 'Level',
+						__type_Name::plural		=> 'Levels',
+						__type_Name::slugSingular	=> 'level',
+						__type_Name::slugPlural		=> 'levels'
+					]);
+					
 					(new PostType(new __type_Posttype([
-						__type_Posttype::name => new __type_Name([
-							__type_Name::singular 		=> 'Member',
-							__type_Name::plural		=> 'Members',
-							__type_Name::slugSingular	=> 'member',
-							__type_Name::slugPlural		=> 'members'
-						])
+						__type_Posttype::name => $__def_Members
 					])))->install();
 					
 					(new Taxonomy(new __type_Taxonomy([
-						__type_Taxonomy::name => new __type_Name([
-							__type_Name::singular 		=> 'Profession',
-							__type_Name::plural		=> 'Professions',
-							__type_Name::slugSingular	=> 'profession',
-							__type_Name::slugPlural		=> 'professions'
-						]),
-						__type_Taxonomy::type => 'member',
+						__type_Taxonomy::name => $__def_MemberProfessions,
+						__type_Taxonomy::type => $__def_Members->slugSingular,
 						__type_Taxonomy::args => new __type_Args([
 							__type_Args::hierarchical	=> FALSE
 						])
 					])))->install();
 					
 					(new Taxonomy(new __type_Taxonomy([
-						__type_Taxonomy::name => new __type_Name([
-							__type_Name::singular 		=> 'Level',
-							__type_Name::plural		=> 'Levels',
-							__type_Name::slugSingular	=> 'level',
-							__type_Name::slugPlural		=> 'levels'
-						]),
-						__type_Taxonomy::type => 'member',
+						__type_Taxonomy::name => $__def_MemberLevels,
+						__type_Taxonomy::type => $__def_Members->slugSingular,
 						__type_Taxonomy::args => new __type_Args([
 							__type_Args::hierarchical	=> FALSE
 						])
 					])))->install();
 					
 					(new ContextualHelp(new __type_ContextualHelp([
-						__type_ContextualHelp::name		=> new __type_Name([
-							__type_Name::singular 		=> 'Member',
-							__type_Name::plural		=> 'Members',
-							__type_Name::slugSingular	=> 'member',
-							__type_Name::slugPlural		=> 'members'
-						]),
-						__type_ContextualHelp::id		=> 'edit-member',
-						__type_ContextualHelp::content		=> new __type_Call([
-							__type_Call::fn			=> function()
+						__type_ContextualHelp::name	=> $__def_Members,
+						__type_ContextualHelp::id	=> 'edit-'.$__def_Members->slugSingular,
+						__type_ContextualHelp::content	=> new __type_Call([
+							__type_Call::fn		=> function()
 							{
 								return [
 									'<h2>Edit {:singular}</h2>',
@@ -116,14 +117,9 @@
 					])))->install();
 					
 					(new ContextualHelp(new __type_ContextualHelp([
-						__type_ContextualHelp::name		=> new __type_Name([
-							__type_Name::singular 		=> 'Member',
-							__type_Name::plural		=> 'Members',
-							__type_Name::slugSingular	=> 'member',
-							__type_Name::slugPlural		=> 'members'
-						]),
-						__type_ContextualHelp::id		=> 'member',
-						__type_ContextualHelp::content		=> new Tabs([
+						__type_ContextualHelp::name	=> $__def_Members,
+						__type_ContextualHelp::id	=> $__def_Members->slugSingular,
+						__type_ContextualHelp::content	=> new Tabs([
 							new __type_Tab([
 								__type_Tab::id		=> 'welcome',
 								__type_Tab::label	=> 'edit {:plural}',
@@ -156,18 +152,33 @@
 						])
 					])))->install();
 					
-				
 				#::
 				
 				#:skills:
 				
+					$__def_Skills = new __type_Name([
+						__type_Name::singular 		=> 'Skill',
+						__type_Name::plural		=> 'Skills',
+						__type_Name::slugSingular	=> 'skill',
+						__type_Name::slugPlural		=> 'skills'
+					]);
+					
+					$__def_SkillTechnologies = new __type_Name([
+						__type_Name::singular 		=> 'Technology',
+						__type_Name::plural		=> 'Technologies',
+						__type_Name::slugSingular	=> 'technology',
+						__type_Name::slugPlural		=> 'technologies'
+					]);
+					
+					$__def_SkillTypes = new __type_Name([
+						__type_Name::singular 		=> 'Type',
+						__type_Name::plural		=> 'Types',
+						__type_Name::slugSingular	=> 'type',
+						__type_Name::slugPlural		=> 'types'
+					]);
+					
 					(new PostType(new __type_Posttype([
-						__type_Posttype::name => new __type_Name([
-							__type_Name::singular 		=> 'Skill',
-							__type_Name::plural		=> 'Skills',
-							__type_Name::slugSingular	=> 'skill',
-							__type_Name::slugPlural		=> 'skills'
-						]),
+						__type_Posttype::name => $__def_Skills,
 						__type_Posttype::env => new __type_Env([
 							__type_Env::supports 		=> 11 + __flag_Support::PAGE_ATTRIBUTES | __flag_Support::POST_FORMATS,
 							__type_Env::hierarchical	=> TRUE
@@ -175,26 +186,16 @@
 					])))->install();
 					
 					(new Taxonomy(new __type_Taxonomy([
-						__type_Taxonomy::name => new __type_Name([
-							__type_Name::singular 		=> 'Technology',
-							__type_Name::plural		=> 'Technologies',
-							__type_Name::slugSingular	=> 'technology',
-							__type_Name::slugPlural		=> 'technologies'
-						]),
-						__type_Taxonomy::type => 'skill',
+						__type_Taxonomy::name => $__def_SkillTechnologies,
+						__type_Taxonomy::type => $__def_Skills->slugSingular,
 						__type_Taxonomy::args => new __type_Args([
 							__type_Args::hierarchical	=> FALSE
 						])
 					])))->install();
 					
 					(new Taxonomy(new __type_Taxonomy([
-						__type_Taxonomy::name => new __type_Name([
-							__type_Name::singular 		=> 'Type',
-							__type_Name::plural		=> 'Types',
-							__type_Name::slugSingular	=> 'type',
-							__type_Name::slugPlural		=> 'types'
-						]),
-						__type_Taxonomy::type => 'skill',
+						__type_Taxonomy::name => $__def_SkillTypes,
+						__type_Taxonomy::type => $__def_Skills->slugSingular,
 						__type_Taxonomy::args => new __type_Args([
 							__type_Args::hierarchical	=> FALSE
 						])
@@ -231,7 +232,7 @@
 			
 			#::
 				
-			#:todo:
+			#:adminbar:
 			
 				(new AdminBar(new __type_AdminBar([
 					__type_AdminBar::title	=> Theme::fullName(),

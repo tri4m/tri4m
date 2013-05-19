@@ -28,7 +28,7 @@
 			'corePie'	=> '{:root}/core/lib/pie',
 			'std'		=> '{:root}/core/std',
 			'stdLib'	=> '{:root}/core/std/lib',
-			'stdImg'	=> '{:root}/core/std/lib/mg',
+			'stdImg'	=> '{:root}/core/std/lib/img',
 			'wp'		=> '{:wp}',
 			'wpJs'		=> '{:wp}/js',
 			'wpCss'		=> '{:wp}/css',
