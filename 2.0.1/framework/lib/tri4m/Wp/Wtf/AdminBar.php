@@ -4,7 +4,7 @@
 	USE tri4m\Wp\__type_Action;
 	USE tri4m\Wp\Wtf\__type_AdminBar;
 	USE tri4m\Wp\Wtf\AdminBar\__type_Meta;
-	USE tri4m\Wp\Wtf\AdminBar\Sub;
+	USE tri4m\Wp\Wtf\AdminBar\Child;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Std\Spl\FsbCollection;
 	USE WP_Admin_Bar;
@@ -36,7 +36,7 @@
 					] as $i => $k)
 						$config[$k] = $this->__Setup->get()->toArray()[$i];
 					
-					if($this->__Setup->sub instanceOf Sub)
+					if($this->__Setup->sub instanceOf Child)
 						foreach($this->__Setup->sub->get() as $i => $Sub)
 							$Sub->__Setup->parentId = $this->__Setup->id;
 					
@@ -57,7 +57,7 @@
 		
 		function install()
 		{
-			if(($Sub = parent::install()->__Setup->sub) instanceOf Sub)
+			if(($Sub = parent::install()->__Setup->sub) instanceOf Child)
 				foreach($Sub->get() as $S)
 					$S->install();
 			

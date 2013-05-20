@@ -123,6 +123,8 @@
 					] as $i => $k)
 						$config[$k] = $this->__Setup->env->get()->toArray()[$i];
 					
+					$config[is_string($c = $this->__Setup->env->get()->toArray()[__type_Env::capability]) ? 'capability_type' : 'capabilities'] = $c;
+					
 					foreach([
 						__type_Labels::plural		=> 'name',
 						__type_Labels::singular		=> 'singular_name',

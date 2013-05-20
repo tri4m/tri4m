@@ -2,7 +2,7 @@
 	NAMESPACE tri4m\Wp\Wtf;
 	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\__const_Filter;
-	USE tri4m\Wp\__type_Filter;
+	USE tri4m\Wp\__type_Action;
 	USE tri4m\Wp\__type_Call;
 	USE tri4m\Wp\__type_Filter;
 	USE tri4m\Wp\Inv;

@@ -21,7 +21,7 @@
 					self::id		=> [__const_Type::SPL_STRING],
 					self::href		=> [__const_Type::SPL_STRING],
 					self::parentId		=> [__const_Type::SPL_STRING],
-					self::sub		=> ['tri4m\Wp\Wtf\AdminBar\Sub'],
+					self::sub		=> ['tri4m\Wp\Wtf\AdminBar\Child'],
 					self::meta		=> ['tri4m\Wp\Wtf\AdminBar\__type_Meta']
 				],
 				$__setup

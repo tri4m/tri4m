@@ -2,7 +2,7 @@
 	NAMESPACE tri4m\Wp\Wtf\AdminBar;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
-	CLASS Sub EXTENDS \ILLI\Core\Std\Def\ADVArrayStrict
+	CLASS Child EXTENDS \ILLI\Core\Std\Def\ADVArrayStrict
 	{
 		public function __construct(array $__setup = [])
 		{

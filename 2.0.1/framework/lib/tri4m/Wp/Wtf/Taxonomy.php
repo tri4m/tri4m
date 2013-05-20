@@ -6,7 +6,7 @@
 	USE tri4m\Wp\__type_Filter;
 	USE tri4m\Wp\Inv;
 	USE tri4m\Wp\Wtf\__type_Taxonomy;
-	USE tri4m\Wp\Wtf\Taxonomy\__type_Args;
+	USE tri4m\Wp\Wtf\Taxonomy\__type_Env;
 	USE tri4m\Wp\Wtf\Taxonomy\__type_Labels;
 	USE tri4m\Wp\Wtf\Taxonomy\__type_Rewrite;
 	USE ILLI\Core\Util\Inflector;
@@ -44,17 +44,17 @@
 					$config = [];
 						
 					foreach([
-						__type_Args::isPublic			=> 'public',
-						__type_Args::showUi			=> 'show_ui',
-						__type_Args::showInNavMenus		=> 'show_in_nav_menus',
-						__type_Args::showTagCloud		=> 'show_tag_cloud',
-						__type_Args::showAdminColumn		=> 'show_admin_column',
-						__type_Args::hierarchical		=> 'hierarchical',
-						__type_Args::hierarchical		=> 'hierarchical',
-						__type_Args::updateCountCallback	=> 'update_count_callback',
-						__type_Args::queryVar			=> 'query_var',
-						__type_Args::sort			=> 'sort',
-						__type_Args::builtin			=> '_builtin',
+						__type_Env::isPublic			=> 'public',
+						__type_Env::showUi			=> 'show_ui',
+						__type_Env::showInNavMenus		=> 'show_in_nav_menus',
+						__type_Env::showTagCloud		=> 'show_tag_cloud',
+						__type_Env::showAdminColumn		=> 'show_admin_column',
+						__type_Env::hierarchical		=> 'hierarchical',
+						__type_Env::hierarchical		=> 'hierarchical',
+						__type_Env::updateCountCallback	=> 'update_count_callback',
+						__type_Env::queryVar			=> 'query_var',
+						__type_Env::sort			=> 'sort',
+						__type_Env::builtin			=> '_builtin',
 					] as $i => $k)
 						$config[$k] = $this->__Setup->args->get()->toArray()[$i];
 					

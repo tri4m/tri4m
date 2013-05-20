@@ -9,25 +9,21 @@
 	USE tri4m\Wp\Inv;
 	USE tri4m\Wp\Wtf\__type_Name;
 	USE tri4m\Wp\Wtf\__type_AdminBar;
-	USE tri4m\Wp\Wtf\__type_PostType;
 	USE tri4m\Wp\Wtf\__type_ContextualHelp;
+	USE tri4m\Wp\Wtf\__type_ManageColumns;
+	USE tri4m\Wp\Wtf\__type_PostType;
 	USE tri4m\Wp\Wtf\__type_SideBar;
 	USE tri4m\Wp\Wtf\__type_Taxonomy;
 	USE tri4m\Wp\Wtf\AdminBar;
-	USE tri4m\Wp\Wtf\AdminBar\__type_Meta;
-	USE tri4m\Wp\Wtf\AdminBar\Sub;
-	USE tri4m\Wp\Wtf\PostType;
-	USE tri4m\Wp\Wtf\PostType\__flag_Support;
-	USE tri4m\Wp\Wtf\PostType\__type_Env;
+	USE tri4m\Wp\Wtf\AdminBar\Child;
 	USE tri4m\Wp\Wtf\ContextualHelp;
 	USE tri4m\Wp\Wtf\ContextualHelp\__type_Tab;
 	USE tri4m\Wp\Wtf\ContextualHelp\Tabs;
+	USE tri4m\Wp\Wtf\ManageColumns;
+	USE tri4m\Wp\Wtf\PostType;
+	USE tri4m\Wp\Wtf\PostType\__flag_Support;
 	USE tri4m\Wp\Wtf\SideBar;
 	USE tri4m\Wp\Wtf\Taxonomy;
-	USE tri4m\Wp\Wtf\Taxonomy\__type_Args;
-	USE tri4m\Wp\Wtf\Taxonomy\__type_Rewrite;
-	USE tri4m\Wp\Wtf\ManageColumns;
-	USE tri4m\Wp\Wtf\__type_ManageColumns;
 	USE tri4m\Wp\Wtf\ThemeOptionsPage;
 	USE ILLI\Core\Util\String;
 	USE WP_Post;
@@ -354,7 +350,7 @@
 						__type_AdminBar::title	=> Theme::fullName(),
 						__type_AdminBar::id	=> Theme::fullName(),
 						__type_AdminBar::href	=> '#',
-						__type_AdminBar::sub	=> new Sub([
+						__type_AdminBar::sub	=> new Child([
 							new AdminBar(new __type_AdminBar([
 								__type_AdminBar::title	=> 'foo'
 							]))
@@ -365,7 +361,7 @@
 						__type_AdminBar::title	=> Theme::name(),
 						__type_AdminBar::id	=> Theme::name(),
 						__type_AdminBar::href	=> '#',
-						__type_AdminBar::sub	=> new Sub([
+						__type_AdminBar::sub	=> new Child([
 							new AdminBar(new __type_AdminBar([
 								__type_AdminBar::title	=> 'baz'
 							]))
