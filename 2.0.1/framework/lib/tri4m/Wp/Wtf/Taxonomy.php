@@ -58,6 +58,9 @@
 					] as $i => $k)
 						$config[$k] = $this->__Setup->args->get()->toArray()[$i];
 					
+					if(FALSE !== (bool) ($c = $this->__Setup->args->get()->toArray()[__type_Env::capabilities]))
+						$config['capabilities'] = $c;
+					
 					foreach([
 						__type_Labels::plural			=> 'name',
 						__type_Labels::singular			=> 'singular_name',
