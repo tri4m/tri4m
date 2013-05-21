@@ -1,7 +1,6 @@
 <?PHP
 	NAMESPACE tri4m\Wp;
-	USE ILLI\Core\Std\Invoke;
-	USE ILLI\Core\Util\Inflector;
+	USE tri4m\Wp\Hook;
 	
 	CLASS Wtf
 	{
@@ -18,12 +17,20 @@
 			foreach(['__actions', '__filters'] as $p)
 				foreach($this->$p as $e => $T)
 				{
+					if($T === NULL)
+						continue;
+						
 					$T->event = $e;
 					Hook::enqueue($T);
 				}
 				
 			foreach($this->__callables as $T)
+			{
+				if($T === NULL)
+					continue;
+				
 				Hook::enqueue($T);
+			}
 				
 			return $this;
 		}

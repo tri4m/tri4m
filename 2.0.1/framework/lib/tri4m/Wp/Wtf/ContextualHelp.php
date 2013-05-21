@@ -55,24 +55,24 @@
 						case $this->__Setup->id !== $__WpScreen->id:
 							return $__contextualHelp;
 						
-						case is_string($this->__Setup->content):
-							return String::insert($this->__Setup->content, $__name);
+						case is_string($c = $this->__Setup->content):
+							return String::insert($c, $__name);
 						
-						case is_array($this->__Setup->content):
-							return String::insert(implode(PHP_EOL, $this->__Setup->content), $__name);
+						case is_array($c = $this->__Setup->content):
+							return String::insert(implode(PHP_EOL, $c), $__name);
 						
-						case $this->__Setup->content instanceOf __type_Call:
+						case ($c = $this->__Setup->content) instanceOf __type_Call:
 							$__WpScreen->add_help_tab([
 								'id'		=> Inflector::underscore($this->__Setup->id),
 								'title'		=> String::insert($this->__Setup->name->singular, $__name),
-								'content'	=> String::insert(is_array($c = $__STATIC_fnI($this->__Setup->content)) ? implode(PHP_EOL, $c) : $c, $__name),
+								'content'	=> String::insert(is_array($c = $__STATIC_fnI($c)) ? implode(PHP_EOL, $c) : $c, $__name),
 								'callback'	=> $this->__Setup->callback
 							]);
 							
 							break;
 						
-						case $this->__Setup->content instanceOf Tabs:
-							foreach($this->__Setup->content->get() as $t)
+						case ($c = $this->__Setup->content) instanceOf Tabs:
+							foreach($c->get() as $t)
 								$__WpScreen->add_help_tab([
 									'id'		=> Inflector::underscore($t->id),
 									'title'		=> String::insert($t->label, $__name),

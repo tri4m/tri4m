@@ -25,6 +25,14 @@
 	USE tri4m\Wp\Wtf\SideBar;
 	USE tri4m\Wp\Wtf\Taxonomy;
 	USE tri4m\Wp\Wtf\ThemeOptionsPage;
+	
+	USE tri4m\Wp\Wtf\Settings;
+	USE tri4m\Wp\Wtf\__type_Settings;
+	USE tri4m\Wp\Wtf\Settings\Sections;
+	USE tri4m\Wp\Wtf\Settings\__type_Section;
+	USE tri4m\Wp\Wtf\Settings\Fields;
+	USE tri4m\Wp\Wtf\Settings\__type_Field;
+	//USE tri4m\Wp\Data\OptionsTheme;
 	USE ILLI\Core\Util\String;
 	USE WP_Post;
 	
@@ -33,6 +41,55 @@
 		function boot()
 		{
 			Trace::add(__METHOD__);
+			
+			#:options:
+			
+				(new Settings(new __type_Settings([
+					__type_Settings::id		=> 'tri4m_test',
+					__type_Settings::name		=> 'Test Options',
+					__type_Settings::sections	=> new Sections([
+						new __type_Section([
+							__type_Section::id	=> 'FOO',
+							__type_Section::title	=> 'FOO VARS',
+							__type_Section::content	=> '<p>trolololol</p>',
+							__type_Section::fields	=> new Fields([
+								new __type_Field([
+									__type_Field::id	=> 'first_option',
+									__type_Field::title	=> '1st Option',
+									__type_Field::std	=> '1st Value',
+									__type_Field::type	=> 'text',
+								]),
+								new __type_Field([
+									__type_Field::id	=> 'second_option',
+									__type_Field::title	=> '2nd Option',
+									__type_Field::std	=> '2nd Value',
+									__type_Field::type	=> 'text',
+								])
+							])
+						]),
+						new __type_Section([
+							__type_Section::id	=> 'BAR',
+							__type_Section::title	=> 'BAR VARS',
+							__type_Section::content	=> '<p>Hello world</p>',
+							__type_Section::fields	=> new Fields([
+								new __type_Field([
+									__type_Field::id	=> 'third_option',
+									__type_Field::title	=> '3rd Option',
+									__type_Field::std	=> '3rd Value',
+									__type_Field::type	=> 'text',
+								]),
+								new __type_Field([
+									__type_Field::id	=> 'fourth_option',
+									__type_Field::title	=> '4th Option',
+									__type_Field::std	=> '4th Value',
+									__type_Field::type	=> 'text',
+								])
+							])
+						])
+					])
+				])))->install();
+			
+			#::
 			
 			#:config:
 				
