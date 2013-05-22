@@ -248,15 +248,19 @@
 			{
 				$config = [];
 				
-				foreach([
-					__type_Page::parentId		=> __type_SubMenuPage::parentId,
-					__type_Page::title		=> __type_SubMenuPage::title,
-					__type_Page::menuTitle		=> __type_SubMenuPage::menuTitle,
-					__type_Page::cssClass		=> __type_SubMenuPage::cssClass,
-					__type_Page::capability		=> __type_SubMenuPage::capability,
-					__type_Page::icon		=> __type_SubMenuPage::icon
-				] as $i => $k)
-					$config[$k] = $this->__Setup->page->get()->toArray()[$i];
+				$_ = [
+					[
+						'parentId', 'title', 'menuTitle', 'cssClass', 'capability', 'icon'
+					],
+					$this->__Setup->page->get()->toArray(),
+					'tri4m\Wp\Wtf\__type_SubMenuPage::',
+					'tri4m\Wp\Wtf\Settings\__type_Page::',
+				];
+				
+				foreach($_[0] as $c)
+					$config[constant($_[2].$c)] = $_[1][constant($_[3].$c)];
+				
+				unset($_);
 				
 				$config[__type_SubMenuPage::id]		= $id;
 				$config[__type_SubMenuPage::content]	= new __type_Call([
