@@ -1,6 +1,7 @@
 <?PHP
 	NAMESPACE tri4m\Wp\Wtf;
 	USE tri4m\Wp\__const_Action;
+	USE tri4m\Wp\__const_AdminLink;
 	USE tri4m\Wp\__const_Filter;
 	USE tri4m\Wp\__type_Action;
 	USE tri4m\Wp\__type_Filter;
@@ -46,7 +47,7 @@
 				
 				switch($_POST['action']):
 					case 'reset':
-						Inv::addSettingsError($__Setup->id, 'restore_defaults', 'Default options restored.', 'updated fade');
+						Inv::addSettingsError($__Setup->id, 'restore_defaults', $__Setup->messages->resetComplete, 'updated fade');
 						
 						foreach($__cache as $id => $Field)
 							$result[$id] = $Field->std;
@@ -56,11 +57,11 @@
 					case 'import':
 						if($result = unserialize(stripslashes(trim($_POST['import']))))
 						{
-							Inv::addSettingsError($__Setup->id, 'import', 'Options Imported', 'updated fade');
+							Inv::addSettingsError($__Setup->id, 'import', $__Setup->messages->importComplete, 'updated fade');
 							break;
 						}
 						
-						Inv::addSettingsError($__Setup->id, 'import', 'Invalid Data for Import', 'updated fade');
+						Inv::addSettingsError($__Setup->id, 'import', $__Setup->messages->importError, 'updated fade');
 						break;
 					
 					case 'update':
@@ -145,7 +146,7 @@
 						foreach($pattern as &$_)
 							$_ = String::insert($_, $config);
 						
-						print String::insert('<input {:attr} />', ['attr' => String::attribute($pattern)]);
+						print String::insert('<input {:attr} />', ['attr' => String::attribute($pattern, ['delimeter' => ' '])]);
 					},
 					$__Setup->id,
 					$__Section->id,
@@ -180,7 +181,7 @@
 			{
 				return Inv::addSubmenuPage
 				(
-					'themes.php',
+					__const_AdminLink::THEMES,
 					$__Setup->name,
 					$__Setup->name,
 					$__Setup->capability,

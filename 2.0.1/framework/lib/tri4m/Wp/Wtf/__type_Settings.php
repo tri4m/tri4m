@@ -1,5 +1,6 @@
 <?PHP
 	NAMESPACE tri4m\Wp\Wtf;
+	USE tri4m\Wp\Wtf\Settings\__type_Messages;
 	USE tri4m\Wp\Wtf\Settings\Sections;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
@@ -10,6 +11,7 @@
 		CONST capability	= 0x02;
 		CONST sections		= 0x03;
 		CONST fn		= 0x04;
+		CONST messages		= 0x05;
 		
 		public function __construct(array $__setup = [])
 		{
@@ -20,11 +22,13 @@
 					self::name		=> [__const_Type::SPL_STRING],
 					self::capability	=> [__const_Type::SPL_STRING],
 					self::sections		=> ['tri4m\Wp\Wtf\Settings\Sections'],
-					self::fn		=> [__const_Type::SPL_CLOSURE, __const_Type::SPL_FUNCTION, __const_Type::SPL_METHOD]
+					self::fn		=> [__const_Type::SPL_CLOSURE, __const_Type::SPL_FUNCTION, __const_Type::SPL_METHOD],
+					self::messages		=> ['tri4m\Wp\Wtf\Settings\__type_Messages'],
 				],
 				parent::mergeOffsetValues($__setup, [
 					self::capability	=> 'administrator',
-					self::sections		=> new Sections
+					self::sections		=> new Sections,
+					self::messages		=> new __type_Messages
 				])
 			);
 		}

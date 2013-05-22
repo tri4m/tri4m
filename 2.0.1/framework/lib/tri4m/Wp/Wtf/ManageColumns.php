@@ -2,6 +2,7 @@
 	NAMESPACE tri4m\Wp\Wtf;
 	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\__const_Filter;
+	USE tri4m\Wp\__const_Global;
 	USE tri4m\Wp\__type_Action;
 	USE tri4m\Wp\__type_Call;
 	USE tri4m\Wp\__type_Filter;
@@ -65,7 +66,7 @@
 				if(FALSE === ($__columnId === $__Setup->id))
 					return;
 				
-				if(FALSE === (($WpPost = Inv::glob('post')) instanceOf WP_Post))
+				if(FALSE === (($WpPost = Inv::glob(__const_Global::LOOP_POST)) instanceOf WP_Post))
 					return;
 							
 				$__Setup->action->arguments = [$__columnId, $WpPost] + $__Setup->action->arguments;

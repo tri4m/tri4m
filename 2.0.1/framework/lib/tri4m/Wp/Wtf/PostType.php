@@ -2,6 +2,7 @@
 	NAMESPACE tri4m\Wp\Wtf;
 	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\__const_Filter;
+	USE tri4m\Wp\__const_Global;
 	USE tri4m\Wp\__type_Action;
 	USE tri4m\Wp\__type_Filter;
 	USE tri4m\Wp\Inv;
@@ -143,16 +144,15 @@
 			
 			isset($__STATIC_fnM) ?: $__STATIC_fnM = function(__type_PostType $__Setup, $__name)
 			{
-				$post	= Inv::glob('post');
-				$id	= Inv::glob('post_ID');
+				$WpPost = Inv::glob(__const_Global::LOOP_POST);
 				$x	= 0;
 				$h	= &$__messages[$__Setup->name->slugSingular];
 				$p	= $__name +
 				[
-					'permalink'	=> Inv::escUrl(Inv::getPermalink($id)),
+					'permalink'	=> Inv::escUrl(Inv::getPermalink($WpPost->ID)),
 					'revision'	=> isset($_GET['revision']) ? Inv::wpPostRevisionTitle(intval($_GET['revision']), FALSE) : NULL,
-					'preview'	=> Inv::escUrl(Inv::addQueryArg('preview', 'true', Inv::getPermalink($id))),
-					'date'		=> Inv::dateI18n('M j, Y @ G:i', strtotime($post->post_date))
+					'preview'	=> Inv::escUrl(Inv::addQueryArg('preview', 'true', Inv::getPermalink($WpPost->ID))),
+					'date'		=> Inv::dateI18n('M j, Y @ G:i', strtotime($WpPost->post_date))
 				];
 				
 				foreach([
