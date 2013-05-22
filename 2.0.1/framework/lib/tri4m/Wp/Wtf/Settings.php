@@ -272,7 +272,7 @@
 			$this->__actions[__const_Action::ADMIN_INIT] = new __type_Action([
 				__type_Action::argsNum	=> 0,
 				__type_Action::priority	=> 101,
-				__type_Action::fn	=> function() use (&$__STATIC_fnV, &$__STATIC_fnF, &$__STATIC_fnS, &$__STATIC_fnR)
+				__type_Action::fn	=> function() use (&$__STATIC_fnF, &$__STATIC_fnS, &$__STATIC_fnR)
 				{
 					$__STATIC_fnR($this->__Setup, $this->__cache);
 					
