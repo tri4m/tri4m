@@ -20,17 +20,18 @@
 		
 		static function dequeue()
 		{
-			foreach(static::$__hooked as $case => $hook)
+			foreach([self::CALL, self::FILTER, self::ACTION] as $case)
 			{
 				Trace::add(1, __METHOD__.'[{:case}]', ['case' => $case]);
+				
 				switch($case):
 					case self::CALL:
-						foreach($hook as $hash => $fn)
+						foreach(static::$__hooked[$case] as $hash => $fn)
 							$fn();
 						break;
 					case self::ACTION:
 					case self::FILTER:
-						foreach($hook as $event => $do)
+						foreach(static::$__hooked[$case] as $event => $do)
 							foreach($do as $hash => $fn)
 								$fn();
 						break;

@@ -34,10 +34,7 @@
 		
 		function __construct(__type_ManageColumns $__Setup)
 		{
-			$this->__Setup		= $__Setup;
-			$this->__Setup->id	= Inflector::underscore($this->__Setup->id);
-			
-			static $__STATIC_fnI;
+			static $__STATIC_fnI, $__STATIC_fnF, $__STATIC_fnC;
 			
 			isset($__STATIC_fnI) ?: $__STATIC_fnI = function(__type_Call $T)
 			{
@@ -48,6 +45,37 @@
 				endswitch;
 			};
 			
+			isset($__STATIC_fnF) ?: $__STATIC_fnF = function(__type_ManageColumns $__Setup, array $__columns) use (&$__STATIC_fnI)
+			{
+				if($__Setup->filter instanceOf __type_Call)
+				{
+					$__Setup->filter->arguments = [$__columns] + $__Setup->filter->arguments;
+					return $__STATIC_fnI($__Setup->filter);
+				}
+				
+				$__columns = array_slice($__columns, 0, $__Setup->index + 1, TRUE)
+						+ [$__Setup->id => $__Setup->title]
+						+ array_slice($__columns, $__Setup->index + 1, NULL, TRUE);
+						
+				return $__columns;
+			};
+			
+			isset($__STATIC_fnC) ?: $__STATIC_fnC = function(__type_ManageColumns $__Setup, $__columnId) use (&$__STATIC_fnI)
+			{
+				if(FALSE === ($__columnId === $__Setup->id))
+					return;
+				
+				if(FALSE === (($WpPost = Inv::glob('post')) instanceOf WP_Post))
+					return;
+							
+				$__Setup->action->arguments = [$__columnId, $WpPost] + $__Setup->action->arguments;
+				
+				$__STATIC_fnI($__Setup->action);
+			};
+			
+			$this->__Setup		= $__Setup;
+			$this->__Setup->id	= Inflector::underscore($this->__Setup->id);
+			
 			if(FALSE === (bool) $__Setup->filterEvent)
 				return;
 			
@@ -55,20 +83,10 @@
 				$this->__filters[$event] = new __type_Filter([
 					__type_Filter::argsNum	=> 1,
 					__type_Filter::priority	=> 400,
-					__type_Filter::fn	=> $this->__Setup->filter instanceOf __type_Call
-						? function(array $__columns) use (&$__STATIC_fnI)
-						{
-							$this->__Setup->filter->arguments = [$__columns] + $this->__Setup->filter->arguments;
-							return $__STATIC_fnI($this->__Setup->filter);
-						}
-						: function(array $__columns)
-						{
-							$__columns = array_slice($__columns, 0, $this->__Setup->index + 1, TRUE)
-									+ [$this->__Setup->id => $this->__Setup->title]
-									+ array_slice($__columns, $this->__Setup->index + 1, NULL, TRUE);
-									
-							return $__columns;
-						}
+					__type_Filter::fn	=> function($__columns) use (&$__STATIC_fnF)
+					{
+						return $__STATIC_fnF($this->__Setup, $__columns);
+					}
 				]);
 			
 			if(FALSE === ($this->__Setup->action instanceOf __type_Call)
@@ -79,19 +97,9 @@
 				$this->__actions[$event] = new __type_Action([
 					__type_Action::argsNum	=> 1,
 					__type_Action::priority	=> 400,
-					__type_Action::fn	=> function($__columnId) use (&$__STATIC_fnI)
+					__type_Action::fn	=> function($__columnId) use (&$__STATIC_fnC)
 					{
-						if(FALSE === ($__columnId === $this->__Setup->id))
-							return;
-						
-						$WpPost = Inv::glob('post');
-						
-						if(FALSE === ($WpPost instanceOf WP_Post))
-							return;
-						
-						$this->__Setup->action->arguments = [$__columnId, $WpPost] + $this->__Setup->action->arguments;
-						
-						$__STATIC_fnI($this->__Setup->action);
+						$__STATIC_fnC($this->__Setup, $__columnId);
 					}
 				]);
 		}

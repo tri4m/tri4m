@@ -16,6 +16,27 @@
 		
 		function __construct(__type_SideBar $__Setup)
 		{
+			static $__STATIC_fnC;
+			
+			isset($__STATIC_fnC) ?: $__STATIC_fnC = function(__type_SideBar $__Setup, $__name)
+			{
+				$config = [];
+				
+				foreach([
+					__type_Sidebar::name		=> 'name',
+					__type_Sidebar::desc		=> 'description',
+					__type_Sidebar::id		=> 'id',
+					__type_Sidebar::cssClass	=> 'class',
+					__type_Sidebar::beforeWidget	=> 'before_widget',
+					__type_Sidebar::afterWidget	=> 'after_widget',
+					__type_Sidebar::beforeTitle	=> 'before_title',
+					__type_Sidebar::afterTitle	=> 'after_title'
+				] as $i => $k)
+					$config[$k] = String::insert(is_array($d = $__Setup->get()->toArray()[$i]) ? implode(PHP_EOL, $d) : $d, $__name);
+				
+				Inv::registerSidebar($config);
+			};
+			
 			$this->__Setup		= $__Setup;
 			$this->__Setup->id	= Inflector::underscore($this->__Setup->id);
 			
@@ -31,23 +52,9 @@
 			$this->__actions[__const_Action::WIDGETS_INIT] = new __type_Action([
 				__type_Action::argsNum	=> 1,
 				__type_Action::priority	=> 20,
-				__type_Action::fn	=> function() use (&$__name)
+				__type_Action::fn	=> function() use (&$__STATIC_fnC, &$__name)
 				{
-					$config = [];
-					
-					foreach([
-						__type_Sidebar::name		=> 'name',
-						__type_Sidebar::desc		=> 'description',
-						__type_Sidebar::id		=> 'id',
-						__type_Sidebar::cssClass	=> 'class',
-						__type_Sidebar::beforeWidget	=> 'before_widget',
-						__type_Sidebar::afterWidget	=> 'after_widget',
-						__type_Sidebar::beforeTitle	=> 'before_title',
-						__type_Sidebar::afterTitle	=> 'after_title'
-					] as $i => $k)
-						$config[$k] = String::insert(is_array($d = $this->__Setup->get()->toArray()[$i]) ? implode(PHP_EOL, $d) : $d, $__name);
-					
-					Inv::registerSidebar($config);
+					$__STATIC_fnC($this->__Setup, $__name);
 				}
 			]);
 		}

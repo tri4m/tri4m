@@ -58,6 +58,7 @@
 									__type_Field::title	=> '1st Option',
 									__type_Field::std	=> '1st Value',
 									__type_Field::type	=> 'text',
+									__type_Field::desc	=> 'another textfield',
 								]),
 								new __type_Field([
 									__type_Field::id	=> 'second_option',

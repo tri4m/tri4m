@@ -19,7 +19,8 @@
 					self::id		=> [__const_Type::SPL_STRING],
 					self::name		=> [__const_Type::SPL_STRING],
 					self::capability	=> [__const_Type::SPL_STRING],
-					self::sections		=> ['tri4m\Wp\Wtf\Settings\Sections']
+					self::sections		=> ['tri4m\Wp\Wtf\Settings\Sections'],
+					self::fn		=> [__const_Type::SPL_CLOSURE, __const_Type::SPL_FUNCTION, __const_Type::SPL_METHOD]
 				],
 				parent::mergeOffsetValues($__setup, [
 					self::capability	=> 'administrator',
