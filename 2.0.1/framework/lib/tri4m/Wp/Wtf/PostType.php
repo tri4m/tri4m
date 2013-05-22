@@ -15,7 +15,6 @@
 	USE tri4m\Wp\Wtf\PostType\__type_UpdateMsg;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
-	USE WP_Screen;
 	
 	/**
 	 * @todo

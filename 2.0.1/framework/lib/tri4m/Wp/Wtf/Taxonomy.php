@@ -2,16 +2,14 @@
 	NAMESPACE tri4m\Wp\Wtf;
 	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\__type_Action;
-	USE tri4m\Wp\__const_Filter;
-	USE tri4m\Wp\__type_Filter;
 	USE tri4m\Wp\Inv;
+	USE tri4m\Wp\Wtf\__type_Name;
 	USE tri4m\Wp\Wtf\__type_Taxonomy;
 	USE tri4m\Wp\Wtf\Taxonomy\__type_Env;
 	USE tri4m\Wp\Wtf\Taxonomy\__type_Labels;
 	USE tri4m\Wp\Wtf\Taxonomy\__type_Rewrite;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
-	USE WP_Admin_Bar;
 	
 	CLASS Taxonomy EXTENDS \tri4m\Wp\Wtf
 	{

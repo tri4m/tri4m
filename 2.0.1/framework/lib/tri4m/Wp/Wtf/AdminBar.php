@@ -6,7 +6,6 @@
 	USE tri4m\Wp\Wtf\AdminBar\__type_Meta;
 	USE tri4m\Wp\Wtf\AdminBar\Child;
 	USE ILLI\Core\Util\Inflector;
-	USE ILLI\Core\Std\Spl\FsbCollection;
 	USE WP_Admin_Bar;
 	
 	CLASS AdminBar EXTENDS \tri4m\Wp\Wtf
@@ -32,9 +31,9 @@
 				] as $i => $k)
 					$config[$k] = $__Setup->get()->toArray()[$i];
 				
-				if($__Setup->sub instanceOf Child)
-					foreach($__Setup->sub->get() as $i => $Sub)
-						$Sub->__Setup->parentId = $__Setup->id;
+				if($__Setup->child instanceOf Child)
+					foreach($__Setup->child->get() as $i => $Child)
+						$Child->__Setup->parentId = $__Setup->id;
 				
 				if($__Setup->meta instanceOf __type_Meta)
 					foreach([
@@ -64,7 +63,7 @@
 		
 		function install()
 		{
-			if(($Sub = parent::install()->__Setup->sub) instanceOf Child)
+			if(($Sub = parent::install()->__Setup->child) instanceOf Child)
 				foreach($Sub->get() as $S)
 					$S->install();
 			

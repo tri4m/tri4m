@@ -3,12 +3,12 @@
 	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\__type_Action;
 	USE tri4m\Wp\__type_Call;
-	USE tri4m\Wp\Trace;
 	USE tri4m\Wp\Wtf\__type_Name;
 	USE tri4m\Wp\Wtf\__type_ContextualHelp;
+	USE tri4m\Wp\Wtf\ContextualHelp\__type_Tab;
 	USE tri4m\Wp\Wtf\ContextualHelp\Tabs;
-	USE ILLI\Core\Std\Invoke;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Std\Invoke;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
 	USE WP_Screen;
@@ -56,13 +56,14 @@
 						break;
 					
 					case ($c = $__Setup->content) instanceOf Tabs:
-						foreach($c->get() as $t)
-							$__WpScreen->add_help_tab([
-								'id'		=> Inflector::underscore($t->id),
-								'title'		=> String::insert($t->label, $__name),
-								'content'	=> String::insert(is_array($c = $t->content instanceOf __type_Call ? $__STATIC_fnI($t->content) : $t->content) ? implode(PHP_EOL, $c) : $c, $__name),
-								'callback'	=> $t->callback
-							]);
+						foreach($c->get() as $Tab)
+							if($Tab instanceOf __type_Tab)
+								$__WpScreen->add_help_tab([
+									'id'		=> Inflector::underscore($Tab->id),
+									'title'		=> String::insert($Tab->label, $__name),
+									'content'	=> String::insert(is_array($c = $Tab->content instanceOf __type_Call ? $__STATIC_fnI($Tab->content) : $Tab->content) ? implode(PHP_EOL, $c) : $c, $__name),
+									'callback'	=> $Tab->callback
+								]);
 						
 						break;
 				endswitch;

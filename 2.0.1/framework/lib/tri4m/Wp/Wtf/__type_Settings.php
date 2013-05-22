@@ -1,17 +1,18 @@
 <?PHP
 	NAMESPACE tri4m\Wp\Wtf;
 	USE tri4m\Wp\Wtf\Settings\__type_Messages;
+	USE tri4m\Wp\Wtf\Settings\__type_Page;
 	USE tri4m\Wp\Wtf\Settings\Sections;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
 	CLASS __type_Settings EXTENDS \ILLI\Core\Std\Def\ADVTuple
 	{
 		CONST id		= 0x00;
-		CONST name		= 0x01;
-		CONST capability	= 0x02;
-		CONST sections		= 0x03;
-		CONST fn		= 0x04;
-		CONST messages		= 0x05;
+		CONST sections		= 0x01;
+		CONST fn		= 0x02;
+		CONST messages		= 0x03;
+		CONST deep		= 0x04;
+		CONST page		= 0x05;
 		
 		public function __construct(array $__setup = [])
 		{
@@ -19,16 +20,16 @@
 			(
 				[
 					self::id		=> [__const_Type::SPL_STRING],
-					self::name		=> [__const_Type::SPL_STRING],
-					self::capability	=> [__const_Type::SPL_STRING],
 					self::sections		=> ['tri4m\Wp\Wtf\Settings\Sections'],
 					self::fn		=> [__const_Type::SPL_CLOSURE, __const_Type::SPL_FUNCTION, __const_Type::SPL_METHOD],
 					self::messages		=> ['tri4m\Wp\Wtf\Settings\__type_Messages'],
+					self::deep		=> [__const_Type::SPL_BOOLEAN],
+					self::page		=> ['tri4m\Wp\Wtf\Settings\__type_Page'],
 				],
 				parent::mergeOffsetValues($__setup, [
-					self::capability	=> 'administrator',
 					self::sections		=> new Sections,
-					self::messages		=> new __type_Messages
+					self::messages		=> new __type_Messages,
+					self::deep		=> TRUE,
 				])
 			);
 		}

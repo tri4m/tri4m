@@ -24,6 +24,9 @@
 			{
 				Trace::add(1, __METHOD__.'[{:case}]', ['case' => $case]);
 				
+				if(FALSE === isset(static::$__hooked[$case]))
+					continue;
+				
 				switch($case):
 					case self::CALL:
 						foreach(static::$__hooked[$case] as $hash => $fn)

@@ -8,8 +8,8 @@
 	USE tri4m\Wp\__type_Filter;
 	USE tri4m\Wp\Inv;
 	USE tri4m\Wp\Wtf\__type_ManageColumns;
-	USE ILLI\Core\Std\Invoke;
 	USE ILLI\Core\Std\Def\__const_Type;
+	USE ILLI\Core\Std\Invoke;
 	USE ILLI\Core\Util\Inflector;
 	USE WP_Post;
 	

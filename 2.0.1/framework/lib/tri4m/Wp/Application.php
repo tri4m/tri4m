@@ -1,6 +1,7 @@
 <?PHP
 	NAMESPACE tri4m\Wp;
 	USE tri4m\Wp\__const_Action;
+	USE tri4m\Wp\__const_AdminLink;
 	USE tri4m\Wp\__const_Filter;
 	USE tri4m\Wp\__type_Call;
 	USE tri4m\Wp\Hook;
@@ -24,11 +25,14 @@
 	USE tri4m\Wp\Wtf\PostType;
 	USE tri4m\Wp\Wtf\PostType\__flag_Support;
 	USE tri4m\Wp\Wtf\Settings;
-	USE tri4m\Wp\Wtf\Settings\Sections;
+	USE tri4m\Wp\Wtf\Settings\__type_Field;
+	USE tri4m\Wp\Wtf\Settings\__type_Page;
 	USE tri4m\Wp\Wtf\Settings\__type_Section;
 	USE tri4m\Wp\Wtf\Settings\Fields;
-	USE tri4m\Wp\Wtf\Settings\__type_Field;
+	USE tri4m\Wp\Wtf\Settings\Sections;
 	USE tri4m\Wp\Wtf\SideBar;
+	USE tri4m\Wp\Wtf\SubMenuPage;
+	USE tri4m\Wp\Wtf\__type_SubMenuPage;
 	USE tri4m\Wp\Wtf\Taxonomy;
 	USE ILLI\Core\Util\String;
 	USE WP_Post;
@@ -39,11 +43,26 @@
 		{
 			Trace::add(__METHOD__);
 			
+				(new SubMenuPage(new __type_SubMenuPage([
+					__type_SubMenuPage::id		=> 'bob',
+					__type_SubMenuPage::title	=> 'bob Options',
+					__type_SubMenuPage::menuTitle	=> 'bob',
+					__type_SubMenuPage::content	=> new __type_Call([
+						__type_Call::fn => function()
+						{
+							print 'hello';
+						}
+					])
+				])))->install();
+			
 			#:options:
 			
 				(new Settings(new __type_Settings([
-					__type_Settings::id		=> 'tri4m_test',
-					__type_Settings::name		=> 'Test Options',
+					__type_Settings::id		=> 'foobar',
+					__type_Settings::deep		=> TRUE,
+					__type_Settings::page		=> new __type_Page([
+						__type_Page::title		=> 'foobar Options',
+					]),
 					__type_Settings::sections	=> new Sections([
 						new __type_Section([
 							__type_Section::id	=> 'FOO',
@@ -86,7 +105,56 @@
 						])
 					])
 				])))->install();
-			
+				
+				(new Settings(new __type_Settings([
+					__type_Settings::id		=> 'foobaz',
+					__type_Settings::deep		=> FALSE,
+					__type_Settings::page		=> new __type_Page([
+						__type_Page::title		=> 'foobaz Options',
+						__type_Page::parentId		=> __const_AdminLink::PAGES,
+					]),
+					__type_Settings::sections	=> new Sections([
+						new __type_Section([
+							__type_Section::id	=> 'FOO',
+							__type_Section::title	=> 'FOO VARS',
+							__type_Section::content	=> '<p>trolololol</p>',
+							__type_Section::fields	=> new Fields([
+								new __type_Field([
+									__type_Field::id	=> 'first_option',
+									__type_Field::title	=> '1st Option',
+									__type_Field::std	=> '1st Value',
+									__type_Field::type	=> 'text',
+									__type_Field::desc	=> 'another textfield',
+								]),
+								new __type_Field([
+									__type_Field::id	=> 'second_option',
+									__type_Field::title	=> '2nd Option',
+									__type_Field::std	=> '2nd Value',
+									__type_Field::type	=> 'text',
+								])
+							])
+						]),
+						new __type_Section([
+							__type_Section::id	=> 'BAR',
+							__type_Section::title	=> 'BAR VARS',
+							__type_Section::content	=> '<p>Hello world</p>',
+							__type_Section::fields	=> new Fields([
+								new __type_Field([
+									__type_Field::id	=> 'third_option',
+									__type_Field::title	=> '3rd Option',
+									__type_Field::std	=> '3rd Value',
+									__type_Field::type	=> 'text',
+								]),
+								new __type_Field([
+									__type_Field::id	=> 'fourth_option',
+									__type_Field::title	=> '4th Option',
+									__type_Field::std	=> '4th Value',
+									__type_Field::type	=> 'text',
+								])
+							])
+						])
+					])
+				])))->install();
 			#::
 			
 			#:config:
@@ -405,7 +473,7 @@
 						__type_AdminBar::title	=> Theme::fullName(),
 						__type_AdminBar::id	=> Theme::fullName(),
 						__type_AdminBar::href	=> '#',
-						__type_AdminBar::sub	=> new Child([
+						__type_AdminBar::child	=> new Child([
 							new AdminBar(new __type_AdminBar([
 								__type_AdminBar::title	=> 'foo'
 							]))
@@ -416,7 +484,7 @@
 						__type_AdminBar::title	=> Theme::name(),
 						__type_AdminBar::id	=> Theme::name(),
 						__type_AdminBar::href	=> '#',
-						__type_AdminBar::sub	=> new Child([
+						__type_AdminBar::child	=> new Child([
 							new AdminBar(new __type_AdminBar([
 								__type_AdminBar::title	=> 'baz'
 							]))

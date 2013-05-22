@@ -7,6 +7,7 @@
 		CONST importComplete	= 0x00;
 		CONST importError	= 0x01;
 		CONST resetComplete	= 0x02;
+		CONST updateComplete	= 0x03;
 		
 		public function __construct(array $__setup = [])
 		{
@@ -15,12 +16,14 @@
 				[
 					self::importComplete	=> [__const_Type::SPL_STRING],
 					self::importError	=> [__const_Type::SPL_STRING],
-					self::resetComplete	=> [__const_Type::SPL_STRING]
+					self::resetComplete	=> [__const_Type::SPL_STRING],
+					self::updateComplete	=> [__const_Type::SPL_STRING]
 				],
 				parent::mergeOffsetValues($__setup, [
 					self::importComplete	=> 'Options imported.',
 					self::importError	=> 'Invalid data for import.',
-					self::resetComplete	=> 'Default options restored.'
+					self::resetComplete	=> 'Default options restored.',
+					self::updateComplete	=> 'Options updated.'
 				])
 			);
 		}

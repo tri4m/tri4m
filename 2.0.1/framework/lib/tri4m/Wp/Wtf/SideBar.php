@@ -23,14 +23,14 @@
 				$config = [];
 				
 				foreach([
-					__type_Sidebar::name		=> 'name',
-					__type_Sidebar::desc		=> 'description',
-					__type_Sidebar::id		=> 'id',
-					__type_Sidebar::cssClass	=> 'class',
-					__type_Sidebar::beforeWidget	=> 'before_widget',
-					__type_Sidebar::afterWidget	=> 'after_widget',
-					__type_Sidebar::beforeTitle	=> 'before_title',
-					__type_Sidebar::afterTitle	=> 'after_title'
+					__type_SideBar::name		=> 'name',
+					__type_SideBar::desc		=> 'description',
+					__type_SideBar::id		=> 'id',
+					__type_SideBar::cssClass	=> 'class',
+					__type_SideBar::beforeWidget	=> 'before_widget',
+					__type_SideBar::afterWidget	=> 'after_widget',
+					__type_SideBar::beforeTitle	=> 'before_title',
+					__type_SideBar::afterTitle	=> 'after_title'
 				] as $i => $k)
 					$config[$k] = String::insert(is_array($d = $__Setup->get()->toArray()[$i]) ? implode(PHP_EOL, $d) : $d, $__name);
 				
@@ -42,10 +42,10 @@
 			
 			$__name = [];
 			foreach([
-				__type_Sidebar::slug		=> 'slug',
-				__type_Sidebar::cssClass	=> 'class',
-				__type_Sidebar::id		=> 'id',
-				__type_Sidebar::name		=> 'name'
+				__type_SideBar::slug		=> 'slug',
+				__type_SideBar::cssClass	=> 'class',
+				__type_SideBar::id		=> 'id',
+				__type_SideBar::name		=> 'name'
 			] as $i => $k)
 				$__name[$k] = $this->__Setup->get()->toArray()[$i];
 			

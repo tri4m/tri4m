@@ -4,7 +4,7 @@
 	
 	CLASS Wtf
 	{
-		static protected $__defaults	= [];
+		protected $__isInstalled	= FALSE;
 		protected $__Setup		= NULL;
 		protected $__actions		= [];
 		protected $__filters		= [];
@@ -14,6 +14,9 @@
 		
 		function install()
 		{
+			if(TRUE === $this->__isInstalled)
+				return $this;
+				
 			foreach(['__actions', '__filters'] as $p)
 				foreach($this->$p as $e => $T)
 				{
@@ -31,6 +34,8 @@
 				
 				Hook::enqueue($T);
 			}
+			
+			$this->__isInstalled = TRUE;
 				
 			return $this;
 		}

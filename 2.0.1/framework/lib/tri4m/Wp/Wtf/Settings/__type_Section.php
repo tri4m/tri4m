@@ -8,7 +8,6 @@
 		CONST id		= 0x00;
 		CONST title		= 0x01;
 		CONST content		= 0x02;
-		CONST page		= 0x03;
 		CONST fields		= 0x03;
 		
 		public function __construct(array $__setup = [])
@@ -24,7 +23,6 @@
 						__const_Type::SPL_STRING,
 						__const_Type::SPL_ARRAY
 					],
-					self::page		=> [__const_Type::SPL_STRING],
 					self::fields		=> ['tri4m\Wp\Wtf\Settings\Fields']
 				],
 				parent::mergeOffsetValues($__setup, [
