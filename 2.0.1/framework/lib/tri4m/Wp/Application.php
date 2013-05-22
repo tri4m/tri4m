@@ -1,17 +1,18 @@
 <?PHP
 	NAMESPACE tri4m\Wp;
-	USE tri4m\Wp\__type_Call;
-	USE tri4m\Wp\__const_Filter;
 	USE tri4m\Wp\__const_Action;
-	USE tri4m\Wp\Trace;
+	USE tri4m\Wp\__const_Filter;
+	USE tri4m\Wp\__type_Call;
 	USE tri4m\Wp\Hook;
-	USE tri4m\Wp\Theme;
 	USE tri4m\Wp\Inv;
-	USE tri4m\Wp\Wtf\__type_Name;
+	USE tri4m\Wp\Theme;
+	USE tri4m\Wp\Trace;
 	USE tri4m\Wp\Wtf\__type_AdminBar;
 	USE tri4m\Wp\Wtf\__type_ContextualHelp;
 	USE tri4m\Wp\Wtf\__type_ManageColumns;
+	USE tri4m\Wp\Wtf\__type_Name;
 	USE tri4m\Wp\Wtf\__type_PostType;
+	USE tri4m\Wp\Wtf\__type_Settings;
 	USE tri4m\Wp\Wtf\__type_SideBar;
 	USE tri4m\Wp\Wtf\__type_Taxonomy;
 	USE tri4m\Wp\Wtf\AdminBar;
@@ -22,17 +23,13 @@
 	USE tri4m\Wp\Wtf\ManageColumns;
 	USE tri4m\Wp\Wtf\PostType;
 	USE tri4m\Wp\Wtf\PostType\__flag_Support;
-	USE tri4m\Wp\Wtf\SideBar;
-	USE tri4m\Wp\Wtf\Taxonomy;
-	USE tri4m\Wp\Wtf\ThemeOptionsPage;
-	
 	USE tri4m\Wp\Wtf\Settings;
-	USE tri4m\Wp\Wtf\__type_Settings;
 	USE tri4m\Wp\Wtf\Settings\Sections;
 	USE tri4m\Wp\Wtf\Settings\__type_Section;
 	USE tri4m\Wp\Wtf\Settings\Fields;
 	USE tri4m\Wp\Wtf\Settings\__type_Field;
-	//USE tri4m\Wp\Data\OptionsTheme;
+	USE tri4m\Wp\Wtf\SideBar;
+	USE tri4m\Wp\Wtf\Taxonomy;
 	USE ILLI\Core\Util\String;
 	USE WP_Post;
 	
