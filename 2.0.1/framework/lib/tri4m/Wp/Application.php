@@ -1,73 +1,127 @@
 <?PHP
 	NAMESPACE tri4m\Wp;
-	USE tri4m\Wp\__const_Action;
-	USE tri4m\Wp\__const_AdminLink;
-	USE tri4m\Wp\__const_Filter;
-	USE tri4m\Wp\__type_Call;
-	USE tri4m\Wp\Hook;
-	USE tri4m\Wp\Inv;
-	USE tri4m\Wp\Theme;
-	USE tri4m\Wp\Trace;
-	USE tri4m\Wp\Wtf\__type_AdminBar;
-	USE tri4m\Wp\Wtf\__type_ContextualHelp;
-	USE tri4m\Wp\Wtf\__type_ManageColumns;
-	USE tri4m\Wp\Wtf\__type_MetaBox;
-	USE tri4m\Wp\Wtf\__type_Name;
-	USE tri4m\Wp\Wtf\__type_PostMeta;
-	USE tri4m\Wp\Wtf\__type_PostType;
-	USE tri4m\Wp\Wtf\__type_Settings;
-	USE tri4m\Wp\Wtf\__type_SideBar;
-	USE tri4m\Wp\Wtf\__type_SubMenuPage;
-	USE tri4m\Wp\Wtf\__type_Taxonomy;
-	USE tri4m\Wp\Wtf\AdminBar;
-	USE tri4m\Wp\Wtf\AdminBar\Child;
-	USE tri4m\Wp\Wtf\ContextualHelp;
-	USE tri4m\Wp\Wtf\ContextualHelp\__type_Tab;
-	USE tri4m\Wp\Wtf\ContextualHelp\Tabs;
-	USE tri4m\Wp\Wtf\ManageColumns;
-	USE tri4m\Wp\Wtf\MetaBox;
-	USE tri4m\Wp\Wtf\PostMeta;
-	USE tri4m\Wp\Wtf\PostMeta\__type_Field as __type_FieldPM;
-	USE tri4m\Wp\Wtf\PostMeta\__type_FieldList as __type_FieldListPM;
-	USE tri4m\Wp\Wtf\PostMeta\__type_FieldListField as __type_FieldListFieldPM;
-	USE tri4m\Wp\Wtf\PostMeta\__type_Box as __type_BoxPM;
-	USE tri4m\Wp\Wtf\PostMeta\__type_Section as __type_SectionPM;
-	USE tri4m\Wp\Wtf\PostMeta\Fields as FieldsPM;
-	USE tri4m\Wp\Wtf\PostMeta\ListFields as ListFieldsPM;
-	USE tri4m\Wp\Wtf\PostMeta\Sections as SectionsPM;
-	USE tri4m\Wp\Wtf\PostType;
-	USE tri4m\Wp\Wtf\PostType\__flag_Support;
-	USE tri4m\Wp\Wtf\Settings;
-	USE tri4m\Wp\Wtf\Settings\__type_Field;
-	USE tri4m\Wp\Wtf\Settings\__type_Page;
-	USE tri4m\Wp\Wtf\Settings\__type_Section;
-	USE tri4m\Wp\Wtf\Settings\Fields;
-	USE tri4m\Wp\Wtf\Settings\Sections;
-	USE tri4m\Wp\Wtf\SideBar;
-	USE tri4m\Wp\Wtf\SubMenuPage;
-	USE tri4m\Wp\Wtf\Taxonomy;
-	USE ILLI\Core\Util\String;
-	USE WP_Post;
 	
+	#! test app
+	
+	#:tri4m:
+		#:Wp:
+			USE tri4m\Wp\__const_Action;
+			USE tri4m\Wp\__const_AdminLink;
+			USE tri4m\Wp\__const_Filter;
+			USE tri4m\Wp\__type_Call;
+			USE tri4m\Wp\Hook;
+			USE tri4m\Wp\Inv;
+			USE tri4m\Wp\Theme;
+			USE tri4m\Wp\Trace;
+		#::
+		#:Wtf:
+			USE tri4m\Wp\Wtf\__type_Name;
+		#::
+		#:Modules:
+			#:AdminBar:
+				USE tri4m\Wp\Wtf\__type_AdminBar;
+				USE tri4m\Wp\Wtf\AdminBar;
+				USE tri4m\Wp\Wtf\AdminBar\Child;
+			#::
+			#:ContextualHelp:
+				USE tri4m\Wp\Wtf\__type_ContextualHelp;
+				USE tri4m\Wp\Wtf\ContextualHelp;
+				USE tri4m\Wp\Wtf\ContextualHelp\__type_Tab;
+				USE tri4m\Wp\Wtf\ContextualHelp\Tabs;
+			#::
+			#:ManageColumns:
+				USE tri4m\Wp\Wtf\__type_ManageColumns;
+				USE tri4m\Wp\Wtf\ManageColumns;
+			#::
+			#:ContextualHelp:
+				USE tri4m\Wp\Wtf\__type_MetaBox;
+				USE tri4m\Wp\Wtf\MetaBox;
+			#::
+			#:PostMeta:
+				USE tri4m\Wp\Wtf\__type_PostMeta;
+				USE tri4m\Wp\Wtf\PostMeta;
+				USE tri4m\Wp\Wtf\PostMeta\__type_Field as __type_FieldPM;
+				USE tri4m\Wp\Wtf\PostMeta\__type_FieldList as __type_FieldListPM;
+				USE tri4m\Wp\Wtf\PostMeta\__type_FieldListField as __type_FieldListFieldPM;
+				USE tri4m\Wp\Wtf\PostMeta\__type_Box as __type_BoxPM;
+				USE tri4m\Wp\Wtf\PostMeta\__type_Section as __type_SectionPM;
+				USE tri4m\Wp\Wtf\PostMeta\Fields as FieldsPM;
+				USE tri4m\Wp\Wtf\PostMeta\ListFields as ListFieldsPM;
+				USE tri4m\Wp\Wtf\PostMeta\Sections as SectionsPM;
+			#::
+			#:PostType:
+				USE tri4m\Wp\Wtf\__type_PostType;
+				USE tri4m\Wp\Wtf\PostType;
+				USE tri4m\Wp\Wtf\PostType\__flag_Support;
+			#::
+			#:ContextualHelp:
+				USE tri4m\Wp\Wtf\__type_Settings;
+				USE tri4m\Wp\Wtf\Settings;
+				USE tri4m\Wp\Wtf\Settings\__type_Field;
+				USE tri4m\Wp\Wtf\Settings\__type_Page;
+				USE tri4m\Wp\Wtf\Settings\__type_Section;
+				USE tri4m\Wp\Wtf\Settings\Fields;
+				USE tri4m\Wp\Wtf\Settings\Sections;
+			#::
+			#:SideBar:
+				USE tri4m\Wp\Wtf\__type_SideBar;
+				USE tri4m\Wp\Wtf\SideBar;
+			#::
+			#:SubMenuPage:
+				USE tri4m\Wp\Wtf\__type_SubMenuPage;
+				USE tri4m\Wp\Wtf\SubMenuPage;
+			#::
+			#:ContextualHelp:
+				USE tri4m\Wp\Wtf\__type_Taxonomy;
+				USE tri4m\Wp\Wtf\Taxonomy;
+			#::
+		#::
+	#::
+	#:ILLI:
+		USE ILLI\Core\Util\String;
+	#::
+	#:WP:
+		USE WP_Post;
+	#::
+	
+	/**
+	 * test app
+	 *
+	 * {{{+:
+	 * class Application
+	 *		::boot()
+	 *		::run()
+	 *		::shutdown()
+	 *		::install()
+	 *		::uninstall()
+	 * }}}
+	 */
 	CLASS Application
 	{
 		function boot()
 		{
 			Trace::add(__METHOD__);
 			
-				(new SubMenuPage(new __type_SubMenuPage([
-					__type_SubMenuPage::id		=> 'bob',
-					__type_SubMenuPage::title	=> 'bob Options',
-					__type_SubMenuPage::menuTitle	=> 'bob',
-					__type_SubMenuPage::content	=> new __type_Call([
-						__type_Call::fn => function()
-						{
-							print 'hello';
-						}
-					])
-				])))->install();
 			
 			#:options:
+			
+				#:subMenuPage
+				
+					(new SubMenuPage(new __type_SubMenuPage([
+						__type_SubMenuPage::id		=> 'bob',
+						__type_SubMenuPage::title	=> 'bob Options',
+						__type_SubMenuPage::menuTitle	=> 'bob',
+						__type_SubMenuPage::content	=> new __type_Call([
+							__type_Call::fn => function()
+							{
+								print 'hello';
+							}
+						])
+					])))->install();
+					
+				#::
+				
+				#:metaBox:
 					
 					(new MetaBox(new __type_MetaBox([
 						__type_MetaBox::id	=> 'event_metabox',
@@ -80,178 +134,205 @@
 							}
 						])
 					])))->install();
-			
-				(new PostMeta(new __type_PostMeta([
-					__type_PostMeta::id		=> 'postmeta_event',
-					__type_PostMeta::deep		=> TRUE,
-					__type_PostMeta::box		=> new __type_BoxPM([
-						__type_BoxPM::title		=> 'Event Options',
-						__type_BoxPM::type		=> 'event',
-					]),
-					__type_Settings::sections	=> new SectionsPM([
-						new __type_SectionPM([
-							__type_SectionPM::id	=> 'period',
-							__type_SectionPM::title	=> 'foo',
-							__type_SectionPM::content	=> '<p>foo & bar</p>',
-							__type_SectionPM::fields	=> new FieldsPM([
-								new __type_FieldListPM([
-									__type_FieldListPM::id		=> 'begin',
-									__type_FieldListPM::title	=> 'Begin',
-									__type_FieldListPM::fields	=> new ListFieldsPM([
-										new __type_FieldListFieldPM([
-											__type_FieldListFieldPM::id	=> 'date',
-											__type_FieldListFieldPM::title	=> 'Date',
-											__type_FieldListFieldPM::std	=> '00/00/0000',
-											__type_FieldListFieldPM::type	=> 'text',
-										]),
-										new __type_FieldListFieldPM([
-											__type_FieldListFieldPM::id	=> 'time',
-											__type_FieldListFieldPM::title	=> 'Time',
-											__type_FieldListFieldPM::std	=> '00:00',
-											__type_FieldListFieldPM::type	=> 'text',
-										])
-									])
-								]),
-								new __type_FieldListPM([
-									__type_FieldListPM::id		=> 'end',
-									__type_FieldListPM::title	=> 'End',
-									__type_FieldListPM::fields	=> new ListFieldsPM([
-										new __type_FieldListFieldPM([
-											__type_FieldListFieldPM::id	=> 'date',
-											__type_FieldListFieldPM::title	=> 'Date',
-											__type_FieldListFieldPM::std	=> '00/00/0000',
-											__type_FieldListFieldPM::type	=> 'text',
-										]),
-										new __type_FieldListFieldPM([
-											__type_FieldListFieldPM::id	=> 'time',
-											__type_FieldListFieldPM::title	=> 'Time',
-											__type_FieldListFieldPM::std	=> '00:00',
-											__type_FieldListFieldPM::type	=> 'text',
-										])
-									])
-								])
-							])
-						]),
-						new __type_SectionPM([
-							__type_SectionPM::id	=> 'info',
-							__type_SectionPM::title	=> 'Info',
-							//__type_SectionPM::content	=> '<p>Event adds</p>',
-							__type_SectionPM::fields	=> new FieldsPM([
-								new __type_FieldPM([
-									__type_FieldPM::id	=> 'location',
-									__type_FieldPM::title	=> 'Location',
-									__type_FieldPM::std	=> 'here',
-									__type_FieldPM::type	=> 'text',
-								]),
-								new __type_FieldPM([
-									__type_FieldPM::id	=> 'ticket_url',
-									__type_FieldPM::title	=> 'Ticket URL',
-									__type_FieldPM::std	=> 'http://',
-									__type_FieldPM::type	=> 'text',
-								])
-							])
-						]),
-					])
-				])))->install();
-					
-				(new Settings(new __type_Settings([
-					__type_Settings::id		=> 'foobar',
-					__type_Settings::deep		=> TRUE,
-					__type_Settings::page		=> new __type_Page([
-						__type_Page::title		=> 'foobar Options',
-					]),
-					__type_Settings::sections	=> new Sections([
-						new __type_Section([
-							__type_Section::id	=> 'FOO',
-							__type_Section::title	=> 'FOO VARS',
-							__type_Section::content	=> '<p>trolololol</p>',
-							__type_Section::fields	=> new Fields([
-								new __type_Field([
-									__type_Field::id	=> 'first_option',
-									__type_Field::title	=> '1st Option',
-									__type_Field::std	=> '1st Value',
-									__type_Field::type	=> 'text',
-									__type_Field::desc	=> 'another textfield',
-								]),
-								new __type_Field([
-									__type_Field::id	=> 'second_option',
-									__type_Field::title	=> '2nd Option',
-									__type_Field::std	=> '2nd Value',
-									__type_Field::type	=> 'text',
-								])
-							])
-						]),
-						new __type_Section([
-							__type_Section::id	=> 'BAR',
-							__type_Section::title	=> 'BAR VARS',
-							__type_Section::content	=> '<p>Hello world</p>',
-							__type_Section::fields	=> new Fields([
-								new __type_Field([
-									__type_Field::id	=> 'third_option',
-									__type_Field::title	=> '3rd Option',
-									__type_Field::std	=> '3rd Value',
-									__type_Field::type	=> 'text',
-								]),
-								new __type_Field([
-									__type_Field::id	=> 'fourth_option',
-									__type_Field::title	=> '4th Option',
-									__type_Field::std	=> '4th Value',
-									__type_Field::type	=> 'text',
-								])
-							])
-						])
-					])
-				])))->install();
 				
-				(new Settings(new __type_Settings([
-					__type_Settings::id		=> 'foobaz',
-					__type_Settings::deep		=> FALSE,
-					__type_Settings::page		=> new __type_Page([
-						__type_Page::title		=> 'foobaz Options',
-						__type_Page::parentId		=> __const_AdminLink::PAGES,
-					]),
-					__type_Settings::sections	=> new Sections([
-						new __type_Section([
-							__type_Section::id	=> 'FOO',
-							__type_Section::title	=> 'FOO VARS',
-							__type_Section::content	=> '<p>trolololol</p>',
-							__type_Section::fields	=> new Fields([
-								new __type_Field([
-									__type_Field::id	=> 'first_option',
-									__type_Field::title	=> '1st Option',
-									__type_Field::std	=> '1st Value',
-									__type_Field::type	=> 'text',
-									__type_Field::desc	=> 'another textfield',
-								]),
-								new __type_Field([
-									__type_Field::id	=> 'second_option',
-									__type_Field::title	=> '2nd Option',
-									__type_Field::std	=> '2nd Value',
-									__type_Field::type	=> 'text',
-								])
-							])
+				#::
+			
+				#:eventMetaBox:
+				
+					#+ metabox for PT event
+				
+					#+ __type_PostMeta::deep = TRUE
+					#! __type_Settings::deep = not implemented
+					
+					(new PostMeta(new __type_PostMeta([
+						__type_PostMeta::id		=> 'postmeta_event',
+						__type_PostMeta::deep		=> TRUE,
+						__type_PostMeta::box		=> new __type_BoxPM([
+							__type_BoxPM::title		=> 'Event Options',
+							__type_BoxPM::type		=> 'event',
 						]),
-						new __type_Section([
-							__type_Section::id	=> 'BAR',
-							__type_Section::title	=> 'BAR VARS',
-							__type_Section::content	=> '<p>Hello world</p>',
-							__type_Section::fields	=> new Fields([
-								new __type_Field([
-									__type_Field::id	=> 'third_option',
-									__type_Field::title	=> '3rd Option',
-									__type_Field::std	=> '3rd Value',
-									__type_Field::type	=> 'text',
-								]),
-								new __type_Field([
-									__type_Field::id	=> 'fourth_option',
-									__type_Field::title	=> '4th Option',
-									__type_Field::std	=> '4th Value',
-									__type_Field::type	=> 'text',
+						__type_PostMeta::sections	=> new SectionsPM([
+							new __type_SectionPM([
+								__type_SectionPM::id	=> 'period',
+								__type_SectionPM::title	=> 'foo',
+								__type_SectionPM::content	=> '<p>foo & bar</p>',
+								
+								#+ field list test
+								
+								__type_SectionPM::fields	=> new FieldsPM([
+									new __type_FieldListPM([
+										__type_FieldListPM::id		=> 'begin',
+										__type_FieldListPM::title	=> 'Begin',
+										__type_FieldListPM::fields	=> new ListFieldsPM([
+											new __type_FieldListFieldPM([
+												__type_FieldListFieldPM::id	=> 'date',
+												__type_FieldListFieldPM::title	=> 'Date',
+												__type_FieldListFieldPM::std	=> '00/00/0000',
+												__type_FieldListFieldPM::type	=> 'text',
+											]),
+											new __type_FieldListFieldPM([
+												__type_FieldListFieldPM::id	=> 'time',
+												__type_FieldListFieldPM::title	=> 'Time',
+												__type_FieldListFieldPM::std	=> '00:00',
+												__type_FieldListFieldPM::type	=> 'text',
+											])
+										])
+									]),
+									new __type_FieldListPM([
+										__type_FieldListPM::id		=> 'end',
+										__type_FieldListPM::title	=> 'End',
+										__type_FieldListPM::fields	=> new ListFieldsPM([
+											new __type_FieldListFieldPM([
+												__type_FieldListFieldPM::id	=> 'date',
+												__type_FieldListFieldPM::title	=> 'Date',
+												__type_FieldListFieldPM::std	=> '00/00/0000',
+												__type_FieldListFieldPM::type	=> 'text',
+											]),
+											new __type_FieldListFieldPM([
+												__type_FieldListFieldPM::id	=> 'time',
+												__type_FieldListFieldPM::title	=> 'Time',
+												__type_FieldListFieldPM::std	=> '00:00',
+												__type_FieldListFieldPM::type	=> 'text',
+											])
+										])
+									])
+								])
+							]),
+							new __type_SectionPM([
+								__type_SectionPM::id	=> 'info',
+								__type_SectionPM::title	=> 'Info',
+								//__type_SectionPM::content	=> '<p>Event adds</p>',
+								
+								#+ field test
+								
+								__type_SectionPM::fields	=> new FieldsPM([
+									new __type_FieldPM([
+										__type_FieldPM::id	=> 'location',
+										__type_FieldPM::title	=> 'Location',
+										__type_FieldPM::std	=> 'here',
+										__type_FieldPM::type	=> 'text',
+									]),
+									new __type_FieldPM([
+										__type_FieldPM::id	=> 'ticket_url',
+										__type_FieldPM::title	=> 'Ticket URL',
+										__type_FieldPM::std	=> 'http://',
+										__type_FieldPM::type	=> 'text',
+									])
+								])
+							]),
+						])
+					])))->install();
+				
+				#::
+				
+				#:settingsPage:
+				
+					#+ __type_Settings::deep = TRUE
+					#! __type_Settings::deep = not implemented
+				
+					(new Settings(new __type_Settings([
+						__type_Settings::id		=> 'foobar',
+						__type_Settings::deep		=> TRUE,
+						__type_Settings::page		=> new __type_Page([
+							__type_Page::title		=> 'foobar Options',
+						]),
+						__type_Settings::sections	=> new Sections([
+							new __type_Section([
+								__type_Section::id	=> 'FOO',
+								__type_Section::title	=> 'FOO VARS',
+								__type_Section::content	=> '<p>trolololol</p>',
+								__type_Section::fields	=> new Fields([
+									new __type_Field([
+										__type_Field::id	=> 'first_option',
+										__type_Field::title	=> '1st Option',
+										__type_Field::std	=> '1st Value',
+										__type_Field::type	=> 'text',
+										__type_Field::desc	=> 'another textfield',
+									]),
+									new __type_Field([
+										__type_Field::id	=> 'second_option',
+										__type_Field::title	=> '2nd Option',
+										__type_Field::std	=> '2nd Value',
+										__type_Field::type	=> 'text',
+									])
+								])
+							]),
+							new __type_Section([
+								__type_Section::id	=> 'BAR',
+								__type_Section::title	=> 'BAR VARS',
+								__type_Section::content	=> '<p>Hello world</p>',
+								__type_Section::fields	=> new Fields([
+									new __type_Field([
+										__type_Field::id	=> 'third_option',
+										__type_Field::title	=> '3rd Option',
+										__type_Field::std	=> '3rd Value',
+										__type_Field::type	=> 'text',
+									]),
+									new __type_Field([
+										__type_Field::id	=> 'fourth_option',
+										__type_Field::title	=> '4th Option',
+										__type_Field::std	=> '4th Value',
+										__type_Field::type	=> 'text',
+									])
 								])
 							])
 						])
-					])
-				])))->install();
+					])))->install();
+				
+					#+ __type_Settings::deep = FALSE
+					#! __type_Settings::deep = not implemented
+					
+					(new Settings(new __type_Settings([
+						__type_Settings::id		=> 'foobaz',
+						__type_Settings::deep		=> FALSE,
+						__type_Settings::page		=> new __type_Page([
+							__type_Page::title		=> 'foobaz Options',
+							__type_Page::parentId		=> __const_AdminLink::PAGES,
+						]),
+						__type_Settings::sections	=> new Sections([
+							new __type_Section([
+								__type_Section::id	=> 'FOO',
+								__type_Section::title	=> 'FOO VARS',
+								__type_Section::content	=> '<p>trolololol</p>',
+								__type_Section::fields	=> new Fields([
+									new __type_Field([
+										__type_Field::id	=> 'first_option',
+										__type_Field::title	=> '1st Option',
+										__type_Field::std	=> '1st Value',
+										__type_Field::type	=> 'text',
+										__type_Field::desc	=> 'another textfield',
+									]),
+									new __type_Field([
+										__type_Field::id	=> 'second_option',
+										__type_Field::title	=> '2nd Option',
+										__type_Field::std	=> '2nd Value',
+										__type_Field::type	=> 'text',
+									])
+								])
+							]),
+							new __type_Section([
+								__type_Section::id	=> 'BAR',
+								__type_Section::title	=> 'BAR VARS',
+								__type_Section::content	=> '<p>Hello world</p>',
+								__type_Section::fields	=> new Fields([
+									new __type_Field([
+										__type_Field::id	=> 'third_option',
+										__type_Field::title	=> '3rd Option',
+										__type_Field::std	=> '3rd Value',
+										__type_Field::type	=> 'text',
+									]),
+									new __type_Field([
+										__type_Field::id	=> 'fourth_option',
+										__type_Field::title	=> '4th Option',
+										__type_Field::std	=> '4th Value',
+										__type_Field::type	=> 'text',
+									])
+								])
+							])
+						])
+					])))->install();
+					
+				#::
 			#::
 			
 			#:config:
@@ -290,6 +371,8 @@
 			#:posttypes:
 			
 				#:events:
+				
+					#+ simple posttype test
 				
 					$Event = new __type_PostType([
 						__type_PostType::name => new __type_Name([
@@ -426,6 +509,9 @@
 				
 				#:skills:
 					
+					#+ post2post test
+					#! not implemented
+					
 					$Skill = new __type_PostType([
 						__type_PostType::name => new __type_Name([
 							__type_Name::singular 		=> 'Skill',
@@ -531,6 +617,8 @@
 			#:sidebar:
 			
 				#:test:
+				
+					#+ simple sidebars
 					
 					(new SideBar(new __type_SideBar([
 						__type_Sidebar::name	=> 'Left',
@@ -563,6 +651,8 @@
 			#:adminbar:
 			
 				#:test:
+				
+					#+ simple admin menu
 			
 					(new AdminBar(new __type_AdminBar([
 						__type_AdminBar::title	=> Theme::fullName(),
@@ -596,7 +686,7 @@
 			
 					#:test:
 				
-						#+ remove column 'tags' from postType 'post'
+						#+ remove column test: 'tags' from postType 'post'
 					
 						(new ManageColumns(new __type_ManageColumns([
 							__type_ManageColumns::filterEvent	=> String::insert(__const_Filter::MANAGE_POST_TYPE_POSTS_COLUMNS__, ['postType' => 'post']),

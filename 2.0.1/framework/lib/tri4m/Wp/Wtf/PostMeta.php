@@ -8,14 +8,14 @@
 	USE tri4m\Wp\__type_Filter;
 	USE tri4m\Wp\Inv;
 	USE tri4m\Wp\Theme;
+	USE tri4m\Wp\Wtf\__type_MetaBox;
 	USE tri4m\Wp\Wtf\__type_PostMeta;
+	USE tri4m\Wp\Wtf\MetaBox;
+	USE tri4m\Wp\Wtf\PostMeta\__type_Box;
 	USE tri4m\Wp\Wtf\PostMeta\__type_Field;
 	USE tri4m\Wp\Wtf\PostMeta\__type_FieldList;
 	USE tri4m\Wp\Wtf\PostMeta\__type_FieldListField;
 	USE tri4m\Wp\Wtf\PostMeta\__type_Section;
-	USE tri4m\Wp\Wtf\PostMeta\__type_Box;
-	USE tri4m\Wp\Wtf\__type_MetaBox;
-	USE tri4m\Wp\Wtf\MetaBox;
 	USE ILLI\Core\Std\Def\__const_Type;
 	USE ILLI\Core\Std\Invoke;
 	USE ILLI\Core\Util\Inflector;
@@ -152,7 +152,6 @@
 					
 				foreach($__Setup->sections->get() as $Section)
 				{
-					#:section:
 					if(NULL !== $Section->title)
 						print String::insert('<h4>{:title}</h4>', ['title' => $Section->title]);
 						
@@ -225,7 +224,6 @@
 						{
 							$pattern = [
 								'id'		=> '{:setupId}_{:sectionId}_{:fieldId}',
-								'name'		=> '{:setupId}[{:sectionId}][{:fieldId}]'
 							];
 							
 							$config = [
