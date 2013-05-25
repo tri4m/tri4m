@@ -47,7 +47,7 @@
 					self::capability	=> 'administrator',
 					self::parentId		=> __const_AdminLink::THEMES,
 					self::icon		=> 'options-general',
-					self::beforeForm	=> '{:message}<form action="options.php" method="post">',
+					self::beforeForm	=> '<form action="options.php" method="post">',
 					self::afterForm		=> '</form>',
 					self::beforeCtrl	=> '<p class="submit">',
 					self::afterCtrl		=> '</p>',

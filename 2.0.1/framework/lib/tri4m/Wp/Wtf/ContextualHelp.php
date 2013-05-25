@@ -46,6 +46,7 @@
 						return String::insert(implode(PHP_EOL, $c), $__name);
 					
 					case ($c = $__Setup->content) instanceOf __type_Call:
+						
 						$__WpScreen->add_help_tab([
 							'id'		=> Inflector::underscore($__Setup->id),
 							'title'		=> String::insert($__Setup->name->singular, $__name),
@@ -56,7 +57,9 @@
 						break;
 					
 					case ($c = $__Setup->content) instanceOf Tabs:
+						
 						foreach($c->get() as $Tab)
+						{
 							if($Tab instanceOf __type_Tab)
 								$__WpScreen->add_help_tab([
 									'id'		=> Inflector::underscore($Tab->id),
@@ -64,7 +67,7 @@
 									'content'	=> String::insert(is_array($c = $Tab->content instanceOf __type_Call ? $__STATIC_fnI($Tab->content) : $Tab->content) ? implode(PHP_EOL, $c) : $c, $__name),
 									'callback'	=> $Tab->callback
 								]);
-						
+						}
 						break;
 				endswitch;
 			};

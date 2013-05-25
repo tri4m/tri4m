@@ -1,5 +1,5 @@
 <?PHP
-	NAMESPACE tri4m\Wp\Wtf\Settings;
+	NAMESPACE tri4m\Wp\Wtf\PostMeta;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
 	CLASS __type_Field EXTENDS \ILLI\Core\Std\Def\ADVTuple
@@ -56,12 +56,12 @@
 					self::afterLabel	=> [__const_Type::SPL_STRING],
 				],
 				parent::mergeOffsetValues($__setup, [
-					self::content		=> '<input {:attr} />',
-					self::beforeContent	=> '<td>',
-					self::afterContent	=> '</td>',
-					self::label		=> '<label for="{:id}">{:title}</label>',
 					self::beforeLabel	=> '<th scope="row">',
+					self::label		=> '<label for="{:id}">{:title}</label>',
 					self::afterLabel	=> '</th>',
+					self::beforeContent	=> '<td>',
+					self::content		=> '<input {:attr} />',
+					self::afterContent	=> '</td>',
 				])
 			);
 		}

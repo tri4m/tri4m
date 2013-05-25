@@ -24,4 +24,14 @@
 			global $$__name;
 			return $$__name;
 		}
+		
+		static function defined($__name)
+		{
+			return defined($__name);
+		}
+		
+		static function constant($__name)
+		{
+			return constant($__name);
+		}
 	}

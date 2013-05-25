@@ -21,19 +21,17 @@
 	
 	CLASS Settings EXTENDS \tri4m\Wp\Wtf
 	{
-		protected $__Page	= [];
 		protected $__pageHook	= NULL;
 		protected $__cache	= [];
 		
 		protected $__actions	=
 		[
-			__const_Action::ADMIN_INIT => NULL,
-			__const_Action::ADMIN_MENU => NULL
+			__const_Action::ADMIN_INIT => NULL
 		];
 		
 		function __construct(__type_Settings $__Setup)
 		{
-			static $__STATIC_fnI, $__STATIC_fnV, $__STATIC_fnF, $__STATIC_fnS, $__STATIC_fnR, $__STATIC_fnP;
+			static $__STATIC_fnI, $__STATIC_fnV, $__STATIC_fnR, $__STATIC_fnP;
 			
 			isset($__STATIC_fnI) ?: $__STATIC_fnI = function(__type_Call $T)
 			{
@@ -46,6 +44,7 @@
 			
 			isset($__STATIC_fnV) ?: $__STATIC_fnV = function(__type_Settings $__Setup, array $__cache, array $__input)
 			{
+				return $__input;
 				if(FALSE === isset($_POST['action']))
 					return;
 					
@@ -57,17 +56,9 @@
 						if($__Setup->messages instanceOf __type_Messages)
 							Inv::addSettingsError($__Setup->id, 'restore_defaults', $__Setup->messages->resetComplete, 'updated fade');
 						
-						if(TRUE === $__Setup->deep)
-						{
-							foreach($__cache as $sid => &$fields)
-								foreach($fields as $fid => &$Field)
-									$result[$sid][$fid] = $Field->std;
-						}
-						else
-						{
-							foreach($__cache as $id => &$Field)
-								$result[$id] = $Field->std;
-						}		
+						foreach($__cache as $sid => &$fields)
+							foreach($fields as $fid => &$Field)
+								$result[$sid][$fid] = $Field->std;
 						
 						break;
 						
@@ -96,30 +87,24 @@
 							if(NULL !== ($_ = $Field->fn))
 								return $_($i, $Field);
 							
-							//if(Inv::hasFilter('tri4m_sanitize_'.$Field->type))
-							//	$result[$id] = Inv::applyFilters('tri4m_sanitize_' . $Field->type, $__input[$id], $Field);
-								return $i;
+							#! Field::gc::adt::validate()
+							#:validate:
+							
+								//if(Inv::hasFilter('tri4m_sanitize_'.$Field->type))
+								//	$result[$id] = Inv::applyFilters('tri4m_sanitize_' . $Field->type, $__input[$id], $Field);
+									return $i;
+							
+							#::
 								
 							return $Field->std;
 						};
 						
-						if(TRUE === $__Setup->deep)
-						{
-							foreach($__cache as $sid => &$fields)
-								foreach($fields as $fid => &$Field)
-								{
-									$i = &$__input[$sid][$fid];
-									$result[$sid][$fid] = $v($Field, $i);
-								}
-						}
-						else
-						{
-							foreach($__cache as $id => &$Field)
+						foreach($__cache as $sid => &$fields)
+							foreach($fields as $fid => &$Field)
 							{
-								$i = &$__input[$id];
-								$result[$id] = $v($Field, $i);
+								$i = &$__input[$sid][$fid];
+								$result[$sid][$fid] = $v($Field, $i);
 							}
-						}
 						
 						break;
 				endswitch;
@@ -127,112 +112,96 @@
 				return [] === $result ? NULL : $result;
 			};
 			
-			isset($__STATIC_fnS) ?: $__STATIC_fnS = function(__type_Settings $__Setup, __type_Section $__Section) use (&$__STATIC_fnI)
+			isset($__STATIC_fnR) ?: $__STATIC_fnR = function(__type_Settings $__Setup, array &$__cache, array $__input) use (&$__STATIC_fnV)
 			{
-				Inv::addSettingsSection
-				(
-					$__Section->id,
-					$__Section->title,
-					function() use (&$__Section, &$__STATIC_fnI)
-					{
-						switch(TRUE):
-							case is_string($c = $__Section->content):
-								print $c;
-								break;
-							
-							case is_array($c = $__Section->content):
-								print implode(PHP_EOL, $c);
-								break;
-							
-							case ($c = $__Section->content) instanceOf __type_Call:
-								print is_array($c = $__STATIC_fnI($c)) ? implode(PHP_EOL, $c) : $c;
-								break;
-						endswitch;
-					},
-					$__Setup->id
-				);
+				return NULL === $__Setup->fn
+					? $__STATIC_fnV($__Setup, $__cache, $__input)
+					: $__Setup->fn($__Setup, $__cache, $__input);
 			};
 			
-			isset($__STATIC_fnF) ?: $__STATIC_fnF = function(__type_Settings $__Setup, __type_Section $__Section, __type_Field $__Field)
+			isset($__STATIC_fnP) ?: $__STATIC_fnP = function(__type_Settings $__Setup)
 			{
-				Inv::addSettingsField
-				(
-					$__Field->id,
-					$__Field->title,
-					function() use (&$__Setup, &$__Section, &$__Field)
+				if(FALSE === ($options = Inv::getOption($__Setup->id)))
+					$options = [];
+				
+				Inv::settingsErrors($__Setup->id);
+				print $__Setup->page->beforeForm;
+				Inv::settingsFields($__Setup->id);
+				
+				foreach($__Setup->sections->get() as $Section)
+				{
+					if(NULL !== $Section->title)
+						print String::insert('<h3>{:title}</h3>', ['title' => $Section->title]);
+					
+					print $Section->beforeContent;
+					
+					switch(TRUE):
+						case is_string($c = $Section->content):
+							print $c;
+							break;
+						
+						case is_array($c = $Section->content):
+							print implode(PHP_EOL, $c);
+							break;
+						
+						case ($c = $Section->content) instanceOf __type_Call:
+							print is_array($c = $__STATIC_fnI($c)) ? implode(PHP_EOL, $c) : $c;
+							break;
+					endswitch;
+					
+					print $Section->beforeFields;
+					
+					foreach($Section->fields->get() as $Field)
 					{
-						if(TRUE === $__Setup->deep)
-						{
-							if(FALSE === ($options = Inv::getOption($__Setup->id))
-							|| FALSE === isset($options[$__Section->id][$__Field->id]))
-								$options[$__Section->id][$__Field->id] = $__Field->std;
-						}
-						else
-						{
-							if(FALSE === ($options = Inv::getOption($__Setup->id))
-							|| FALSE === isset($options[$__Field->id]))
-								$options[$__Field->id] = $__Field->std;
-						}
-							
 						$pattern = [
 							'id'		=> '{:setupId}_{:sectionId}_{:fieldId}',
-							'name'		=> TRUE === $__Setup->deep
-										? '{:setupId}[{:sectionId}][{:fieldId}]'
-										: '{:setupId}[{:fieldId}]',
+							'name'		=> '{:setupId}[{:sectionId}][{:fieldId}]',
 							'type'		=> '{:type}',
-							'value'		=> '{:value}'
+							'value'		=> '{:value}',
+							'class'		=> '{:class}'
 						];
 						
 						$config = [
-							'fieldId' 	=> $__Field->id,
-							'sectionId' 	=> $__Section->id,
+							'fieldId' 	=> $Field->id,
+							'sectionId' 	=> $Section->id,
 							'setupId' 	=> $__Setup->id,
-							'value'		=> TRUE === $__Setup->deep
-										? $options[$__Section->id][$__Field->id]
-										: $options[$__Field->id],
-							'type'		=> $__Field->type
+							'value'		=> isset($options[$Section->id][$Field->id]) ? $options[$Section->id][$Field->id] : $Field->std,
+							'type'		=> $Field->type,
+							'class'		=> $Field->cssClass
 						];
 						
 						foreach($pattern as &$_)
 							$_ = String::insert($_, $config);
 						
-						print String::insert('<input {:attr} />', ['attr' => String::attribute($pattern, ['delimeter' => ' '])]);
-					},
-					$__Setup->id,
-					$__Section->id,
-					[
-						'type'		=> $__Field->type,
-						'desc'		=> $__Field->desc,
-						'id'		=> String::insert('{:setupId}_{:fieldId}', ['setupId' => $__Setup->id, 'fieldId' => $__Field->id]),
-						'label_for'	=> String::insert('{:setupId}_{:fieldId}', ['setupId' => $__Setup->id, 'fieldId' => $__Field->id]),
-						'choices'	=> $__Field->choices,
-						'std'		=> $__Field->std,
-						'class'		=> $__Field->cssClass
-					]
-				);
-			};
-			
-			isset($__STATIC_fnR) ?: $__STATIC_fnR = function(__type_Settings $__Setup, array &$__cache) use (&$__STATIC_fnV)
-			{
-				Inv::registerSetting
-				(
-					$__Setup->id,
-					$__Setup->id,
-					NULL === $__Setup->fn
-						? function($__input) use (&$__Setup, &$__cache, &$__STATIC_fnV)
-						{
-							return $__STATIC_fnV($__Setup, $__cache, $__input);
-						}
-						: $__Setup->fn
-				);
-			};
-			
-			isset($__STATIC_fnP) ?: $__STATIC_fnP = function(__type_Settings $__Setup)
-			{
-				settings_errors($__Setup->id);
-				print $__Setup->page->beforeForm;
-				settings_fields($__Setup->id);
-				do_settings_sections($__Setup->id);
+						print $Section->beforeField;
+						
+						print $Field->beforeLabel;
+						print String::insert($Field->label, ['id' => $pattern['id'], 'title' => $Field->title]);
+						print $Field->afterLabel;
+							
+						print $Field->beforeContent;
+						switch(TRUE):
+							case is_string($c = $Field->content):
+								print String::insert($c, $pattern + ['attr' => String::attribute($pattern, ['delimeter' => ' '])]);
+								break;
+							
+							case is_array($c = $Field->content):
+								print '@todo';
+								break;
+							
+							case ($c = $Field->content) instanceOf __type_Call:
+								print String::insert(is_array($c = $__STATIC_fnI($c)) ? implode(PHP_EOL, $c) : $c, $pattern + ['attr' => String::attribute($pattern, ['delimeter' => ' '])]);
+								break;
+						endswitch;
+						print $Field->afterContent;
+						
+						print $Section->afterField;
+					}
+					
+					print $Section->afterFields;
+					print $Section->afterContent;
+				}
+				
 				print $__Setup->page->beforeCtrl;
 				print $__Setup->page->submit;
 				print $__Setup->page->reset;
@@ -243,6 +212,17 @@
 			$id			= $__Setup->id;
 			$this->__Setup		= $__Setup;
 			$this->__Setup->id	= Theme::slug(Inflector::variablize(Inflector::underscore($this->__Setup->id)));
+			
+			foreach($this->__Setup->sections->get() as $Section)
+			{
+				$Section->id = Inflector::variablize(Inflector::underscore($Section->id));
+				
+				foreach($Section->fields->get() as $Field)
+				{
+					$Field->id = Inflector::variablize(Inflector::underscore($Field->id));
+					$this->__cache[$Section->id][$Field->id] = $Field;
+				}
+			}
 			
 			if($this->__Setup->page instanceOf __type_Page)
 			{
@@ -264,13 +244,14 @@
 				
 				$config[__type_SubMenuPage::id]		= $id;
 				$config[__type_SubMenuPage::content]	= new __type_Call([
-					__type_Call::fn		=> function() use (&$__STATIC_fnP)
+					__type_Call::fn	=> function() use (&$__STATIC_fnP)
 					{
 						$__STATIC_fnP($this->__Setup);
 					}
 				]);
 				
 				$this->__Page = new SubMenuPage(new __type_SubMenuPage($config));
+				
 			}
 			
 			$this->__actions[__const_Action::ADMIN_INIT] = new __type_Action([
@@ -278,39 +259,23 @@
 				__type_Action::priority	=> 101,
 				__type_Action::fn	=> function() use (&$__STATIC_fnF, &$__STATIC_fnS, &$__STATIC_fnR)
 				{
-					$__STATIC_fnR($this->__Setup, $this->__cache);
+					Inv::registerSetting($this->__Setup->id, $this->__Setup->id, function($__input) use (&$__STATIC_fnR)
+					{
+						return $__STATIC_fnR($this->__Setup, $this->__cache, $__input);
+					});
 					
 					foreach($this->__Setup->sections->get() as $Section)
 					{
-						$Section->id = Inflector::variablize(Inflector::underscore($Section->id));
-						
-						$__STATIC_fnS($this->__Setup, $Section);
+						Inv::addSettingsSection($Section->id, $Section->title, NULL, $this->__Setup->id);
 						
 						foreach($Section->fields->get() as $Field)
 						{
-							$Field->id = Inflector::variablize(Inflector::underscore($Field->id));
-							
-							TRUE === $this->__Setup->deep
-								? $this->__cache[$Section->id][$Field->id]	= $Field
-								: $this->__cache[$Field->id]			= $Field;
-							
-							$__STATIC_fnF($this->__Setup, $Section, $Field);
+							Inv::addSettingsField($Field->id, $Field->title, NULL, $this->__Setup->id, $Section->id, []);
 						}
 					}
-					
-					
 				}
 			]);
 			
-			/*
-			$this->__actions[__const_Action::ADMIN_MENU] = new __type_Action([
-				__type_Action::argsNum	=> 0,
-				__type_Action::priority	=> 100,
-				__type_Action::fn	=> function() use (&$__STATIC_fnP)
-				{
-					$this->__pageHook = $__STATIC_fnP($this->__Setup);
-				}
-			]);
 			/*
 			$this->__actions[String::insert(__const_Action::LOAD_PAGE_HOOK__, ['pageHook' => $this->__pageHook])] = new __type_Action([
 				__type_Action::argsNum	=> 2,

@@ -11,10 +11,13 @@
 	USE tri4m\Wp\Wtf\__type_AdminBar;
 	USE tri4m\Wp\Wtf\__type_ContextualHelp;
 	USE tri4m\Wp\Wtf\__type_ManageColumns;
+	USE tri4m\Wp\Wtf\__type_MetaBox;
 	USE tri4m\Wp\Wtf\__type_Name;
+	USE tri4m\Wp\Wtf\__type_PostMeta;
 	USE tri4m\Wp\Wtf\__type_PostType;
 	USE tri4m\Wp\Wtf\__type_Settings;
 	USE tri4m\Wp\Wtf\__type_SideBar;
+	USE tri4m\Wp\Wtf\__type_SubMenuPage;
 	USE tri4m\Wp\Wtf\__type_Taxonomy;
 	USE tri4m\Wp\Wtf\AdminBar;
 	USE tri4m\Wp\Wtf\AdminBar\Child;
@@ -22,6 +25,16 @@
 	USE tri4m\Wp\Wtf\ContextualHelp\__type_Tab;
 	USE tri4m\Wp\Wtf\ContextualHelp\Tabs;
 	USE tri4m\Wp\Wtf\ManageColumns;
+	USE tri4m\Wp\Wtf\MetaBox;
+	USE tri4m\Wp\Wtf\PostMeta;
+	USE tri4m\Wp\Wtf\PostMeta\__type_Field as __type_FieldPM;
+	USE tri4m\Wp\Wtf\PostMeta\__type_FieldList as __type_FieldListPM;
+	USE tri4m\Wp\Wtf\PostMeta\__type_FieldListField as __type_FieldListFieldPM;
+	USE tri4m\Wp\Wtf\PostMeta\__type_Box as __type_BoxPM;
+	USE tri4m\Wp\Wtf\PostMeta\__type_Section as __type_SectionPM;
+	USE tri4m\Wp\Wtf\PostMeta\Fields as FieldsPM;
+	USE tri4m\Wp\Wtf\PostMeta\ListFields as ListFieldsPM;
+	USE tri4m\Wp\Wtf\PostMeta\Sections as SectionsPM;
 	USE tri4m\Wp\Wtf\PostType;
 	USE tri4m\Wp\Wtf\PostType\__flag_Support;
 	USE tri4m\Wp\Wtf\Settings;
@@ -32,7 +45,6 @@
 	USE tri4m\Wp\Wtf\Settings\Sections;
 	USE tri4m\Wp\Wtf\SideBar;
 	USE tri4m\Wp\Wtf\SubMenuPage;
-	USE tri4m\Wp\Wtf\__type_SubMenuPage;
 	USE tri4m\Wp\Wtf\Taxonomy;
 	USE ILLI\Core\Util\String;
 	USE WP_Post;
@@ -56,7 +68,92 @@
 				])))->install();
 			
 			#:options:
+					
+					(new MetaBox(new __type_MetaBox([
+						__type_MetaBox::id	=> 'event_metabox',
+						__type_MetaBox::title	=> 'bob Options',
+						__type_MetaBox::type	=> 'event',
+						__type_MetaBox::content	=> new __type_Call([
+							__type_Call::fn => function()
+							{
+								print 'hello';
+							}
+						])
+					])))->install();
 			
+				(new PostMeta(new __type_PostMeta([
+					__type_PostMeta::id		=> 'postmeta_event',
+					__type_PostMeta::deep		=> TRUE,
+					__type_PostMeta::box		=> new __type_BoxPM([
+						__type_BoxPM::title		=> 'Event Options',
+						__type_BoxPM::type		=> 'event',
+					]),
+					__type_Settings::sections	=> new SectionsPM([
+						new __type_SectionPM([
+							__type_SectionPM::id	=> 'period',
+							__type_SectionPM::title	=> 'foo',
+							__type_SectionPM::content	=> '<p>foo & bar</p>',
+							__type_SectionPM::fields	=> new FieldsPM([
+								new __type_FieldListPM([
+									__type_FieldListPM::id		=> 'begin',
+									__type_FieldListPM::title	=> 'Begin',
+									__type_FieldListPM::fields	=> new ListFieldsPM([
+										new __type_FieldListFieldPM([
+											__type_FieldListFieldPM::id	=> 'date',
+											__type_FieldListFieldPM::title	=> 'Date',
+											__type_FieldListFieldPM::std	=> '00/00/0000',
+											__type_FieldListFieldPM::type	=> 'text',
+										]),
+										new __type_FieldListFieldPM([
+											__type_FieldListFieldPM::id	=> 'time',
+											__type_FieldListFieldPM::title	=> 'Time',
+											__type_FieldListFieldPM::std	=> '00:00',
+											__type_FieldListFieldPM::type	=> 'text',
+										])
+									])
+								]),
+								new __type_FieldListPM([
+									__type_FieldListPM::id		=> 'end',
+									__type_FieldListPM::title	=> 'End',
+									__type_FieldListPM::fields	=> new ListFieldsPM([
+										new __type_FieldListFieldPM([
+											__type_FieldListFieldPM::id	=> 'date',
+											__type_FieldListFieldPM::title	=> 'Date',
+											__type_FieldListFieldPM::std	=> '00/00/0000',
+											__type_FieldListFieldPM::type	=> 'text',
+										]),
+										new __type_FieldListFieldPM([
+											__type_FieldListFieldPM::id	=> 'time',
+											__type_FieldListFieldPM::title	=> 'Time',
+											__type_FieldListFieldPM::std	=> '00:00',
+											__type_FieldListFieldPM::type	=> 'text',
+										])
+									])
+								])
+							])
+						]),
+						new __type_SectionPM([
+							__type_SectionPM::id	=> 'info',
+							__type_SectionPM::title	=> 'Info',
+							//__type_SectionPM::content	=> '<p>Event adds</p>',
+							__type_SectionPM::fields	=> new FieldsPM([
+								new __type_FieldPM([
+									__type_FieldPM::id	=> 'location',
+									__type_FieldPM::title	=> 'Location',
+									__type_FieldPM::std	=> 'here',
+									__type_FieldPM::type	=> 'text',
+								]),
+								new __type_FieldPM([
+									__type_FieldPM::id	=> 'ticket_url',
+									__type_FieldPM::title	=> 'Ticket URL',
+									__type_FieldPM::std	=> 'http://',
+									__type_FieldPM::type	=> 'text',
+								])
+							])
+						]),
+					])
+				])))->install();
+					
 				(new Settings(new __type_Settings([
 					__type_Settings::id		=> 'foobar',
 					__type_Settings::deep		=> TRUE,
@@ -192,8 +289,6 @@
 			
 			#:posttypes:
 			
-				#! capabilities not implemented
-				
 				#:events:
 				
 					$Event = new __type_PostType([
@@ -215,7 +310,7 @@
 						])
 					]);
 					
-					$Event->env->supports			= 11 + __flag_Support::POST_FORMATS;
+					$Event->env->supports			= 11 + __flag_Support::POST_FORMATS | __flag_Support::REVISIONS;
 					$Event->env->hierarchical		= TRUE;
 					$Event->env->taxonomies			= [$EventType->name->slugSingular];
 					$Event->env->rewrite->slug		= 'event';

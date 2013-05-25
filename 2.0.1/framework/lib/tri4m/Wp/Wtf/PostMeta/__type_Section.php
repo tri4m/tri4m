@@ -1,6 +1,6 @@
 <?PHP
-	NAMESPACE tri4m\Wp\Wtf\Settings;
-	USE tri4m\Wp\Wtf\Settings\Fields;
+	NAMESPACE tri4m\Wp\Wtf\PostMeta;
+	USE tri4m\Wp\Wtf\PostMeta\Fields;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
 	CLASS __type_Section EXTENDS \ILLI\Core\Std\Def\ADVTuple
@@ -23,7 +23,7 @@
 				[
 					self::id		=> [__const_Type::SPL_STRING],
 					self::title		=> [__const_Type::SPL_STRING],
-					self::fields		=> ['tri4m\Wp\Wtf\Settings\Fields'],
+					self::fields		=> ['tri4m\Wp\Wtf\PostMeta\Fields'],
 					self::content		=>
 					[
 						'tri4m\Wp\__type_Call',
@@ -39,12 +39,12 @@
 				],
 				parent::mergeOffsetValues($__setup, [
 					self::fields		=> new Fields,
+					self::beforeFields	=> '<table class="form-table">',
+					self::beforeField	=> '<tr valign="top">',
 					self::beforeContent	=> '<div>',
 					self::afterContent	=> '</div>',
-					self::beforeFields	=> '<table class="form-table">',
-					self::afterFields	=> '</table>',
-					self::beforeField	=> '<tr valign="top">',
 					self::afterField	=> '</tr>',
+					self::afterFields	=> '</table>',
 				])
 			);
 		}
