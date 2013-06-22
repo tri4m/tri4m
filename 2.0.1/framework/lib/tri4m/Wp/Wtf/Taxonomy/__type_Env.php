@@ -4,7 +4,7 @@
 	USE tri4m\Wp\Wtf\Taxonomy\__type_Rewrite;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
-	CLASS __type_Args EXTENDS \ILLI\Core\Std\Def\ADVTuple
+	CLASS __type_Env EXTENDS \ILLI\Core\Std\Def\ADVTuple
 	{
 		CONST labels			= 0x00;
 		CONST rewrite			= 0x01;
@@ -18,6 +18,7 @@
 		CONST queryVar			= 0x09;
 		CONST sort			= 0x0A;
 		CONST builtin			= 0x0B;
+		CONST capabilities		= 0x0C;
 		
 		public function __construct(array $__setup = [])
 		{
@@ -32,10 +33,11 @@
 					self::showTagCloud		=> [__const_Type::SPL_BOOLEAN],
 					self::showAdminColumn		=> [__const_Type::SPL_BOOLEAN],
 					self::hierarchical		=> [__const_Type::SPL_BOOLEAN],
-					self::updateCountCallback	=> [__const_Type::SPL_STRING],
+					self::updateCountCallback	=> [__const_Type::SPL_CLOSURE, __const_Type::SPL_FUNCTION, __const_Type::SPL_METHOD],
 					self::queryVar			=> [__const_Type::SPL_BOOLEAN, __const_Type::SPL_STRING],
 					self::sort			=> [__const_Type::SPL_BOOLEAN],
-					self::builtin			=> [__const_Type::SPL_BOOLEAN]
+					self::builtin			=> [__const_Type::SPL_BOOLEAN],
+					self::capabilities		=> [__const_Type::SPL_ARRAY]
 				],
 				parent::mergeOffsetValues($__setup, [
 					self::labels		=> new __type_Labels,

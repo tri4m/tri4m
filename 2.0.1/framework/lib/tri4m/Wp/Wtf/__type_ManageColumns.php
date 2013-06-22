@@ -21,9 +21,9 @@
 					self::title		=> [__const_Type::SPL_STRING],
 					self::id		=> [__const_Type::SPL_STRING],
 					self::index		=> [__const_Type::SPL_LONG],
-					self::filterEvent	=> [__const_Type::SPL_STRING],
+					self::filterEvent	=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
 					self::filter		=> ['tri4m\Wp\__type_Call'],
-					self::actionEvent	=> [__const_Type::SPL_STRING],
+					self::actionEvent	=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
 					self::action		=> ['tri4m\Wp\__type_Call']
 				],
 				parent::mergeOffsetValues($__setup, [

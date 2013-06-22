@@ -1,11 +1,10 @@
 <?PHP
 	NAMESPACE tri4m\Wp;
-	USE ILLI\Core\Std\Invoke;
-	USE ILLI\Core\Util\Inflector;
+	USE tri4m\Wp\Hook;
 	
 	CLASS Wtf
 	{
-		static protected $__defaults	= [];
+		protected $__isInstalled	= FALSE;
 		protected $__Setup		= NULL;
 		protected $__actions		= [];
 		protected $__filters		= [];
@@ -15,15 +14,28 @@
 		
 		function install()
 		{
+			if(TRUE === $this->__isInstalled)
+				return $this;
+				
 			foreach(['__actions', '__filters'] as $p)
 				foreach($this->$p as $e => $T)
 				{
+					if($T === NULL)
+						continue;
+						
 					$T->event = $e;
 					Hook::enqueue($T);
 				}
 				
 			foreach($this->__callables as $T)
+			{
+				if($T === NULL)
+					continue;
+				
 				Hook::enqueue($T);
+			}
+			
+			$this->__isInstalled = TRUE;
 				
 			return $this;
 		}
