@@ -9,7 +9,7 @@
 		CONST id		= 0x01;
 		CONST href		= 0x02;
 		CONST parentId		= 0x03;
-		CONST sub		= 0x04;
+		CONST child		= 0x04;
 		CONST meta		= 0x05;
 		
 		public function __construct(array $__setup = [])
@@ -21,7 +21,7 @@
 					self::id		=> [__const_Type::SPL_STRING],
 					self::href		=> [__const_Type::SPL_STRING],
 					self::parentId		=> [__const_Type::SPL_STRING],
-					self::sub		=> ['tri4m\Wp\Wtf\AdminBar\Sub'],
+					self::child		=> ['tri4m\Wp\Wtf\AdminBar\Child'],
 					self::meta		=> ['tri4m\Wp\Wtf\AdminBar\__type_Meta']
 				],
 				$__setup

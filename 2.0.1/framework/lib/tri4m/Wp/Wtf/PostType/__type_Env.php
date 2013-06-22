@@ -29,6 +29,7 @@
 		CONST canExport			= 0x13;
 		CONST builtin			= 0x14;
 		CONST editLink			= 0x15;
+		CONST capability		= 0x16;
 		
 		public function __construct(array $__setup = [])
 		{
@@ -56,7 +57,8 @@
 					self::queryVar		=> [__const_Type::SPL_BOOLEAN, __const_Type::SPL_STRING],
 					self::canExport		=> [__const_Type::SPL_BOOLEAN],
 					self::builtin		=> [__const_Type::SPL_BOOLEAN],
-					self::editLink		=> [__const_Type::SPL_STRING]
+					self::editLink		=> [__const_Type::SPL_STRING],
+					self::capability	=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY]
 				],
 				parent::mergeOffsetValues($__setup, [
 					self::supports		=> __flag_Support::TITLE | __flag_Support::EDITOR | __flag_Support::THUMBNAIL,
@@ -80,7 +82,8 @@
 					self::queryVar		=> TRUE,
 					self::canExport		=> TRUE,
 					self::builtin		=> FALSE,
-					self::editLink		=> 'post.php?post=%d'
+					self::editLink		=> 'post.php?post=%d',
+					self::capability	=> 'page'
 				])
 			);
 		}

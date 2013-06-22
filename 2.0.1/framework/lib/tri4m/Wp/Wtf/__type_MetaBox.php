@@ -9,8 +9,9 @@
 		CONST type		= 0x02;
 		CONST context		= 0x03;
 		CONST priority		= 0x04;
-		CONST fn		= 0x05;
-		CONST arguments		= 0x06;
+		CONST content		= 0x05;
+		CONST beforeContent	= 0x06;
+		CONST afterContent	= 0x07;
 		
 		public function __construct(array $__setup = [])
 		{
@@ -19,14 +20,21 @@
 				[
 					self::id		=> [__const_Type::SPL_STRING],
 					self::title		=> [__const_Type::SPL_STRING],
-					self::type		=> [__const_Type::SPL_STRING],
+					self::type		=> [__const_Type::SPL_STRING, __const_Type::SPL_ARRAY],
 					self::context		=> [__const_Type::SPL_STRING],
 					self::priority		=> [__const_Type::SPL_STRING],
-					self::fn		=> [__const_Type::SPL_CLOSURE, __const_Type::SPL_FUNCTION, __const_Type::SPL_METHOD],
-					self::argments		=> [__const_Type::SPL_ARRAY]
+					self::content		=>
+					[
+						'tri4m\Wp\__type_Call',
+						__const_Type::SPL_STRING,
+						__const_Type::SPL_ARRAY
+					],
+					self::beforeContent	=> [__const_Type::SPL_STRING],
+					self::afterContent	=> [__const_Type::SPL_STRING]
 				],
 				parent::mergeOffsetValues($__setup, [
-					self::args		=> new __type_Args
+					self::context		=> 'advanced',
+					self::priority		=> 'high'
 				])
 			);
 		}

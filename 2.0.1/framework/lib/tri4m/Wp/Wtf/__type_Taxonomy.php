@@ -1,6 +1,6 @@
 <?PHP
 	NAMESPACE tri4m\Wp\Wtf;
-	USE tri4m\Wp\Wtf\Taxonomy\__type_Args;
+	USE tri4m\Wp\Wtf\Taxonomy\__type_Env;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
 	CLASS __type_Taxonomy EXTENDS \ILLI\Core\Std\Def\ADVTuple
@@ -16,10 +16,10 @@
 				[
 					self::name		=> ['tri4m\Wp\Wtf\__type_Name'],
 					self::type		=> ['tri4m\Wp\Wtf\PostType', __const_Type::SPL_ARRAY, __const_Type::SPL_STRING],
-					self::args		=> ['tri4m\Wp\Wtf\Taxonomy\__type_Args']
+					self::args		=> ['tri4m\Wp\Wtf\Taxonomy\__type_Env']
 				],
 				parent::mergeOffsetValues($__setup, [
-					self::args		=> new __type_Args
+					self::args		=> new __type_Env
 				])
 			);
 		}
