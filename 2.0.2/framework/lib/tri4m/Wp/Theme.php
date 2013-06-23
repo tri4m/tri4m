@@ -10,8 +10,10 @@
 	USE tri4m\Wp\Trap;
 	USE ILLI\Core\Std\Exec\__type_Call;
 	USE ILLI\Core\Std\Spl\FsbCollection;
+	USE ILLI\Core\Std\Throwable\Log;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
+	USE ILLI\Core\Util\Set;
 	USE Exception;
 	
 	CLASS Theme
@@ -52,14 +54,26 @@
 				{
 					Inv::addAction($__event, function() use (&$__method)
 					{
-						static::$__Application->$__method();
-						Hook::dequeue();
+						try
+						{
+							static::$__Application->$__method();
+							Hook::dequeue();
+						}
+						catch(\Exception $E)
+						{
+							throw $E;
+						}
 					}, 1, 0);
 				};
 				
 				return $T;
 			})
 			->invoke('emit');
+		}
+		
+		function __destruct()
+		{
+			
 		}
 		
 		function __construct(__type_Theme $__Setup)
@@ -69,14 +83,24 @@
 				'fire' => function(array $i){ Error::add($i['Exception']->toTrack()->asText()); }
 			]);
 			
-			Trap::handle(['shutdown' => function(){
+			Trap::handle(['shutdown' => function()
+			{
+				#! trapped 2 Error::$__log: see parser setup
+				// (new \ILLI\Core\Std\Def\ADVArray())->set(Set::flatten(Log::get()))->each(function($v, $k)
+				//	{ Error::add(2, '['.$k.']'.str_replace(PHP_EOL, PHP_EOL."\t", $v)); return $v; });
+				
 				print Trace::html();
 				print Error::html();
+				
 			}]);
 			
 			Trap::parser(function($i){
 				extract($i);
-				return !strpos($file, 'wp-includes');
+				
+				#! not enough: return !strpos($file, 'wp-includes');
+				#~ see https://gist.github.com/icro/5842541 for /wp-admin/edit-comments.php
+				
+				return strpos($file, 'tri4m') || strpos($file, 'ILLI');
 			});
 			
 			Trap::run();

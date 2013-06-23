@@ -1,50 +1,56 @@
 <?PHP
 	NAMESPACE tri4m\Wp\Module;
-	USE tri4m\Wp\__const_Action;
-	USE tri4m\Wp\Module\__type_AdminBar;
 	USE tri4m\Wp\Module\AdminBar\__type_Meta;
 	USE tri4m\Wp\Module\AdminBar\Child;
+	USE tri4m\Wp\Module\__type_AdminBar;
+	USE tri4m\Wp\__const_Action;
 	USE ILLI\Core\Std\Exec\__type_Action;
-	USE ILLI\Core\Util\Inflector;
 	USE WP_Admin_Bar;
 	
 	CLASS AdminBar EXTENDS \tri4m\Wp\Module
 	{
 		function __construct(__type_AdminBar $__Setup)
 		{
-			$this->__Setup				= $__Setup;
-			$this->__Setup[__type_AdminBar::id]	= Inflector::underscore($this->__Setup[__type_AdminBar::id]);
-			
+			$this->__Setup = $__Setup;
+				
 			$this->__actions[] = new __type_Action([
 				__type_Action::event	=> __const_Action::ADMIN_BAR_MENU,
 				__type_Action::argsNum	=> 1,
 				__type_Action::priority	=> 500,
-				__type_Action::handle	=> [$this, '__menu']
+				__type_Action::handle	=> [$this, '__adminBarMenu']
 			]);
 		}
 		
 		function addChild(__type_AdminBar $__Setup)
 		{
-			$this->__Setup[__type_AdminBar::child][] = new self($__Setup);
+			$this->__Setup->get()[__type_AdminBar::child][] = new self($__Setup);
 			return $this;
 		}
 		
-		function install()
+		protected function onInstall()
 		{
-			parent::install()->__Setup[__type_AdminBar::child]->each(function(AdminBar $Child)
-				{
-					$Child->__Setup[__type_AdminBar::parentId] = $this->__Setup[__type_AdminBar::id];
-					return $Child;
-				})
-				->invoke('install');
-			
-			return $this;
+			$this->__Setup->get()
+				->each
+				(
+					function(Child $v, $k)
+					{
+						return $v->each
+						(
+							function(AdminBar $v, $k)
+							{
+								$v->__Setup->get()[__type_AdminBar::parentId] = $this->__Setup->get()[__type_AdminBar::id];
+								return $v->install();
+							},
+							function($v, $k) { return TRUE === $v instanceOf AdminBar && NULL !== $v; }
+						);
+					},
+					function($v, $k) { return $k === __type_AdminBar::child && $v instanceOf Child; }
+				);
 		}
 		
-		function __menu(WP_Admin_Bar $__AdminBar)
+		function __adminBarMenu(WP_Admin_Bar $__AdminBar)
 		{
 			$config = [];
-				
 			foreach([
 				__type_AdminBar::parentId	=> 'parent',
 				__type_AdminBar::text		=> 'title',

@@ -56,5 +56,7 @@
 					});
 					break;
 			endswitch;
+			
+			return $__T;
 		}
 	}
