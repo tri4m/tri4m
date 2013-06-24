@@ -23,7 +23,7 @@
 		
 		function addChild(__type_AdminBar $__Setup)
 		{
-			$this->__Setup->get()[__type_AdminBar::child][] = new self($__Setup);
+			$this->__Setup->get()[__type_AdminBar::child][] = parent::create($__Setup);
 			
 			return $this;
 		}
