@@ -4,7 +4,7 @@
 	USE tri4m\Wp\Module\AdminBar\Child;
 	USE ILLI\Core\Std\Def\__const_Type;
 	
-	CLASS __type_AdminBar EXTENDS \tri4m\Wp\__type_Module
+	CLASS __type_AdminBar EXTENDS \ILLI\Core\Std\Def\ADVTuple IMPLEMENTS \tri4m\Wp\IModuleSetup
 	{
 		CONST text		= 0x00;
 		CONST id		= 0x01;
