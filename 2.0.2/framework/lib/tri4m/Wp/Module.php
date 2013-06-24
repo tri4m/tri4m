@@ -3,6 +3,7 @@
 	USE tri4m\Wp\__const_Module;
 	USE tri4m\Wp\Hook;
 	USE tri4m\Wp\IModuleSetup;
+	USE tri4m\Wp\Trace;
 	USE ILLI\Core\Std\Exception\ClassNotFoundException;
 	USE ILLI\Core\Std\Exception\ComponentNotFoundException;
 	USE ILLI\Core\Std\Exec\__trait_ClassStatic;
@@ -11,6 +12,7 @@
 	USE ILLI\Core\Std\Spl\FsbCollection;
 	USE ILLI\Core\Util\Inflector;
 	USE ILLI\Core\Util\String;
+	USE ILLI\Core\Util\Spl;
 	
 	CLASS Module
 	{	
@@ -43,10 +45,6 @@
 			return $this;
 		}
 		
-		protected function onInstall()
-		{
-		}
-		
 		static function create(IModuleSetup $__Setup)
 		{
 			$__ident = get_class($__Setup);
@@ -55,6 +53,10 @@
 				throw new ComponentNotFoundException(['name' => $__ident]);
 			
 			return static::Core_Std_Exec___trait_ClassStatic_emit($__ident, [$__Setup]);
+		}
+		
+		protected function onInstall()
+		{
 		}
 		
 		static function handler($__ident, $__handle)
@@ -90,11 +92,16 @@
 		
 		static function __boot()
 		{
+			if(__CLASS__ !== get_called_class())
+				return;
+			
 			foreach(__const_Module::toArray() as $name => $handle)
-				static::Core_Std_Exec___trait_ClassStatic_register(new __type_Class([
+				self::Core_Std_Exec___trait_ClassStatic_register(new __type_Class([
 					__type_Class::identifier	=> static::setupName($name, __CLASS__),
 					__type_Class::origin		=> static::handleName($name, __CLASS__),
-					__type_Class::handle		=> $handle
+					__type_Class::handle		=> $handle,
+					__type_Class::arguments		=> [],
+					__type_Class::lockArguments	=> FALSE
 				]));
 		}
 	}

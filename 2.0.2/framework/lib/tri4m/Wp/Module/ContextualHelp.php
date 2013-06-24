@@ -39,14 +39,12 @@
 			$callback	= $this->__Setup->get()[__type_ContextualHelp::callback];
 			$name		= $this->__Setup->get()[__type_ContextualHelp::name];
 			
-			$names = [];
-			foreach([
-				__type_Name::singular		=> 'singular',
-				__type_Name::plural		=> 'plural',
-				__type_Name::slugSingular	=> 'slug_singular',
-				__type_Name::slugPlural		=> 'slug_plural'
-			] as $i => $k)
-				$names[$k] = $this->__Setup->get()[__type_ContextualHelp::name]->get()->toArray()[$i];
+			$names = $this->__Setup->get()[__type_ContextualHelp::name]->toArray([
+				'singular'	=> __type_Name::singular,
+				'plural'	=> __type_Name::plural,
+				'slug_singular'	=> __type_Name::slugSingular,
+				'slug_plural'	=> __type_Name::slugPlural
+			]);
 			
 			switch(TRUE):
 				case $id !== $__WpScreen->id:

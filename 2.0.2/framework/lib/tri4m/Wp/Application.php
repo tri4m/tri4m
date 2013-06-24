@@ -6,6 +6,7 @@
 	USE tri4m\Wp\Module\__type_ManageColumns;
 	USE tri4m\Wp\Module\__type_Name;
 	USE tri4m\Wp\Module\__type_SideBar;
+	USE tri4m\Wp\Module\__type_SubMenuPage;
 	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\__const_Filter;
 	USE tri4m\Wp\__type_Theme;
@@ -24,14 +25,24 @@
 	{
 		function boot()
 		{
-			Trace::add(__METHOD__);
-			
 			Hook::enqueue(new __type_Call([__type_Call::handle => ['tri4m\Wp\Inv', 'addEditorStyle']]));
 			Hook::enqueue(new __type_Call([__type_Call::handle => ['tri4m\Wp\Inv', 'addThemeSupport'], __type_Call::arguments => ['post-formats', ['aside', 'gallery', 'link', 'image', 'quote', 'status', 'audio', 'video', 'chat']]]));
 			Hook::enqueue(new __type_Call([__type_Call::handle => ['tri4m\Wp\Inv', 'addThemeSupport'], __type_Call::arguments => ['automatic-feed-links']]));
 			Hook::enqueue(new __type_Call([__type_Call::handle => ['tri4m\Wp\Inv', 'addThemeSupport'], __type_Call::arguments => ['post-thumbnails']]));
 			Hook::enqueue(new __type_Call([__type_Call::handle => ['tri4m\Wp\Inv', 'setPostThumbnailSize'], __type_Call::arguments => [720, 300, TRUE]]));
 			Hook::enqueue(new __type_Call([__type_Call::handle => ['tri4m\Wp\Inv', 'addImageSize'], __type_Call::arguments => ['edit-screen-thumbnail', 100, 100, TRUE]]));
+			
+			Module::create(new __type_SubMenuPage([
+				__type_SubMenuPage::id		=> 'bob',
+				__type_SubMenuPage::title	=> 'bob Options',
+				__type_SubMenuPage::menuTitle	=> 'bob',
+				__type_SubMenuPage::content	=> new __type_Call([
+					__type_Call::handle => function()
+					{
+						print 'hello';
+					}
+				])
+			]))->install();
 			
 			Module::create(new __type_ManageColumns([
 				__type_ManageColumns::filterEvent	=> String::insert(__const_Filter::MANAGE_POST_TYPE_POSTS_COLUMNS__, ['postType' => 'post']),
@@ -74,7 +85,7 @@
 			
 			Module::create(new __type_SideBar([__type_Sidebar::name => 'Left', __type_Sidebar::id => '{:slug}_sidebar_left', __type_Sidebar::desc => 'The {:name} sidebar.']))->install();
 			Module::create(new __type_SideBar([__type_Sidebar::name => 'Right', __type_Sidebar::id => '{:slug}_sidebar_right', __type_Sidebar::desc => 'The {:name} sidebar.']))->install();
-			Module::create(new __type_SideBar([ __type_Sidebar::name => '2nd Right', __type_Sidebar::id => '{:slug}_sidebar_right2nd', __type_Sidebar::desc => 'The {:name} sidebar.']))->install();
+			Module::create(new __type_SideBar([__type_Sidebar::name => '2nd Right', __type_Sidebar::id => '{:slug}_sidebar_right2nd', __type_Sidebar::desc => 'The {:name} sidebar.']))->install();
 			Module::create(new __type_SideBar([__type_Sidebar::name => 'Footer', __type_Sidebar::id => '{:slug}_sidebar_footer', __type_Sidebar::desc => 'The {:name} sidebar.']))->install();
 			
 			Module::create(new __type_AdminBar([__type_AdminBar::text => 'badcdcz', __type_AdminBar::id => 'bdcdcdcay', __type_AdminBar::href => '#']))
@@ -93,28 +104,21 @@
 				__type_Tab::content => 'foo',
 			]))
 			->install();
-			
-			
-			
 		}
 		
 		function run()
 		{
-			Trace::add(__METHOD__);
 		}
 		
 		function shutdown()
 		{
-			Trace::add(__METHOD__);
 		}
 		
 		function install()
 		{
-			Trace::add(__METHOD__);
 		}
 		
 		function uninstall()
 		{
-			Trace::add(__METHOD__);
 		}
 	}

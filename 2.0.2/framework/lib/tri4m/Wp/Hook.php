@@ -6,6 +6,7 @@
 	USE ILLI\Core\Std\Exec\__type_Filter;
 	USE ILLI\Core\Std\Exec\__type_Call;
 	USE ILLI\Core\Std\Spl\FsbCollection;
+	USE ILLI\Core\Util\Spl;
 	
 	CLASS Hook
 	{
@@ -13,6 +14,9 @@
 		
 		static function __boot()
 		{
+			if(__CLASS__ !== get_called_class())
+				return;
+			
 			static::$__FSB = new FsbCollection(0);
 		}
 		
@@ -56,7 +60,5 @@
 					});
 					break;
 			endswitch;
-			
-			return $__T;
 		}
 	}

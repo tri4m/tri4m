@@ -8,4 +8,5 @@
 		CONST	Foo			= NULL;
 		CONST	ManageColumns		= NULL;
 		CONST	SideBar			= NULL;
+		CONST	SubMenuPage		= NULL;
 	}

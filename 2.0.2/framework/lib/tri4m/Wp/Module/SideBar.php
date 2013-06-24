@@ -3,6 +3,7 @@
 	USE tri4m\Wp\Module\__type_SideBar;
 	USE tri4m\Wp\__const_Action;
 	USE tri4m\Wp\Inv;
+	USE ILLI\Core\Std\Def\ADVArray;
 	USE ILLI\Core\Std\Exec\__type_Action;
 	USE ILLI\Core\Util\String;
 	
@@ -22,28 +23,30 @@
 				
 		function __sideBar()
 		{
-			$names = [];
-			foreach([
-				__type_SideBar::slug		=> 'slug',
-				__type_SideBar::cssClass	=> 'class',
-				__type_SideBar::id		=> 'id',
-				__type_SideBar::name		=> 'name'
-			] as $i => $k)
-				$names[$k] = $this->__Setup->get()->toArray()[$i];
-				
-			$config = [];
-			foreach([
-				__type_SideBar::name		=> 'name',
-				__type_SideBar::desc		=> 'description',
-				__type_SideBar::id		=> 'id',
-				__type_SideBar::cssClass	=> 'class',
-				__type_SideBar::beforeWidget	=> 'before_widget',
-				__type_SideBar::afterWidget	=> 'after_widget',
-				__type_SideBar::beforeTitle	=> 'before_title',
-				__type_SideBar::afterTitle	=> 'after_title'
-			] as $i => $k)
-				$config[$k] = String::insert(is_array($d = $this->__Setup->get()->toArray()[$i]) ? implode(PHP_EOL, $d) : $d, $names);
+			$names = $this->__Setup->toArray([
+				'slug'	=> __type_SideBar::slug,
+				'class'	=> __type_SideBar::cssClass,
+				'id'	=> __type_SideBar::id,
+				'name'	=> __type_SideBar::name,
+			]);
 			
-			Inv::registerSidebar($config);
+			Inv::registerSidebar
+			(
+				ADVArray::fromArray($this->__Setup->toArray([
+					'name'		=> __type_SideBar::name,
+					'description'	=> __type_SideBar::desc,
+					'id'		=> __type_SideBar::id,
+					'class'		=> __type_SideBar::cssClass,
+					'before_widget'	=> __type_SideBar::beforeWidget,
+					'after_widget'	=> __type_SideBar::afterWidget,
+					'before_title'	=> __type_SideBar::beforeTitle,
+					'after_title'	=> __type_SideBar::afterTitle,
+				]))
+				->each(function($v) use ($names)
+				{
+					return String::insert(is_array($v) ? implode(PHP_EOL, $v) : $v, $names);
+				})
+				->get()
+			);
 		}
 	}

@@ -24,6 +24,9 @@
 		
 		static function __boot()
 		{
+			if(__CLASS__ !== get_called_class())
+				return;
+			
 			static::$__uri =
 			[
 				'root'		=> '{:root}',

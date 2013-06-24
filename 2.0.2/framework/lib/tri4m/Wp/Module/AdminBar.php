@@ -24,6 +24,7 @@
 		function addChild(__type_AdminBar $__Setup)
 		{
 			$this->__Setup->get()[__type_AdminBar::child][] = new self($__Setup);
+			
 			return $this;
 		}
 		
@@ -50,23 +51,20 @@
 		
 		function __adminBarMenu(WP_Admin_Bar $__AdminBar)
 		{
-			$config = [];
-			foreach([
-				__type_AdminBar::parentId	=> 'parent',
-				__type_AdminBar::text		=> 'title',
-				__type_AdminBar::id		=> 'id',
-				__type_AdminBar::href		=> 'href'
-			] as $i => $k)
-				$config[$k] = $this->__Setup[$i];
+			$config = $this->__Setup->toArray([
+				'parent'	=> __type_AdminBar::parentId,
+				'title'		=> __type_AdminBar::text,
+				'id'		=> __type_AdminBar::id,
+				'href'		=> __type_AdminBar::href
+			]);
 			
-			foreach([
-				__type_Meta::html		=> 'html',
-				__type_Meta::cssClass		=> 'class',
-				__type_Meta::onClick		=> 'onclick',
-				__type_Meta::target		=> 'target',
-				__type_Meta::title		=> 'title'
-			] as $i => $k)
-				$config['meta'][$k] = $this->__Setup[__type_AdminBar::meta][$i];
+			$config['meta'] = $this->__Setup->get()[__type_AdminBar::meta]->toArray([
+				'html'		=> __type_Meta::html,
+				'class'		=> __type_Meta::cssClass,
+				'onclick'	=> __type_Meta::onClick,
+				'target'	=> __type_Meta::target,
+				'title'		=> __type_Meta::title
+			]);
 			
 			$__AdminBar->add_menu($config);
 		}

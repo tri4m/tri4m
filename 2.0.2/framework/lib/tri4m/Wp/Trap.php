@@ -13,6 +13,9 @@
 		
 		static function __boot()
 		{
+			if(__CLASS__ !== get_called_class())
+				return;
+			
 			parent::__boot();
 			
 			if(static::isRunning())
